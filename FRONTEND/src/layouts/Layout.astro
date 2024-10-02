@@ -1,6 +1,6 @@
 ---
 import '@fontsource/roboto';
-
+import Navbar from '../sections/Navbar.vue';
 import Footer from '../sections/Footer.vue';
 interface Props {
 	title: string;
@@ -20,6 +20,7 @@ const { title } = Astro.props;
 		<title>{title}</title>
 	</head>
 	<body class="flex flex-col items-center justify-center">
+		<Navbar />
 		<slot />
 		<Footer />
 	</body>
