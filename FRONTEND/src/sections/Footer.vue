@@ -1,20 +1,14 @@
 <template>
-    <footer class="flex flex-col my-6 pt-6 border-t border-gray-300">
-        <div class="flex justify-center gap-28 px-20">
-            <div>
-                <p class="text-md text-center">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-                    exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-            </div>
+    <footer class="flex flex-col border-t border-gray-300 mt-auto">
+        <div class="flex flex-col lg:flex-row justify-evenly items-center gap-6 lg:gap-40 px-40 lg:px-20 py-4">
+            <p class="text-md text-center">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+                tempor incididunt ut labore et dolore magna aliqua.</p>
 
-            <div>
-                <p class="text-md text-center">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-                    exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-            </div>
+            <p class="text-md text-center">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+                tempor incididunt ut labore et dolore magna aliqua.</p>
 
             <!-- Logos en la parte superior, alineados a la derecha -->
-            <div class="flex flex-col text-gray-600 items-start mb-4 gap-2">
+            <div class="flex flex-row lg:flex-col text-gray-600 items-start mb-4 gap-2">
                 <span class="flex items-center justify-center">
                     <div class="w-5 h-5 mx-2" alt="Logo Facebook">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
@@ -51,7 +45,7 @@
         </div>
 
         <!-- Parte inferior: Enlaces "About" a la derecha y redes sociales a la izquierda -->
-        <div class="px-20 h-28 flex items-center justify-between">
+        <div class="px-20 py-5 flex items-center justify-between">
             <!-- Icono de redes sociales a la izquierda -->
             <a href="#" target="_blank" class="w-10 h-10 ml-10">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512">
