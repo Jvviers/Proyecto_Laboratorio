@@ -38,7 +38,7 @@ export default {
         </div>
         <div class="flex flex-col items-center gap-4 p-4">
             <label class="text-2xl" for="date">Seleccione una fecha:</label>
-            <input class="date-input" v-model="selectedDate" type="date" id="date" />
+            <input class="cursor-pointer px-4 py-2" v-model="selectedDate" type="date" id="date" />
         </div>
         <button class="bg-gray-600 hover:bg-gray-500 text-white font-bold py-2 px-4" type="submit">
             Agendar
@@ -49,18 +49,5 @@ export default {
 <style scoped>
 .text-input {
     width: 300px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-}
-
-.date-input {
-    padding-left: 16px;
-    padding-right: 16px;
-    padding-top: 8px;
-    padding-bottom: 8px;
-    border: 1px solid #ddddddb0;
-    outline: 2px solid transparent;
-    outline-offset: 2px;
-    cursor: pointer;
 }
 </style>
