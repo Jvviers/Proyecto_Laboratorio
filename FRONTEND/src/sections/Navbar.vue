@@ -3,7 +3,7 @@ import LoginButton from '../components/LoginButton.vue';
 </script>
 
 <template>
-    <nav class="flex w-full justify-between items-center px-16 py-8">
+    <nav class="flex w-full justify-between items-center px-16 py-8 border-b border-gray-300">
         <div class="flex gap-10">
             <a href="#" target="_blank" class="w-10 h-10">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512">
