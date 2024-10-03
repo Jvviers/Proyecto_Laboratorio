@@ -1,6 +1,6 @@
 <template>
     <div class="relative w-full">
-      <!-- Carousel wrapper -->
+      <!-- Carousel wrapper --> 
       <div class="relative h-56 overflow-hidden rounded-lg md:h-96">
         <!-- Carrusel de items -->
         <div
@@ -86,7 +86,7 @@ export default {
     return {
       activeIndex: 0,
       images: [
-        /* agregar imagenes aqui  */
+       
       ],
     };
   },
@@ -107,5 +107,5 @@ export default {
 
   
   <style scoped>
-  /* Opcional: puedes ajustar más estilos según lo necesites */
+  /*por si queremos agregar estilos*/
   </style>
