@@ -1,5 +1,4 @@
 <script setup>
-import LoginButton from '../components/LoginButton.vue';
 </script>
 
 <template>
@@ -25,7 +24,11 @@ import LoginButton from '../components/LoginButton.vue';
             </a>
         </div>
         <div>
-            <LoginButton />
+            <a href="/admin" aria-label="acceso admin">
+                <button class="bg-gray-600 hover:bg-gray-500 text-white font-bold py-2 px-4">
+                    Acceso Admin
+                </button>
+            </a>
         </div>
     </nav>
 </template>
