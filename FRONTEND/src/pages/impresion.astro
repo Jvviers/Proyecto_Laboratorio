@@ -1,0 +1,14 @@
+---
+import Layout from "../layouts/Layout.astro";
+import CheckBox from "../sections/CheckBox.vue";
+import FormImpresion from "../sections/FormImpresion.vue";
+---
+
+<Layout title="Impresión">
+    <div class="py-5">
+        <h1 class="text-3xl text-center font-bold">Solicitud Impresión</h1>
+        <FormImpresion client:load/>
+        <CheckBox client:load/>
+    </div>
+	
+</Layout>
