@@ -1,5 +1,4 @@
-<script setup>
-</script>
+<script setup></script>
 
 <template>
     <nav class="flex w-full justify-between items-center px-16 py-6 border-b border-gray-300">
