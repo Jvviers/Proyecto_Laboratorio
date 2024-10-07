@@ -1,8 +1,7 @@
-<script setup>
-</script>
+<script setup></script>
 
 <template>
-    <nav class="flex w-full justify-between items-center px-16 py-8 border-b border-gray-300">
+    <nav class="flex w-full justify-between items-center px-16 py-6 border-b border-gray-300">
         <div class="flex gap-10">
             <a href="/" class="w-10 h-10" aria-label="logo lab 1">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512">
