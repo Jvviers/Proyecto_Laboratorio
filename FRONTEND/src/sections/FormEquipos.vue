@@ -9,14 +9,14 @@ export default {
         const matricula = ref("");
         const actividad = ref("");
 
-        const equipos = [
+        const equipos = ref([
             { id: 1, name: 'Impresora Creality FDM', checked: false },
             { id: 2, name: 'Impresoras Creality Resina', checked: false },
             { id: 3, name: 'Impresoras Stratasys', checked: false },
             { id: 4, name: 'Extrusora', checked: false },
             { id: 5, name: 'Inyectora', checked: false },
             { id: 6, name: 'Scanner', checked: false },
-        ]
+        ]);
 
         return {
             solicitante,

@@ -1,29 +1,39 @@
 <script>
+import { ref } from 'vue';
+
 export default {
-  data() {
+  name: 'Materiales',
+  setup() {
+    const projectTypes = ref([
+      { id: 1, name: 'Personal', checked: false },
+      { id: 2, name: 'Curso', checked: false },
+      { id: 3, name: 'Proyecto', checked: false },
+      { id: 4, name: 'IPSUM', checked: false },
+      { id: 5, name: 'IPSUM', checked: false },
+    ]);
+
+    const materialTypes = ref([
+      { id: 1, name: 'PLA', checked: false },
+      { id: 2, name: 'ABS', checked: false },
+      { id: 3, name: 'LOREM', checked: false },
+      { id: 4, name: 'LOREM', checked: false },
+      { id: 5, name: 'LOREM', checked: false },
+    ]);
+
+    const file = ref(null);
+
+    const handleFileUpload = (event) => {
+      file.value = event.target.files[0];
+    };
+
+    // Retornar las variables y funciones para usarlas en el template
     return {
-      projectTypes: [
-        { id: 1, name: 'Personal', checked: false },
-        { id: 2, name: 'Curso', checked: false },
-        { id: 3, name: 'Proyecto', checked: false },
-        { id: 4, name: 'IPSUM', checked: false },
-        { id: 5, name: 'IPSUM', checked: false },
-      ],
-      materialTypes: [
-        { id: 1, name: 'PLA', checked: false },
-        { id: 2, name: 'ABS', checked: false },
-        { id: 3, name: 'LOREM', checked: false },
-        { id: 4, name: 'LOREM', checked: false },
-        { id: 5, name: 'LOREM', checked: false },
-      ],
-      file: null
+      projectTypes,
+      materialTypes,
+      file,
+      handleFileUpload,
     };
   },
-  methods: {
-    handleFileUpload(event) {
-      this.file = event.target.files[0];
-    }
-  }
 };
 </script>
 
