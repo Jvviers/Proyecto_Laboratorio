@@ -104,12 +104,9 @@ export default {
   </div>
 
   <!-- Lo que hace el boton para enviar -->
-  <div class="flex justify-center">
-    <button 
-      class="bg-gray-600 hover:bg-gray-500 text-white font-bold py-2 px-16 my-8" 
-      type="button" 
-      @click="enviarFormulario"
-    >
+  <div class="flex justify-center py-4">
+    <button class="bg-gray-600 hover:bg-gray-500 text-white font-bold py-2 px-4 text-nowrap rounded"
+      type="submit" @click="enviarFormulario">
       Enviar
     </button>
   </div>
