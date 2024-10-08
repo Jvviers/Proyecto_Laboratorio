@@ -1,6 +1,7 @@
 INSERT INTO usuario (email, password, is_admin) VALUES ('admin@admin.com', 'admin', 1);
 INSERT INTO usuario (email, password, is_admin) VALUES ('encargado1@enc.com', 'lab1', 0);
 INSERT INTO usuario (email, password, is_admin) VALUES ('encargado2@enc.com', 'lab2', 0);
+INSERT INTO usuario (email, password, is_admin) VALUES ('encargado3@enc.com', 'lab3', 0);
 
 INSERT INTO solicitud (ref_admin, solicitante, matricula, actividad, fecha, tipo_form)
 	VALUES (1, 'Juan', '1000', 'Asesoría', '2020-01-01', 'asesoria');
