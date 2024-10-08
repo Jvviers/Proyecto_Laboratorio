@@ -1,14 +1,16 @@
 -- USER INFO
-CREATE TABLE administrador(
+CREATE TABLE usuario(
     id INTEGER AUTO_INCREMENT NOT NULL PRIMARY KEY,
     email TEXT NOT NULL,
-    password TEXT NOT NULL
+    password TEXT NOT NULL,
+    is_admin BOOLEAN NOT NULL
 );
 
 -- FORM INFO
-CREATE TABLE formulario(
+CREATE TABLE solicitud(
 	id INTEGER AUTO_INCREMENT NOT NULL PRIMARY KEY,
-    ref_admin INTEGER REFERENCES administrador(id),
+    ref_admin INTEGER REFERENCES usuario(id),
+    ref_enc INTEGER REFERENCES usuario(id),
 	solicitante TEXT NOT NULL,
     matricula TEXT NOT NULL,
     actividad TEXT NOT NULL,
@@ -22,26 +24,27 @@ CREATE TABLE formulario(
     CONSTRAINT chk_fecha CHECK ((tipo_form = 'asesoria' AND fecha IS NOT NULL) OR (tipo_form != 'asesoria' AND fecha IS NULL)),
     CONSTRAINT chk_tipo_proyecto CHECK ((tipo_form = 'impresion' AND tipo_proyecto IS NOT NULL) OR (tipo_form != 'impresion' AND tipo_proyecto IS NULL)),
     CONSTRAINT chk_tipo_material CHECK ((tipo_form = 'impresion' AND tipo_material IS NOT NULL) OR (tipo_form != 'impresion' AND tipo_material IS NULL)),
-    CONSTRAINT chk_archivo CHECK ((tipo_form = 'impresion' AND archivo IS NOT NULL) OR (tipo_form != 'impresion' AND archivo IS NULL))
+    CONSTRAINT chk_archivo CHECK ((tipo_form = 'impresion' AND archivo IS NOT NULL) OR (tipo_form != 'impresion' AND archivo IS NULL)),
+    CONSTRAINT chk_ref_enc CHECK ((tipo_form = 'asesoria' AND ref_enc IS NULL) OR (tipo_form != 'asesoria'))
 );
 
 CREATE TABLE equipo(
-	ref_form INTEGER NOT NULL REFERENCES formulario(id),
+	ref_sol INTEGER NOT NULL REFERENCES solicitud(id),
     nombre_equipo TEXT NOT NULL,
-    PRIMARY KEY (ref_form, nombre_equipo(50))
+    PRIMARY KEY (ref_sol, nombre_equipo(50))
 );
 
--- TRIGGERS TO VALIDATE "equipo" TABLE
+-- VALIDATION TRIGGERS
 DELIMITER $$
 CREATE TRIGGER before_insert_equipo
 BEFORE INSERT ON equipo
 FOR EACH ROW
 BEGIN
-    DECLARE form_tipo TEXT;
-    SELECT tipo_form INTO form_tipo FROM formulario WHERE id = NEW.ref_form;
-    IF form_tipo != 'laboratorio' THEN
+    DECLARE tipo TEXT;
+    SELECT tipo_form INTO tipo FROM solicitud WHERE id = NEW.ref_sol;
+    IF tipo != 'laboratorio' THEN
         SIGNAL SQLSTATE '45000'
-        SET MESSAGE_TEXT = 'Solo los formularios de tipo laboratorio pueden contener equipos';
+        SET MESSAGE_TEXT = 'Solo las solicitudes de tipo laboratorio pueden contener equipos';
     END IF;
 END$$
 DELIMITER ;
@@ -51,11 +54,51 @@ CREATE TRIGGER before_update_equipo
 BEFORE UPDATE ON equipo
 FOR EACH ROW
 BEGIN
-    DECLARE form_tipo TEXT;
-    SELECT tipo_form INTO form_tipo FROM formulario WHERE id = NEW.ref_form;
-    IF form_tipo != 'laboratorio' THEN
+    DECLARE tipo TEXT;
+    SELECT tipo_form INTO tipo FROM solicitud WHERE id = NEW.ref_sol;
+    IF tipo != 'laboratorio' THEN
         SIGNAL SQLSTATE '45000' 
-        SET MESSAGE_TEXT = 'No se pueden actualizar equipos en formularios que no son de tipo laboratorio';
+        SET MESSAGE_TEXT = 'No se pueden actualizar equipos en solicitudes que no son de tipo laboratorio';
+    END IF;
+END$$
+DELIMITER ;
+
+DELIMITER $$
+CREATE TRIGGER before_insert_solicitud
+BEFORE INSERT ON solicitud
+FOR EACH ROW
+BEGIN
+    DECLARE enc_is_admin BOOLEAN;
+	DECLARE adm_is_admin BOOLEAN;
+    SELECT is_admin INTO enc_is_admin FROM usuario WHERE id = NEW.ref_enc;
+    SELECT is_admin INTO adm_is_admin FROM usuario WHERE id = NEW.ref_admin;
+    IF enc_is_admin THEN
+        SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT = 'El id proporcionado para el encargado de laboratorio no es válido';
+    END IF;
+    IF NOT adm_is_admin THEN
+        SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT = 'El id proporcionado para el administrador no es válido';
+    END IF;
+END$$
+DELIMITER ;
+
+DELIMITER $$
+CREATE TRIGGER before_update_solicitud
+BEFORE UPDATE ON solicitud
+FOR EACH ROW
+BEGIN
+    DECLARE enc_is_admin BOOLEAN;
+	DECLARE adm_is_admin BOOLEAN;
+    SELECT is_admin INTO enc_is_admin FROM usuario WHERE id = NEW.ref_enc;
+    SELECT is_admin INTO adm_is_admin FROM usuario WHERE id = NEW.ref_admin;
+    IF enc_is_admin THEN
+        SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT = 'El id proporcionado para el encargado de laboratorio no es válido';
+    END IF;
+    IF NOT adm_is_admin THEN
+        SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT = 'El id proporcionado para el administrador no es válido';
     END IF;
 END$$
 DELIMITER ;
