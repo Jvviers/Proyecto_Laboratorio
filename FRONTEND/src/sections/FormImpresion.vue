@@ -6,11 +6,13 @@ export default {
     setup() {
         // Variables del formulario
         const solicitante = ref("");
+        const email = ref("");
         const matricula = ref("");
         const actividad = ref("");
 
         return {
             solicitante,
+            email,
             matricula,
             actividad,
         };
@@ -25,6 +27,10 @@ export default {
             <div class="flex justify-between items-center w-full gap-4">
                 <label for="solicitante">Solicitante:</label>
                 <input class="text-input" type="text" id="solicitante" v-model="solicitante" />
+            </div>
+            <div class="flex justify-between items-center w-full gap-4">
+                <label for="email">Email:</label>
+                <input class="text-input" type="email" id="email" v-model="email" />
             </div>
             <div class="flex justify-between items-center w-full gap-4">
                 <label for="matricula">Matrícula:</label>
