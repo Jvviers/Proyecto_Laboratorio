@@ -1,7 +1,13 @@
 import express from 'express';
-import { PORT } from './config.js';
+import cors from 'cors';
+import router from './routes/routes.js';
 
 const app = express();
+const PORT = process.env.PORT ?? 3000;
+
+app.use(express.json());
+app.use(cors());
+app.use(router);
 
 app.get('/', (req, res) => {
     res.send('Hello World!');
@@ -10,7 +16,3 @@ app.get('/', (req, res) => {
 app.listen(PORT, () => {
     console.log('Server started on port ' + PORT);
 });
-
-app.post('/login', (req, res) => {});
-app.post('/logout', (req, res) => {});
-app.get('/protected', (req, res) => {});
