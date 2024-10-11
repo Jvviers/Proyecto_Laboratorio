@@ -12,7 +12,7 @@ const register = async (req, res) => {
 }
 
 const postAsesoria = async (req, res) => {
-    const [user] = await db.query(Queries.postAsesoria, [req.body.ref_admin, req.body.solicitante, req.body.email, req.body.matricula, req.body.actividad, req.body.fecha, "asesoria"]);
+    const [user] = await db.query(Queries.postAsesoria, [req.body.solicitante, req.body.email, req.body.matricula, req.body.actividad, req.body.fecha, "asesoria"]);
     res.json(user);
 }
 

@@ -39,14 +39,12 @@ export default {
         const asesoria = async () => {
             try {
                 const formattedDate = formatDate(selectedDate.value);
-                console.log("fecha: ", formattedDate);
                 const response = await fetch('http://localhost:3000/asesoria', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
                     },
                     body: JSON.stringify({
-                        ref_admin: "1",//pendiente
                         solicitante: solicitante.value,
                         email: email.value,
                         matricula: matricula.value,
