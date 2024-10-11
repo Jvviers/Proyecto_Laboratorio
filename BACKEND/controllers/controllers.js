@@ -6,6 +6,18 @@ const getUsers = async (req, res) => {
     res.json(users);
 }
 
+const register = async (req, res) => {
+    const [user] = await db.query(Queries.register, [req.body.email, req.body.password, req.body.is_admin]);
+    res.json(user);
+}
+
+const postAsesoria = async (req, res) => {
+    const [user] = await db.query(Queries.postAsesoria, [req.body.solicitante, req.body.email, req.body.matricula, req.body.actividad, req.body.fecha, "asesoria"]);
+    res.json(user);
+}
+
 export default {
-    getUsers
+    getUsers,
+    register,
+    postAsesoria
 }

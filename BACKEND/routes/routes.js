@@ -4,9 +4,7 @@ import Controller from '../controllers/controllers.js';
 const router = Router();
 
 router.get('/users', Controller.getUsers);
-
-/* app.post('/login', (req, res) => {});
-app.post('/logout', (req, res) => {});
-app.get('/protected', (req, res) => {}); */
+router.post('/register', Controller.register);
+router.post('/asesoria', Controller.postAsesoria);
 
 export default router;
