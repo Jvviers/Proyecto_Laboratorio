@@ -40,22 +40,22 @@ export default {
 };
 </script>
 <template>
-    <div>
-        <h2>Registro de Usuario</h2>
-        <form @submit.prevent="register">
-            <div>
+    <form @submit.prevent="register" class="flex flex-col justify-center items-center gap-4 my-4 w-full">
+        <h1 class="text-3xl text-center font-bold">Registro</h1>
+        <div class="flex flex-col justify-center items-center gap-4 mx-auto px-10 py-6">
+            <div class="flex justify-between items-center w-full gap-4">
                 <label for="email">Email:</label>
-                <input id="email" type="email" v-model="email" required />
+                <input class="text-input" type="email" id="email" v-model="email" required />
             </div>
-            <div>
-                <label for="password">Password:</label>
-                <input id="password" type="password" v-model="password" required />
+            <div class="flex justify-between items-center w-full gap-4">
+                <label for="password">Contraseña:</label>
+                <input class="text-input" type="password" id="password" v-model="password" required />
             </div>
-            <div>
-                <label for="is_admin">¿Es Administrador?</label>
-                <input id="is_admin" type="checkbox" v-model="is_admin" />
+            <div class="flex justify-start items-center w-full gap-8">
+                <label for="is_admin">Es Admin:</label>
+                <input class="text-input" type="checkbox" id="is_admin" v-model="is_admin" />
             </div>
-            <button type="submit">Registrar</button>
-        </form>
-    </div>
+        </div>
+        <button type="submit" class="px-4 py-2 bg-gray-500 text-white rounded">Registrar</button>
+    </form>
 </template>
