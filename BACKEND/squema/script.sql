@@ -9,12 +9,12 @@ CREATE TABLE usuario(
 -- FORM INFO
 CREATE TABLE solicitud(
 	id INTEGER AUTO_INCREMENT NOT NULL PRIMARY KEY,
-    ref_admin INTEGER REFERENCES usuario(id),
     ref_enc INTEGER REFERENCES usuario(id),
 	solicitante TEXT NOT NULL,
+    email VARCHAR(255) NOT NULL,
     matricula TEXT NOT NULL,
     actividad TEXT NOT NULL,
-	fecha DATE,
+	fecha TIMESTAMP,
     tipo_proyecto TEXT,
     tipo_material TEXT,
     archivo TEXT,
@@ -69,16 +69,10 @@ BEFORE INSERT ON solicitud
 FOR EACH ROW
 BEGIN
     DECLARE enc_is_admin BOOLEAN;
-	DECLARE adm_is_admin BOOLEAN;
     SELECT is_admin INTO enc_is_admin FROM usuario WHERE id = NEW.ref_enc;
-    SELECT is_admin INTO adm_is_admin FROM usuario WHERE id = NEW.ref_admin;
     IF enc_is_admin THEN
         SIGNAL SQLSTATE '45000'
         SET MESSAGE_TEXT = 'El id proporcionado para el encargado de laboratorio no es válido';
-    END IF;
-    IF NOT adm_is_admin THEN
-        SIGNAL SQLSTATE '45000'
-        SET MESSAGE_TEXT = 'El id proporcionado para el administrador no es válido';
     END IF;
 END$$
 DELIMITER ;
@@ -89,16 +83,10 @@ BEFORE UPDATE ON solicitud
 FOR EACH ROW
 BEGIN
     DECLARE enc_is_admin BOOLEAN;
-	DECLARE adm_is_admin BOOLEAN;
     SELECT is_admin INTO enc_is_admin FROM usuario WHERE id = NEW.ref_enc;
-    SELECT is_admin INTO adm_is_admin FROM usuario WHERE id = NEW.ref_admin;
     IF enc_is_admin THEN
         SIGNAL SQLSTATE '45000'
         SET MESSAGE_TEXT = 'El id proporcionado para el encargado de laboratorio no es válido';
-    END IF;
-    IF NOT adm_is_admin THEN
-        SIGNAL SQLSTATE '45000'
-        SET MESSAGE_TEXT = 'El id proporcionado para el administrador no es válido';
     END IF;
 END$$
 DELIMITER ;
