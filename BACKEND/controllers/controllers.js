@@ -41,13 +41,14 @@ const login = async (req, res) => {
         return res.status(401).json({ message: "Invalid credentials" });
     }
 
-    const token = jwt.sign({ email: users.email, id: users.id }, data.SECRET_JWT_SECRET, { expiresIn: '5m' });
-    
+    const token = jwt.sign({ email: users.email, id: users.id }, data.SECRET_JWT_KEY, { expiresIn: '1h' });
+    res.send({user, token});
+
     res.cookie('access_token', token, {
         httpOnly: true,  // Para prevenir acceso desde JavaScript (mayor seguridad contra XSS)
         secure: process.env.NODE_ENV === 'production',  // Solo en HTTPS en producción
         sameSite: 'Strict',  // Protección adicional contra CSRF
-        maxAge: 60 * 5// 5 minutos 
+        maxAge: 60 * 60 * 1000// 5 minutos 
     });
 
     res.json({ 
@@ -74,5 +75,5 @@ export default {
     register,
     postAsesoria,
     login,
-    logout
+    logout,
 }
