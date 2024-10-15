@@ -3,7 +3,6 @@ import cors from 'cors';
 import router from './routes/routes.js';
 import cookieParser from 'cookie-parser';
 
-
 const app = express();
 
 const PORT = process.env.PORT ?? 3000;

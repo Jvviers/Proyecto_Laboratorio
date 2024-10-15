@@ -1,7 +1,7 @@
 const getUsers = "select * from usuario"
 const register = "INSERT INTO usuario (email, password, is_admin) VALUES (?, ?, ?)";
 const postAsesoria = "INSERT INTO solicitud (solicitante, email, matricula, actividad, fecha, tipo_form) VALUES (?, ?, ?, ?, ?, ?)";
-
+const postMateriales = "INSERT INTO solicitud (solicitante, email, matricula, actividad, tipo_proyecto, tipo_material, archivo, tipo_form) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 /*
 Usando bcrypt las contraseñas no se guardan en texto plano, sino como un hash seguro. O sea que... 
 la contra ya ingresada no se compara directamente con el valor de la contra en la BD porque 
@@ -20,5 +20,6 @@ export default {
     getUsers,
     register,
     postAsesoria,
+    postMateriales,
     login
 }

@@ -21,6 +21,11 @@ const postAsesoria = async (req, res) => {
     res.json(user);
 }
 
+const postMateriales = async (req, res) => {
+    const [user] = await db.query(Queries.postMateriales, [req.body.solicitante, req.body.email, req.body.matricula, req.body.actividad, req.body.tipo_proyecto, req.body.tipo_material, null, "impresion"]);
+    res.json(user);
+}
+
 /*
 Usé bcrypt para la comparación de contraseñas y 
 JWT para luego generar un token de sesión.
@@ -74,6 +79,7 @@ export default {
     getUsers,
     register,
     postAsesoria,
+    postMateriales,
     login,
     logout,
 }

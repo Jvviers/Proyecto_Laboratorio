@@ -24,7 +24,7 @@ CREATE TABLE solicitud(
     CONSTRAINT chk_fecha CHECK ((tipo_form = 'asesoria' AND fecha IS NOT NULL) OR (tipo_form != 'asesoria' AND fecha IS NULL)),
     CONSTRAINT chk_tipo_proyecto CHECK ((tipo_form = 'impresion' AND tipo_proyecto IS NOT NULL) OR (tipo_form != 'impresion' AND tipo_proyecto IS NULL)),
     CONSTRAINT chk_tipo_material CHECK ((tipo_form = 'impresion' AND tipo_material IS NOT NULL) OR (tipo_form != 'impresion' AND tipo_material IS NULL)),
-    CONSTRAINT chk_archivo CHECK ((tipo_form = 'impresion' AND archivo IS NOT NULL) OR (tipo_form != 'impresion' AND archivo IS NULL)),
+    CONSTRAINT chk_archivo CHECK ((tipo_form != 'impresion' AND archivo IS NULL) OR (tipo_form = 'impresion')),
     CONSTRAINT chk_ref_enc CHECK ((tipo_form = 'asesoria' AND ref_enc IS NULL) OR (tipo_form != 'asesoria'))
 );
 
