@@ -1,18 +1,19 @@
 ---
 import Card from "../components/Card.astro";
 ---
-
-<div class="flex justify-center py-6">
-    <h1 class="text-3xl font-bold text-center">Servicios</h1>
-</div>
-<div class="flex flex-wrap justify-evenly items-center gap-4 w-full py-6 px-4">
-    <Card text="Materiales" url="/laboratorio">
-        <img src="/materiales.svg" alt="Materiales" loading="lazy"/>
-    </Card>
-    <Card text="Impresión" url="/impresion">
-        <img src="/impresion.svg" alt="Impresión" loading="lazy"/>
-    </Card>
-    <Card text="Agendar" url="/asesoria">
-        <img src="/asesoria.svg" alt="Agendar" loading="lazy"/>
-    </Card>
+<div class="flex flex-col w-full py-6">
+    <div class="flex justify-center py-6">
+        <h1 class="text-3xl font-bold text-center">Servicios</h1>
+    </div>
+    <div class="flex flex-wrap justify-evenly items-center gap-4 w-full py-6 px-4">
+        <Card text="Materiales" url="/laboratorio">
+            <img src="/materiales.svg" alt="Materiales" loading="lazy"/>
+        </Card>
+        <Card text="Impresión" url="/impresion">
+            <img src="/impresion.svg" alt="Impresión" loading="lazy"/>
+        </Card>
+        <Card text="Agendar" url="/asesoria">
+            <img src="/asesoria.svg" alt="Agendar" loading="lazy"/>
+        </Card>
+    </div>
 </div>

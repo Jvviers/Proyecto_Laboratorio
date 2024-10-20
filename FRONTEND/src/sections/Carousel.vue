@@ -53,9 +53,9 @@ export default {
 </script>
 
 <template>
-  <div class="relative w-full" @mousedown="startDrag" @mousemove="onDrag" @mouseup="endDrag" @mouseleave="endDrag">
+  <div class="relative w-full bg-[#eeeeee] z-10" @mousedown="startDrag" @mousemove="onDrag" @mouseup="endDrag" @mouseleave="endDrag">
     <!-- Carousel wrapper -->
-    <div class="relative h-[80vh] overflow-hidden -z-20">
+    <div class="relative h-[80vh] overflow-hidden -z-20 mx-0 md:mx-32">
       <!-- Carrusel de items -->
       <div v-for="(image, index) in images" :key="index"
         class="absolute inset-0 transition-opacity duration-1000 ease-in-out"
@@ -72,7 +72,7 @@ export default {
         }" aria-label="Slide"></button>
     </div>
     <!-- Controles del slider -->
-    <button type="button" class="px-4 absolute top-0 left-0 z-10 h-full outline-none bg-transparent hover:bg-transparent transitions"
+    <button type="button" class="px-4 mx-0 md:mx-32 absolute top-0 left-0 z-10 h-full outline-none bg-transparent hover:bg-transparent transitions"
       @click="prevSlide">
       <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 transitions">
         <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
@@ -81,7 +81,7 @@ export default {
         </svg>
       </span>
     </button>
-    <button type="button" class="px-4 absolute top-0 right-0 z-10 h-full outline-none bg-transparent hover:bg-transparent transitions"
+    <button type="button" class="px-4 mx-0 md:mx-32 absolute top-0 right-0 z-10 h-full outline-none bg-transparent hover:bg-transparent transitions"
       @click="nextSlide">
       <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 transitions">
         <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
