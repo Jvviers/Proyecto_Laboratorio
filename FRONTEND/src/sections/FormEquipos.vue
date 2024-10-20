@@ -36,19 +36,19 @@ export default {
         <div class="flex flex-col justify-center items-center gap-4 mx-auto px-10 py-6">
             <div class="flex justify-between items-center w-full gap-4">
                 <label for="solicitante">Solicitante:</label>
-                <input class="text-input" type="text" id="solicitante" v-model="solicitante" />
+                <input class="text-input input" type="text" id="solicitante" v-model="solicitante" />
             </div>
             <div class="flex justify-between items-center w-full gap-4">
                 <label for="email">Email:</label>
-                <input class="text-input" type="email" id="email" v-model="email" />
+                <input class="text-input input" type="email" id="email" v-model="email" />
             </div>
             <div class="flex justify-between items-center w-full gap-4">
                 <label for="matricula">Matrícula:</label>
-                <input class="text-input" type="text" id="matricula" v-model="matricula" />
+                <input class="text-input input" type="text" id="matricula" v-model="matricula" />
             </div>
             <div class="flex justify-between items-center w-full gap-4">
                 <label for="actividad">Actividad:</label>
-                <input class="text-input" type="text" id="actividad" v-model="actividad" />
+                <input class="text-input input" type="text" id="actividad" v-model="actividad" />
             </div>
         </div>
         <div class="flex flex-col justify-center gap-4 p-2">
@@ -60,7 +60,7 @@ export default {
                 </li>
             </div>
         </div>
-        <button class="bg-gray-600 hover:bg-gray-500 text-white font-bold py-2 px-4 text-nowrap rounded" type="submit">
+        <button class="button" type="submit">
             Enviar
         </button>
     </form>
@@ -68,6 +68,9 @@ export default {
 
 <style scoped>
 .text-input {
+  width: 240px;
+  @media (min-width: 768px) {
     width: 300px;
+  }
 }
 </style>

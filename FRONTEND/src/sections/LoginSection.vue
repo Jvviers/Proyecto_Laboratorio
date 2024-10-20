@@ -10,6 +10,7 @@ export default {
             try {
                 const response = await fetch('http://localhost:3000/login', {
                     method: 'POST',
+                    credentials: 'include',
                     headers: {
                         'Content-Type': 'application/json',
                     },
@@ -23,6 +24,9 @@ export default {
                 }
                 const data = await response.json();
                 console.log('Usuario logeado:', data);
+                // agregar la cookie
+                /* document.cookie = `accessToken=${data.accessToken}`; */
+
             } catch (error) {
                 console.error('Error al iniciar sesion:', error);
             }
@@ -41,13 +45,13 @@ export default {
         <div class="flex flex-col justify-center items-center gap-4 mx-auto px-10 py-6">
             <div class="flex justify-between items-center w-full gap-4">
                 <label for="email">Email:</label>
-                <input class="text-input" type="email" id="email" v-model="email" required />
+                <input class="text-input input" type="email" id="email" v-model="email" required />
             </div>
             <div class="flex justify-between items-center w-full gap-4">
                 <label for="password">Contraseña:</label>
-                <input class="text-input" type="password" id="password" v-model="password" required />
+                <input class="text-input input" type="password" id="password" v-model="password" required />
             </div>
         </div>
-        <button type="submit" class="px-4 py-2 bg-gray-500 text-white rounded">Login</button>
+        <button class="button" type="submit">Iniciar Sesión</button>
     </form>
 </template>

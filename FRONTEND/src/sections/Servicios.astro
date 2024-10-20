@@ -1,30 +1,19 @@
 ---
 import Card from "../components/Card.astro";
 ---
-
-<div class="flex justify-center py-6">
-    <h1 class="text-3xl font-bold text-center">Servicios</h1>
-</div>
-<div class="flex flex-wrap justify-evenly items-center gap-4 w-full py-6 px-4">
-    <Card text="Materiales" url="/laboratorio">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-            <path
-                d="M176 88v40h160V88c0-4.4-3.6-8-8-8H184c-4.4 0-8 3.6-8 8zm-48 40V88c0-30.9 25.1-56 56-56h144c30.9 0 56 25.1 56 56v40h28.1c12.7 0 24.9 5.1 33.9 14.1l51.9 51.9c9 9 14.1 21.2 14.1 33.9V320H384v-32c0-17.7-14.3-32-32-32s-32 14.3-32 32v32H192v-32c0-17.7-14.3-32-32-32s-32 14.3-32 32v32H0v-92.1C0 215.2 5.1 203 14.1 194L66 142.1c9-9 21.2-14.1 33.9-14.1H128zM0 416v-64h128c0 17.7 14.3 32 32 32s32-14.3 32-32h128c0 17.7 14.3 32 32 32s32-14.3 32-32h128v64c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64z"
-            ></path></svg
-        >
-    </Card>
-    <Card text="Impresión" url="/impresion">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-            <path
-                d="M128 0C92.7 0 64 28.7 64 64v96h64V64h226.7L384 93.3V160h64V93.3c0-17-6.7-33.3-18.7-45.3L400 18.7C388 6.7 371.7 0 354.7 0H128zm256 352v96H128v-96h256zm64 32h32c17.7 0 32-14.3 32-32v-96c0-35.3-28.7-64-64-64H64c-35.3 0-64 28.7-64 64v96c0 17.7 14.3 32 32 32h32v64c0 35.3 28.7 64 64 64h256c35.3 0 64-28.7 64-64v-64zm-16-136a24 24 0 1 1 0 48 24 24 0 1 1 0-48z"
-            ></path>
-        </svg>
-    </Card>
-    <Card text="Agendar" url="/asesoria">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
-            <path
-                d="M96 32v32H48C21.5 64 0 85.5 0 112v48h448v-48c0-26.5-21.5-48-48-48h-48V32c0-17.7-14.3-32-32-32s-32 14.3-32 32v32H160V32c0-17.7-14.3-32-32-32S96 14.3 96 32zm352 160H0v272c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V192z"
-            ></path></svg
-        >
-    </Card>
+<div class="flex flex-col w-full py-6">
+    <div class="flex justify-center py-6">
+        <h1 class="text-3xl font-bold text-center">Servicios</h1>
+    </div>
+    <div class="flex flex-wrap justify-evenly items-center gap-4 w-full py-6 px-4">
+        <Card text="Materiales" url="/laboratorio">
+            <img src="/materiales.svg" alt="Materiales" loading="lazy"/>
+        </Card>
+        <Card text="Impresión" url="/impresion">
+            <img src="/impresion.svg" alt="Impresión" loading="lazy"/>
+        </Card>
+        <Card text="Agendar" url="/asesoria">
+            <img src="/asesoria.svg" alt="Agendar" loading="lazy"/>
+        </Card>
+    </div>
 </div>

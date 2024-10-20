@@ -1,8 +1,16 @@
 import { defineConfig } from 'astro/config';
 import tailwind from '@astrojs/tailwind';
 import vue from '@astrojs/vue';
+import dotenv from 'dotenv';
 
-// https://astro.build/config
+dotenv.config();
+
 export default defineConfig({
-  integrations: [tailwind(), vue()]
+  integrations: [tailwind(), vue({
+    template: {
+      compilerOptions: {
+        isCustomElement: tag => tag.startsWith('uc-'),
+      },
+    },
+  })]
 });

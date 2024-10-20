@@ -56,8 +56,7 @@ export default {
                         </select>
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap">
-                        <button @click="sendEmail(request)"
-                            class="bg-gray-600 hover:bg-gray-500 text-white font-bold py-2 px-4 text-nowrap rounded">
+                        <button class="button" @click="sendEmail(request)" type="button">
                             Enviar Email
                         </button>
                     </td>
