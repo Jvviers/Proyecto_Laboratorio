@@ -52,7 +52,7 @@ const login = async (req, res) => {
     res.cookie('access_token', token, {
         httpOnly: true,  // Para prevenir acceso desde JavaScript (mayor seguridad contra XSS)
         secure: process.env.NODE_ENV === 'production',  // Solo en HTTPS en producción
-        sameSite: 'Strict',  // Protección adicional contra CSRF
+        sameSite: 'Strict',  // Protección adicional contra CSRF //cambiar a none para no tener problemas 
         maxAge: 60 * 60 * 1000// 5 minutos 
     });
 
