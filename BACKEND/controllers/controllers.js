@@ -43,7 +43,7 @@ const login = async (req, res) => {
     res.cookie('accessToken', accessToken, {
         httpOnly: true,
         secure: process.env.NODE_ENV === 'production',
-        sameSite: 'Strict',
+        sameSite: 'None',
         maxAge: 5 * 60 * 1000,
     });
     res.send({ email:user.email });
