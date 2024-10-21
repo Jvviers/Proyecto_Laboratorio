@@ -1,0 +1,13 @@
+---
+import Encargados from "../components/Encargados.vue";
+import Maquinarias from "../components/Maquinarias.vue"
+import Laboratorios from "../components/Laboratorios.vue"
+import Materiales from "../components/Materiales.vue"
+---
+
+<div class="flex flex-wrap justify-evenly items-center gap-8 py-8">
+    <Encargados client:load />
+    <Maquinarias client:load />
+    <Laboratorios client:load />
+    <Materiales client:load />
+</div>

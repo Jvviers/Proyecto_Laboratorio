@@ -1,6 +1,6 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import Register from "../sections/Register.vue";
+import Mantenedores from "../sections/Mantenedores.astro";
 import TablaSolicitudes from "../sections/TablaSolicitudes.vue";
 ---
 
@@ -10,5 +10,5 @@ import TablaSolicitudes from "../sections/TablaSolicitudes.vue";
         <h1 class="text-3xl text-center font-bold">Bienvenido Administrador</h1>
     </div>
     <TablaSolicitudes client:load />
-    <Register client:load />
+    <Mantenedores client:load />
 </Layout>
