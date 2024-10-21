@@ -139,7 +139,7 @@ export default {
         <h2 class="font-bold text-center text-2xl">Tipo proyecto</h2>
         <ul class="flex flex-col gap-2">
           <li v-for="type in projectTypes" :key="type.id" class="flex items-center">
-            <input type="radio" v-model="tipo_proyecto" :id="'project-' + type.id" :value="type.id" class="mr-3 w-6 h-6"
+            <input type="radio" v-model="tipo_proyecto" :id="'project-' + type.id" :value="type.name" class="mr-3 w-6 h-6"
               required />
             <label :for="'project-' + type.id" class="text-md">{{
               type.name
@@ -153,7 +153,7 @@ export default {
         <h2 class="font-bold text-center text-2xl">Tipo material</h2>
         <ul class="flex flex-col gap-2">
           <li v-for="material in materialTypes" :key="material.id" class="flex items-center">
-            <input type="radio" v-model="tipo_material" :id="'material-' + material.id" :value="material.id"
+            <input type="radio" v-model="tipo_material" :id="'material-' + material.id" :value="material.name"
               class="mr-3 w-6 h-6" required />
             <label :for="'material-' + material.id" class="text-md">{{
               material.name
