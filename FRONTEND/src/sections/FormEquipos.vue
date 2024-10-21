@@ -3,7 +3,7 @@ import { ref } from 'vue';
 
 export default {
     name: 'FormLaboratorios',
-    async setup() {
+    setup() {
         // Variables del formulario
         const solicitante = ref("");
         const email = ref("");
@@ -19,12 +19,10 @@ export default {
             { id: 6, name: 'Scanner', checked: false },
         ]);
 
-        const postEquipos = async () => {
-            const equiposSeleccionados = equiposTypes.value
-                .filter(equipo => equipo.checked)
-                .map(equipo => equipo.name); // Filtrar los equipos seleccionados
-            console.log('Equipos seleccionados:', equiposSeleccionados); //PROBANDO SI REALMENTE LOS EQUIPOS SELECCIONADOS SE GUARDAN
+        let equiposSeleccionados = ref([]);
+        const idSolicitud = ref();
 
+        const postEquipos = async () => {
             try {
                 const response = await fetch('http://localhost:3000/equipos', {
                     method: 'POST',
@@ -36,7 +34,6 @@ export default {
                         email: email.value,
                         matricula: matricula.value,
                         actividad: actividad.value,
-                        equipos: equiposSeleccionados, // Los enviamos
                     }),
                 });
                 if (!response.ok) {
@@ -44,9 +41,42 @@ export default {
                 }
                 const data = await response.json();
                 console.log('Solicitud enviada:', data);
+                idSolicitud.value = data.insertId;
             } catch (error) {
                 console.error('Error al enviar la solicitud:', error);
             }
+
+            equiposToArray();
+            for (const equipo of equiposSeleccionados) {
+                console.log('Equipo:', equipo);
+                console.log('idSolicitud:', idSolicitud.value);
+                try {
+                    const response = await fetch('http://localhost:3000/equipo', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            ref_sol: idSolicitud.value,
+                            nombre_equipo: equipo,
+                        }),
+                    });
+                    if (!response.ok) {
+                        throw new Error(`Error: ${response.statusText}`);
+                    }
+                    const data = await response.json();
+                    console.log('Equipo agregado:', data);
+                } catch (error) {
+                    console.error('Error al enviar la solicitud:', error);
+                }
+            }
+        };
+
+        const equiposToArray = () => {
+            equiposSeleccionados = equiposTypes.value
+                .filter(equipo => equipo.checked)
+                .map(equipo => equipo.name); // Filtrar los equipos seleccionados
+            console.log('Equipos seleccionados:', equiposSeleccionados); //PROBANDO SI REALMENTE LOS EQUIPOS SELECCIONADOS SE GUARDAN
         };
 
         return {

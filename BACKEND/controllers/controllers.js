@@ -17,21 +17,25 @@ const getSolicitudes = async (req, res) => {
     }   
 }
 
-
 const postAsesoria = async (req, res) => {
-    const [user] = await db.query(Queries.postAsesoria, [req.body.solicitante, req.body.email, req.body.matricula, req.body.actividad, req.body.fecha, "asesoria"]);
-    res.json(user);
+    const [data] = await db.query(Queries.postAsesoria, [req.body.solicitante, req.body.email, req.body.matricula, req.body.actividad, req.body.fecha, "asesoria"]);
+    res.json(data);
 }
 
 const postMateriales = async (req, res) => {
-    const [user] = await db.query(Queries.postMateriales, [req.body.solicitante, req.body.email, req.body.matricula, req.body.actividad, req.body.tipo_proyecto, req.body.tipo_material, req.body.archivo, "impresion"]);
-    res.json(user);
+    const [data] = await db.query(Queries.postMateriales, [req.body.solicitante, req.body.email, req.body.matricula, req.body.actividad, req.body.tipo_proyecto, req.body.tipo_material, req.body.archivo, "impresion"]);
+    res.json(data);
 }
-/*
+
 const postEquipos = async (req, res) => {
-    const [user] = await db.query(Queries.postEquipos, [req.body.solicitante, req.body.email, req.body.matricula, req.body.actividad, req.body.equipos, "equipos"]);
-    res.json(user);
-}*/
+    const [data] = await db.query(Queries.postEquipos, [req.body.solicitante, req.body.email, req.body.matricula, req.body.actividad, "laboratorio"]);
+    res.json(data);
+}
+
+const postEquipo = async (req, res) => {
+    const [data] = await db.query(Queries.postEquipo, [req.body.ref_sol, req.body.nombre_equipo]);
+    res.json(data);
+}
 
 const register = async (req, res) => {
     const hashedPassword = await bcrypt.hash(req.body.password, data.SALT_ROUNDS);
@@ -73,7 +77,8 @@ export default {
     getSolicitudes,
     postAsesoria,
     postMateriales,
-    //postEquipos,
+    postEquipos,
+    postEquipo,
     register,
     login,
     logout
