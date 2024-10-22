@@ -56,15 +56,20 @@ const login = async (req, res) => {
     if (!isValidPassword) return res.status(401).json({ message: "La contraseña no es válida" });
     
     const tokenPayload = { id: user.id, email: user.email, is_admin: user.is_admin };
-    const accessToken = jwt.sign(tokenPayload, data.SECRET_JWT_KEY, { expiresIn: '5m' });
+    const accessToken = jwt.sign(tokenPayload, data.SECRET_JWT_KEY, { expiresIn: '1h' });
     
     res.cookie('accessToken', accessToken, {
         httpOnly: true,
         secure: process.env.NODE_ENV === 'production',
-        sameSite: 'None',
-        maxAge: 5 * 60 * 1000,
+        sameSite: 'Strict',
+        maxAge: 3600 * 1000,
     });
     res.send({ email:user.email });
+}
+
+const session = (req, res) => {
+    console.log('Sesión válida')
+    res.json({ id: req.user.id, email: req.user.email, is_admin: req.user.is_admin });
 }
 
 const logout = (req, res) => {
@@ -81,5 +86,6 @@ export default {
     postEquipo,
     register,
     login,
+    session,
     logout
 }
