@@ -3,11 +3,14 @@ import { ref, onMounted } from 'vue';
 
 const requests = ref([]);
 const error = ref(null);
+const userRole = ref(false);
+const validSession = ref(false);
 
 const fetchRequests = async () => {
   try {
     const response = await fetch('http://localhost:3000/solicitudes', {
       method: 'GET',
+      credentials: 'include',
       headers: {
         'Content-Type': 'application/json',
       },
@@ -26,18 +29,47 @@ const fetchRequests = async () => {
   }
 };
 
+const validateSession = async () => {
+  try {
+    const response = await fetch('http://localhost:3000/session', {
+      method: 'POST',
+      credentials: 'include',
+    });
+
+    if (!response.ok) {
+      console.error('Status:', response.status);
+    } else {
+      const data = await response.json();
+      validSession.value = true;
+      userRole.value = data.is_admin;
+      console.log('userRole:', userRole.value);
+    }
+  } catch (err) {
+    console.error('Error al validar sesión:', err);
+  }
+};
+
 onMounted(() => {
+  validateSession();
   fetchRequests();
 });
 
 const sendEmail = (request) => {
   alert(`Email sent to ${request.email} regarding request ${request.id}`);
 };
+
+const goToLogin = () => {
+  window.location.href = '/login';
+};
 </script>
 
 <template>
+  <div class="flex justify-center py-6">
+    <h1 v-if="validSession" class="text-3xl text-center font-bold">Bienvenido Administrador</h1>
+    <h1 v-if="!validSession" class="text-2xl text-center font-bold">Inicia sesión para ver las solicitudes</h1>
+  </div>
   <!-- Contenedor de la tabla con un máximo de altura y desplazamiento vertical -->
-  <div class="w-10/12 overflow-x-scroll border mx-4">
+  <div v-if="validSession" class="w-10/12 overflow-x-scroll border mx-4 mb-6">
     <table class="table-auto bg-white">
       <thead class="bg-gray-100 sticky top-0">
         <tr>
@@ -93,9 +125,8 @@ const sendEmail = (request) => {
     </table>
   </div>
 
-  <!-- Mostrar errores si hay -->
-  <div v-if="error" class="text-red-500">
-    Error: {{ error }}
+  <div v-if="!validSession" class="w-full h-[200px] flex justify-center items-center">
+    <button class="button" @click="goToLogin">Iniciar Sesión</button>
   </div>
 </template>
 

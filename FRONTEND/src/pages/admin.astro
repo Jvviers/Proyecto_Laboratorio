@@ -1,14 +1,10 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import Mantenedores from "../sections/Mantenedores.astro";
+import Mantenedores from "../sections/Mantenedores.vue";
 import TablaSolicitudes from "../sections/TablaSolicitudes.vue";
 ---
 
-
 <Layout title="Administrador">
-    <div class="flex justify-center py-6">
-        <h1 class="text-3xl text-center font-bold">Bienvenido Administrador</h1>
-    </div>
     <TablaSolicitudes client:load />
     <Mantenedores client:load />
 </Layout>
