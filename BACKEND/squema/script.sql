@@ -30,9 +30,8 @@ CREATE TABLE solicitud(
 
 CREATE TABLE equipo(
 	ref_sol INTEGER NOT NULL REFERENCES solicitud(id),
-    id INTEGER NOT NULL AUTO_INCREMENT,
     nombre_equipo TEXT NOT NULL,
-    PRIMARY KEY (ref_sol, id)
+    PRIMARY KEY (ref_sol, nombre_equipo(50))
 );
 
 -- VALIDATION TRIGGERS
