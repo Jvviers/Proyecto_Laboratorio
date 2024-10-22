@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken';
 import data from '../config.js';
 
-const adminMiddleware = (req, res, next) => {
+const roleMiddleware = (rolesPermitidos) => (req, res, next) => {
     const accessToken = req.cookies.accessToken;
     const secret = data.SECRET_JWT_KEY;
 
@@ -9,10 +9,12 @@ const adminMiddleware = (req, res, next) => {
 
     try {
         const user = jwt.verify(accessToken, secret);
-        if (!user.is_admin) {
-            // Verificar si el usuario es administrador
-            return res.status(403).send("Acceso denegado, no eres administrador");
+
+        // Verificar si el rol del usuario está en los roles permitidos
+        if (!rolesPermitidos.includes(user.role)) {
+            return res.status(403).send("Acceso denegado, rol no autorizado");
         }
+
         req.user = user;
         next();
     } catch (error) {
@@ -20,4 +22,4 @@ const adminMiddleware = (req, res, next) => {
     }
 };
 
-export default adminMiddleware;
+export default roleMiddleware;

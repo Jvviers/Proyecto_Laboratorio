@@ -55,6 +55,8 @@ const login = async (req, res) => {
 
     if (!isValidPassword) return res.status(401).json({ message: "La contraseña no es válida" });
     
+    const role = user.is_admin ? 'admin' : 'encargado'; // Cambiar a 'admin' si el usuario es administrador
+
     const tokenPayload = { id: user.id, email: user.email, is_admin: user.is_admin };
     const accessToken = jwt.sign(tokenPayload, data.SECRET_JWT_KEY, { expiresIn: '5m' });
     
@@ -71,6 +73,7 @@ const logout = (req, res) => {
     // Eliminar la cookie 'access_token'
     res.clearCookie('accessToken').json({ message: 'Sesión cerrada' });
 };
+
 
 export default {
     getUsers,
