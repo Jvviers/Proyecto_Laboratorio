@@ -9,6 +9,8 @@ router.get('/admin', adminMiddleware, (req, res) => {
 });
 router.get('/users', authMiddleware, Controller.getUsers);
 router.get('/solicitudes', Controller.getSolicitudes);
+router.get('/solicitudes/:id', Controller.getSolicitudesById);
+router.get('/allIdEncargados', Controller.getAllIdEncargados);
 router.post('/asesoria', Controller.postAsesoria);
 router.post('/materiales', Controller.postMateriales);
 router.post('/register', Controller.register);

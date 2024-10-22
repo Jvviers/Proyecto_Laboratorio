@@ -16,6 +16,23 @@ const getSolicitudes = async (req, res) => {
         res.status(500).json({ message: error.message });
     }   
 }
+const getSolicitudesById = async (req, res) => {
+    try {
+        const [solicitudes] = await db.query(Queries.getSolicitudesById, [req.params.id]);
+        res.json(solicitudes);
+    }catch (error) {
+        res.status(500).json({ message: error.message });
+    }   
+}
+
+const getAllIdEncargados = async (req, res) => {
+    try {
+        const [idEncargados] = await db.query(Queries.getAllIdEncargados);
+        res.json(idEncargados);
+    }catch (error) {
+        res.status(500).json({ message: error.message });
+    }   
+}
 
 const postAsesoria = async (req, res) => {
     const [data] = await db.query(Queries.postAsesoria, [req.body.solicitante, req.body.email, req.body.matricula, req.body.actividad, req.body.fecha, "asesoria"]);
@@ -80,6 +97,8 @@ const logout = (req, res) => {
 export default {
     getUsers,
     getSolicitudes,
+    getSolicitudesById,
+    getAllIdEncargados,
     postAsesoria,
     postMateriales,
     postEquipos,
