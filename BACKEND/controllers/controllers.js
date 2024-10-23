@@ -16,6 +16,23 @@ const getSolicitudes = async (req, res) => {
         res.status(500).json({ message: error.message });
     }   
 }
+const getSolicitudesById = async (req, res) => {
+    try {
+        const [solicitudes] = await db.query(Queries.getSolicitudesById, [req.params.id]);
+        res.json(solicitudes);
+    }catch (error) {
+        res.status(500).json({ message: error.message });
+    }   
+}
+
+const getAllIdEncargados = async (req, res) => {
+    try {
+        const [idEncargados] = await db.query(Queries.getAllIdEncargados);
+        res.json(idEncargados);
+    }catch (error) {
+        res.status(500).json({ message: error.message });
+    }   
+}
 
 const postAsesoria = async (req, res) => {
     const [data] = await db.query(Queries.postAsesoria, [req.body.solicitante, req.body.email, req.body.matricula, req.body.actividad, req.body.fecha, "asesoria"]);
@@ -58,15 +75,20 @@ const login = async (req, res) => {
     const role = user.is_admin ? 'admin' : 'encargado'; // Cambiar a 'admin' si el usuario es administrador
 
     const tokenPayload = { id: user.id, email: user.email, is_admin: user.is_admin };
-    const accessToken = jwt.sign(tokenPayload, data.SECRET_JWT_KEY, { expiresIn: '5m' });
+    const accessToken = jwt.sign(tokenPayload, data.SECRET_JWT_KEY, { expiresIn: '1h' });
     
     res.cookie('accessToken', accessToken, {
         httpOnly: true,
         secure: process.env.NODE_ENV === 'production',
-        sameSite: 'None',
-        maxAge: 5 * 60 * 1000,
+        sameSite: 'Strict',
+        maxAge: 3600 * 1000,
     });
     res.send({ email:user.email });
+}
+
+const session = (req, res) => {
+    console.log('Sesión válida')
+    res.json({ id: req.user.id, email: req.user.email, is_admin: req.user.is_admin });
 }
 
 const logout = (req, res) => {
@@ -78,11 +100,14 @@ const logout = (req, res) => {
 export default {
     getUsers,
     getSolicitudes,
+    getSolicitudesById,
+    getAllIdEncargados,
     postAsesoria,
     postMateriales,
     postEquipos,
     postEquipo,
     register,
     login,
+    session,
     logout
 }

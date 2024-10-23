@@ -1,43 +1,35 @@
-<script>
+<script setup>
 import { ref } from 'vue';
 
-export default {
-    setup() {
-        const email = ref('');
-        const password = ref('');
+const email = ref('');
+const password = ref('');
 
-        const login = async () => {
-            try {
-                const response = await fetch('http://localhost:3000/login', {
-                    method: 'POST',
-                    credentials: 'include',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        email: email.value,
-                        password: password.value,
-                    }),
-                });
-                if (!response.ok) {
-                    throw new Error(`Error: ${response.statusText}`);
-                }
-                const data = await response.json();
-                console.log('Usuario logeado:', data);
-                // agregar la cookie
-                /* document.cookie = `accessToken=${data.accessToken}`; */
+const login = async () => {
+    try {
+        const response = await fetch('http://localhost:3000/login', {
+            method: 'POST',
+            credentials: 'include',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                email: email.value,
+                password: password.value,
+            }),
+        });
+        if (!response.ok) {
+            throw new Error(`Error: ${response.statusText}`);
+        }
+        const data = await response.json();
+        console.log('Usuario logeado:', data);
+        goToAdmin();
+    } catch (error) {
+        console.error('Error al iniciar sesion:', error);
+    }
+};
 
-            } catch (error) {
-                console.error('Error al iniciar sesion:', error);
-            }
-        };
-
-        return {
-            email,
-            password,
-            login,
-        };
-    },
+const goToAdmin = () => {
+  window.location.href = '/admin';
 };
 </script>
 <template>
