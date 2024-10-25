@@ -134,6 +134,17 @@ const updateState = async (sol_id, state) => {
   }
 };
 
+const formatDate = (date) => {
+  const d = new Date(date);
+  const year = d.getFullYear();
+  const month = String(d.getMonth() + 1).padStart(2, '0');
+  const day = String(d.getDate()).padStart(2, '0');
+  const hours = String(d.getHours()).padStart(2, '0');
+  const minutes = String(d.getMinutes()).padStart(2, '0');
+  const seconds = String(d.getSeconds()).padStart(2, '0');
+  return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+};
+
 onMounted(() => {
   validateSession();
   getEncargados();
@@ -142,7 +153,10 @@ onMounted(() => {
 
 <template>
   <div class="flex justify-center py-6">
-    <h1 v-if="validSession" class="text-3xl text-center font-bold">Bienvenido Administrador</h1>
+    <div v-if="validSession" class="flex flex-col justify-center items-center gap-6">
+      <h1 class="text-3xl text-center font-bold">Bienvenido Administrador</h1>
+      <h2 class="text-2xl text-center font-bold">Tabla de Solicitudes</h2>
+    </div>
     <h1 v-if="!validSession" class="text-2xl text-center font-bold">Inicia sesión para ver las solicitudes</h1>
   </div>
   <!-- Contenedor de la tabla con un máximo de altura y desplazamiento vertical -->
@@ -170,32 +184,47 @@ onMounted(() => {
         <tr v-for="request in requests" :key="request.id">
           <td class="td">{{ request.id }}</td>
           <td>
-            <select v-model="request.ref_enc" @change="updateRefEnc(request.id, request.ref_enc)" class="border rounded px-2 py-1">
-              <option v-for="encargado in encargados" :key="encargado.id" :value="encargado.id">{{ encargado.email }}</option>
+            <select v-if="request.tipo_form != 'asesoria'" v-model="request.ref_enc"
+              @change="updateRefEnc(request.id, request.ref_enc)" class="border rounded px-2 py-1">
+              <option v-for="encargado in encargados" :key="encargado.id" :value="encargado.id">{{ encargado.email }}
+              </option>
             </select>
           </td>
           <td class="td">{{ request.solicitante }}</td>
           <td class="td">{{ request.email }}</td>
           <td class="td">{{ request.matricula }}</td>
           <td class="td text-wrap overflow-x-scroll max-w-[180px]">{{ request.actividad }}</td>
-          <td class="td">{{ request.fecha }}</td>
+          <td class="td"><p v-if="request.fecha">{{ formatDate(request.fecha) }}</p></td>
           <td class="td">{{ request.tipo_proyecto }}</td>
           <td class="td">{{ request.tipo_material }}</td>
           <td class="td">{{ request.archivo }}</td>
           <td class="td">{{ request.tipo_form }}</td>
-          
+
           <!-- Selector que muestra y actualiza el estado -->
           <td>
-            <select v-model="request.estado" @change="updateState(request.id, request.estado)" class="border rounded px-2 py-1">
+            <select v-if="request.tipo_form == 'asesoria'" v-model="request.estado"
+              @change="updateState(request.id, request.estado)" class="border rounded px-2 py-1 w-[170px]">
               <option value="en espera">En espera</option>
               <option value="agendado">Agendado</option>
+              <option value="terminado">Terminado</option>
+            </select>
+            <select v-if="request.tipo_form == 'impresion'" v-model="request.estado"
+              @change="updateState(request.id, request.estado)" class="border rounded px-2 py-1 w-[170px]">
+              <option value="en espera">En espera</option>
               <option value="cola_impresion">Cola de Impresión</option>
               <option value="listo_retirar">Listo para Retirar</option>
               <option value="rechazado">Rechazado</option>
               <option value="terminado">Terminado</option>
             </select>
+            <select v-if="request.tipo_form == 'laboratorio'" v-model="request.estado"
+              @change="updateState(request.id, request.estado)" class="border rounded px-2 py-1 w-[170px]">
+              <option value="en espera">En espera</option>
+              <option value="agendado">Agendado</option>
+              <option value="rechazado">Rechazado</option>
+              <option value="terminado">Terminado</option>
+            </select>
           </td>
-          
+
           <td class="px-4 py-2 text-sm whitespace-nowrap">
             <button class="button" @click="sendEmail(request)" type="button">
               Enviar Email
@@ -212,34 +241,35 @@ onMounted(() => {
 </template>
 
 <style scoped>
-  th {
-    padding-left: 16px;
-    padding-right: 16px;
-    padding-top: 8px;
-    padding-bottom: 8px;
-    text-align: left;
-    font-size: 12px;
-    line-height: 1rem;
-    font-weight: 500;
-    color: #6b7280;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-  }
+th {
+  padding-left: 16px;
+  padding-right: 16px;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  text-align: left;
+  font-size: 12px;
+  line-height: 1rem;
+  font-weight: 500;
+  color: #6b7280;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
 
-  .td {
-    padding-left: 16px;
-    padding-right: 16px;
-    padding-top: 8px;
-    padding-bottom: 8px;
-    font-size: 14px;
-    line-height: 20px;
-    white-space: nowrap;
-  }
+.td {
+  padding-left: 16px;
+  padding-right: 16px;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  font-size: 14px;
+  line-height: 20px;
+  white-space: nowrap;
+}
 
-  select {
-    outline: none;
-  }
-  select:focus {
-    border: #00cdcd 1px solid;
-  }
+select {
+  outline: none;
+}
+
+select:focus {
+  border: #00cdcd 1px solid;
+}
 </style>

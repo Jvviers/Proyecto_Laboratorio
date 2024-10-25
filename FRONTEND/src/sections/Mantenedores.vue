@@ -33,10 +33,13 @@ onMounted(() => {
 });
 </script>
 <template>
-    <div v-if="validSession && userRole" class="flex flex-wrap justify-evenly items-center gap-8 py-8">
-        <Encargados />
-        <Maquinarias />
-        <Laboratorios />
-        <Materiales />
+  <div v-if="validSession && userRole" class="flex flex-col justify-center items-center mt-4">
+    <h2 class="text-2xl text-center font-bold">Mantenedores</h2>
+    <div class="flex flex-wrap justify-evenly items-center gap-8 py-8">
+      <Encargados />
+      <Maquinarias />
+      <Laboratorios />
+      <Materiales />
     </div>
+  </div>
 </template>
