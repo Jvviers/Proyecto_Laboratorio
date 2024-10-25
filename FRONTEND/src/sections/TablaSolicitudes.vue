@@ -197,7 +197,7 @@ onMounted(() => {
           <td class="td"><p v-if="request.fecha">{{ formatDate(request.fecha) }}</p></td>
           <td class="td">{{ request.tipo_proyecto }}</td>
           <td class="td">{{ request.tipo_material }}</td>
-          <td class="td">{{ request.archivo }}</td>
+          <td class="td"><a target="_blank" :href="request.archivo" class="text-blue-500 underline">{{ request.archivo }}</a></td>
           <td class="td">{{ request.tipo_form }}</td>
 
           <!-- Selector que muestra y actualiza el estado -->
