@@ -34,6 +34,21 @@ CREATE TABLE equipo(
     PRIMARY KEY (ref_sol, nombre_equipo(50))
 );
 
+CREATE TABLE nombreequipos(
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nombre text UNIQUE NOT NULL
+);
+
+CREATE TABLE tipomaterial(
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nombre text UNIQUE NOT NULL
+);
+
+CREATE TABLE tipoproyecto(
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nombre text UNIQUE NOT NULL
+);
+
 -- VALIDATION TRIGGERS
 DELIMITER $$
 CREATE TRIGGER before_insert_equipo

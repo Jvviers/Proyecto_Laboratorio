@@ -1,3 +1,8 @@
+---
+import Logout from "../components/Logout.vue"
+
+---
+
 <script>
     const menuToggle = document.getElementById('menu-toggle');
     const dropdown = document.getElementById('dropdown');
@@ -34,7 +39,7 @@
         </div>
     </a>
     <div class="hidden md:flex items-center px-12">
-        <button onclick="location.href='/admin'" class="button" type="button">Acceso Admin</button>
+        <Logout  />
     </div>
     <div class="flex items-center space-x-4 md:hidden">
         <button id="menu-toggle" class="text-gray-600 focus:outline-none">
