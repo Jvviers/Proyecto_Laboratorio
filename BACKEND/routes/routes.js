@@ -16,7 +16,7 @@ router.post('/materiales', Controller.postMateriales);
 router.post('/register', Controller.register);
 router.post('/login', Controller.login);
 router.post('/session', authMiddleware, Controller.session);
-/* router.post('/logout', authMiddleware, Controller.logout); */
+router.post('/logout', authMiddleware, Controller.logout);
 router.post('/equipos', Controller.postEquipos);
 router.post('/equipo', Controller.postEquipo);
 
