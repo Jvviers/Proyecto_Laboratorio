@@ -12,7 +12,7 @@ const getSolicitudes = async (req, res) => {
     try {
         const [solicitudes] = await db.query(Queries.getSolicitudes);
         res.json(solicitudes);
-    }catch (error) {
+    } catch (error) {
         res.status(500).json({ message: error.message });
     }   
 }
@@ -20,18 +20,18 @@ const getSolicitudesById = async (req, res) => {
     try {
         const [solicitudes] = await db.query(Queries.getSolicitudesById, [req.params.id]);
         res.json(solicitudes);
-    }catch (error) {
+    } catch (error) {
         res.status(500).json({ message: error.message });
     }   
 }
 
-const getAllIdEncargados = async (req, res) => {
+const getEncargados = async (req, res) => {
     try {
-        const [idEncargados] = await db.query(Queries.getAllIdEncargados);
+        const [idEncargados] = await db.query(Queries.getEncargados);
         res.json(idEncargados);
-    }catch (error) {
+    } catch (error) {
         res.status(500).json({ message: error.message });
-    }   
+    }
 }
 
 const postAsesoria = async (req, res) => {
@@ -51,6 +51,16 @@ const postEquipos = async (req, res) => {
 
 const postEquipo = async (req, res) => {
     const [data] = await db.query(Queries.postEquipo, [req.body.ref_sol, req.body.nombre_equipo]);
+    res.json(data);
+}
+
+const postEncargadoSolicitud = async (req, res) => {
+    const [data] = await db.query(Queries.postEncargadoSolicitud, [req.body.ref_enc, req.body.id]);
+    res.json(data);
+}
+
+const postEstadoSolicitud = async (req, res) => {
+    const [data] = await db.query(Queries.postEstadoSolicitud, [req.body.estado, req.body.id]);
     res.json(data);
 }
 
@@ -98,11 +108,13 @@ export default {
     getUsers,
     getSolicitudes,
     getSolicitudesById,
-    getAllIdEncargados,
+    getEncargados,
     postAsesoria,
     postMateriales,
     postEquipos,
     postEquipo,
+    postEncargadoSolicitud,
+    postEstadoSolicitud,
     register,
     login,
     session,

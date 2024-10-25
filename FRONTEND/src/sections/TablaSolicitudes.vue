@@ -52,9 +52,9 @@ const fetchRequests = async () => {
   }
 };
 
-const getIdEncargados = async () => {
+const getEncargados = async () => {
   try {
-    const response = await fetch('http://localhost:3000/allIdEncargados', {
+    const response = await fetch('http://localhost:3000/encargados', {
       method: 'GET',
       credentials: 'include',
       headers: {
@@ -78,11 +78,6 @@ const getIdEncargados = async () => {
   }
 };
 
-onMounted(() => {
-  validateSession();
-  getIdEncargados();
-});
-
 const sendEmail = (request) => {
   alert(`Email sent to ${request.email} regarding request ${request.id}`);
 };
@@ -90,6 +85,59 @@ const sendEmail = (request) => {
 const goToLogin = () => {
   window.location.href = '/login';
 };
+
+const updateRefEnc = async (sol_id, ref_enc) => {
+  try {
+    const response = await fetch('http://localhost:3000/encargado-solicitud', {
+      method: 'POST',
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        ref_enc: ref_enc,
+        id: sol_id,
+      }),
+    });
+    if (!response.ok) {
+      console.error('Status:', response.status);
+      throw new Error('Error en la respuesta del servidor: ' + response.statusText);
+    }
+    const data = await response.json();
+    console.log('Datos:', data);
+  } catch (err) {
+    console.error('Error fetching solicitudes:', err);
+  }
+};
+
+const updateState = async (sol_id, state) => {
+  try {
+    const response = await fetch('http://localhost:3000/estado-solicitud', {
+      method: 'POST',
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        estado: state,
+        id: sol_id,
+      }),
+    });
+    if (!response.ok) {
+      console.error('Status:', response.status);
+      throw new Error('Error en la respuesta del servidor: ' + response.statusText);
+    }
+    const data = await response.json();
+    console.log('Datos:', data);
+  } catch (err) {
+    console.error('Error fetching solicitudes:', err);
+  }
+};
+
+onMounted(() => {
+  validateSession();
+  getEncargados();
+});
 </script>
 
 <template>
@@ -122,8 +170,8 @@ const goToLogin = () => {
         <tr v-for="request in requests" :key="request.id">
           <td class="td">{{ request.id }}</td>
           <td>
-            <select v-model="request.ref_enc" class="border rounded px-2 py-1">
-              <option v-for="encargado in encargados" :key="encargado.id" :value="encargado.id">{{ encargado.id }}</option>
+            <select v-model="request.ref_enc" @change="updateRefEnc(request.id, request.ref_enc)" class="border rounded px-2 py-1">
+              <option v-for="encargado in encargados" :key="encargado.id" :value="encargado.id">{{ encargado.email }}</option>
             </select>
           </td>
           <td class="td">{{ request.solicitante }}</td>
@@ -138,7 +186,7 @@ const goToLogin = () => {
           
           <!-- Selector que muestra y actualiza el estado -->
           <td>
-            <select v-model="request.estado" class="border rounded px-2 py-1">
+            <select v-model="request.estado" @change="updateState(request.id, request.estado)" class="border rounded px-2 py-1">
               <option value="en espera">En espera</option>
               <option value="agendado">Agendado</option>
               <option value="cola_impresion">Cola de Impresión</option>

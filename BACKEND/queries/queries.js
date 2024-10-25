@@ -7,7 +7,9 @@ const postEquipos = "INSERT INTO solicitud (solicitante, email, matricula, activ
 const postEquipo = "INSERT INTO equipo (ref_sol, nombre_equipo) VALUES (?, ?)";
 const getSolicitudes = "SELECT * FROM solicitud";
 const getSolicitudesById = "SELECT * FROM solicitud WHERE ref_enc = ?";
-const getAllIdEncargados = "SELECT DISTINCT id FROM usuario WHERE is_admin = 0";
+const getEncargados = "SELECT DISTINCT id, email FROM usuario WHERE is_admin = 0";
+const postEncargadoSolicitud = "UPDATE solicitud SET ref_enc = ? WHERE id = ?";
+const postEstadoSolicitud = "UPDATE solicitud SET estado = ? WHERE id = ?";
 
 export default {
     getUsers,
@@ -19,5 +21,7 @@ export default {
     postEquipo,
     getSolicitudes,
     getSolicitudesById,
-    getAllIdEncargados,
+    getEncargados,
+    postEncargadoSolicitud,
+    postEstadoSolicitud,
 }
