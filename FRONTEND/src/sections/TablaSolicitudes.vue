@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, computed } from 'vue';
 
 const requests = ref([]);
 const error = ref(null);
@@ -7,6 +7,8 @@ const userId = ref(null);
 const userRole = ref(false);
 const validSession = ref(false);
 const encargados = ref([]);
+const currentPage = ref(1);
+const itemsPerPage = ref(10);
 
 const validateSession = async () => {
   try {
@@ -86,7 +88,7 @@ const goToLogin = () => {
   window.location.href = '/login';
 };
 
-const updateRefEnc = async (sol_id, ref_enc) => {
+const updateEncargado = async (sol_id, ref_enc) => {
   try {
     const response = await fetch('http://localhost:3000/encargado-solicitud', {
       method: 'POST',
@@ -145,6 +147,12 @@ const formatDate = (date) => {
   return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
 };
 
+const paginatedRequests = computed(() => {
+  const start = (currentPage.value - 1) * itemsPerPage.value;
+  const end = start + itemsPerPage.value;
+  return requests.value.slice(start, end);
+});
+
 onMounted(() => {
   validateSession();
   getEncargados();
@@ -181,11 +189,11 @@ onMounted(() => {
       </thead>
       <tbody class="bg-white divide-y divide-gray-200">
         <!-- Iterar sobre los datos de requests -->
-        <tr v-for="request in requests" :key="request.id">
+        <tr v-for="request in paginatedRequests" :key="request.id">
           <td class="td">{{ request.id }}</td>
           <td>
             <select v-if="request.tipo_form != 'asesoria'" v-model="request.ref_enc"
-              @change="updateRefEnc(request.id, request.ref_enc)" class="border rounded px-2 py-1">
+              @change="updateEncargado(request.id, request.ref_enc)" class="border rounded px-2 py-1">
               <option v-for="encargado in encargados" :key="encargado.id" :value="encargado.id">{{ encargado.email }}
               </option>
             </select>
@@ -197,8 +205,8 @@ onMounted(() => {
           <td class="td"><p v-if="request.fecha">{{ formatDate(request.fecha) }}</p></td>
           <td class="td">{{ request.tipo_proyecto }}</td>
           <td class="td">{{ request.tipo_material }}</td>
-          <td class="td"><a target="_blank" :href="request.archivo" class="text-blue-500 underline">{{ request.archivo }}</a></td>
-          <td class="td">{{ request.tipo_form }}</td>
+          <td class="td text-wrap overflow-x-scroll max-w-[180px]"><a target="_blank" :href="request.archivo" class="text-blue-500 underline">{{ request.archivo }}</a></td>
+          <td class="td capitalize">{{ request.tipo_form }}</td>
 
           <!-- Selector que muestra y actualiza el estado -->
           <td>
@@ -233,6 +241,16 @@ onMounted(() => {
         </tr>
       </tbody>
     </table>
+  </div>
+
+  <div v-if="validSession" class="pagination-controls">
+    <button @click="currentPage > 1 && currentPage--" :disabled="currentPage <= 1">
+      <img src="/arrow.svg" alt="Flecha Izquierda Tabla" class="w-4 h-4 rotate-180" />
+    </button>
+    <span>Página {{ currentPage }}</span>
+    <button @click="currentPage++" :disabled="currentPage >= Math.ceil(requests.length / itemsPerPage)">
+      <img src="/arrow.svg" alt="Flecha Derecha Tabla" class="w-4 h-4" />
+    </button>
   </div>
 
   <div v-if="!validSession" class="w-full h-[200px] flex justify-center items-center">
@@ -271,5 +289,38 @@ select {
 
 select:focus {
   border: #00cdcd 1px solid;
+}
+
+.pagination-controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 24px;
+}
+
+.pagination-controls button {
+  padding: 8px 8px;
+  background-color: #e5e7eb; /* Color de fondo del botón */
+  color: #242424;
+  border: none;
+  border-radius: 9999px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.pagination-controls button:hover {
+  background-color: #00cdcd; /* Color al pasar el mouse */
+}
+
+.pagination-controls button:disabled {
+  background-color: #c0c0c0; /* Color de fondo cuando está deshabilitado */
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+.pagination-controls span {
+  font-size: 15px;
+  font-weight: bold;
+  color: #333;
 }
 </style>
