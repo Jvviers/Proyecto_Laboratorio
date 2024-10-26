@@ -1,6 +1,6 @@
 <script setup>
 import { ref } from "vue";
-import FileUploader from "../components/FileUploader.vue";
+import { UploadClient } from '@uploadcare/upload-client'
 
 // Variables de las entradas de texto
 const solicitante = ref("");
@@ -29,7 +29,25 @@ const materialTypes = ref([
 ]);
 
 // Variables del archivo
-const archivo = ref([]);
+const PUBLIC_UPLOADCARE_KEY = import.meta.env.PUBLIC_UPLOADCARE_KEY;
+const client = new UploadClient({ publicKey: PUBLIC_UPLOADCARE_KEY });
+const fileInput = ref(null);
+const fileData = ref(null);
+
+// Actualización del archivo en el input
+const loadFile = (event) => {
+	fileInput.value = event.target.files[0];
+}
+
+// Subir el archivo y obtener sus datos
+const handleSubmit = () => {
+	client.uploadFile(fileInput.value)
+		.then((file) => {
+			fileData.value = file;
+			// Si el archivo se ha subido correctamente, enviar el formulario
+			postMateriales();
+		})
+};
 
 // Función para enviar el formulario
 const postMateriales = async () => {
@@ -46,7 +64,7 @@ const postMateriales = async () => {
 				actividad: actividad.value,
 				tipo_proyecto: tipo_proyecto.value,
 				tipo_material: tipo_material.value,
-				archivo: archivo.value[0].cdnUrl,
+				archivo: fileData.value.cdnUrl,
 			}),
 		});
 		if (!response.ok) {
@@ -61,7 +79,7 @@ const postMateriales = async () => {
 </script>
 
 <template>
-	<form @submit.prevent="postMateriales"
+	<form @submit.prevent="handleSubmit"
 		class="flex flex-col justify-center items-center gap-4 my-4 w-full px-4 md:px-0">
 		<h1 class="text-3xl text-center font-bold">Solicitud Impresión</h1>
 		<!-- Sección de formulario de solicitud de impresión -->
@@ -104,8 +122,8 @@ const postMateriales = async () => {
 				<h2 class="font-bold text-center text-2xl">Tipo material</h2>
 				<ul class="flex flex-col gap-2">
 					<li v-for="material in materialTypes" :key="material.id" class="flex items-center">
-						<input type="radio" v-model="tipo_material" :id="'material-' + material.id" :value="material.name"
-							class="mr-3 w-6 h-6" required />
+						<input type="radio" v-model="tipo_material" :id="'material-' + material.id"
+							:value="material.name" class="mr-3 w-6 h-6" required />
 						<label :for="'material-' + material.id" class="text-md">{{
 							material.name
 						}}</label>
@@ -113,15 +131,18 @@ const postMateriales = async () => {
 				</ul>
 			</div>
 			<!-- Subir archivo -->
-			<!-- <div class="flex flex-col gap-3 md:gap-10 p-2 text-center">
-				<h2 class="font-bold text-center text-2xl">Archivo</h2>
-				<input type="file" @change="handleFileUpload" class="p-2 border border-gray-300"
-					accept=".pdf,.doc,.docx,.jpg,.png" />
-				<p v-if="archivo" class="mt-2 text-sm text-gray-600">
-					Archivo seleccionado: {{ archivo.name }}
-				</p>
-			</div> -->
-			<FileUploader uploader-ctx-name="my-uploader" uploader-class-name="file-uploader" v-model:files="archivo" />
+			<div class="flex flex-col gap-1 justify-start items-center">
+				<div class="flex flex-col justify-start items-center gap-3 md:gap-8 p-2">
+					<h2 class="font-bold text-center text-2xl">Archivo</h2>
+					<button type="button" class="button relative overflow-hidden">Seleccionar Archivo
+						<input type="file" @change="loadFile($event)" required
+							class="absolute top-0 left-0 w-full h-[60px] text-transparent opacity-0" />
+					</button>
+				</div>
+				<span v-if="fileInput != null" class="text-center text-sm">
+					Archivo cargado: {{ fileInput.name }}
+				</span>
+			</div>
 		</div>
 		<!-- Botón enviar -->
 		<div class="flex justify-center py-4">
