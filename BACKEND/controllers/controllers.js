@@ -70,7 +70,7 @@ const login = async (req, res) => {
     const user = users[0];
     const isValidPassword = await bcrypt.compare(password, user.password);
 
-    if (!isValidPassword) return res.status(401).json({ message: "La contraseña no es válida" });
+    if (!isValidPassword) return res.status(401).json({ message: "La contraseña es incorrecta" });
     
     const role = user.is_admin ? 'admin' : 'encargado'; // Cambiar a 'admin' si el usuario es administrador
 
