@@ -78,8 +78,7 @@ onMounted(() => {
             </div>
         </div>
         <div class="flex justify-center items-center gap-8">
-            <button class="button" type="submit">Eliminar</button>
-            <button class="button" type="button" @click="closeModal">Cancelar</button>
+            <button class="button" type="button" @click="closeModal">Volver</button>
         </div>
     </form>
 </template>
