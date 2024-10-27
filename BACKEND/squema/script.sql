@@ -37,17 +37,17 @@ CREATE TABLE equipo(
 -- MANTENEDORES
 CREATE TABLE nombreequipos(
     id INT AUTO_INCREMENT PRIMARY KEY,
-    nombre text UNIQUE NOT NULL
+    nombre VARCHAR(100) UNIQUE NOT NULL
 );
 
 CREATE TABLE tipomaterial(
     id INT AUTO_INCREMENT PRIMARY KEY,
-    nombre text UNIQUE NOT NULL
+    nombre VARCHAR(100) UNIQUE NOT NULL
 );
 
 CREATE TABLE tipoproyecto(
     id INT AUTO_INCREMENT PRIMARY KEY,
-    nombre text UNIQUE NOT NULL
+    nombre VARCHAR(100) UNIQUE NOT NULL
 );
 
 INSERT INTO nombreequipos (nombre) VALUES ('Impresora Creality FDM');
