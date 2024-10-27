@@ -53,6 +53,7 @@ const logout = async () => {
 const goToLogin = () => {
     window.location.href = '/login';
 };
+
 </script>
 
 <template>

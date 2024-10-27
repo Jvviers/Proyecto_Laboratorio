@@ -39,7 +39,7 @@ const login = async () => {
 const showErrorBanner = () => {
     setTimeout(() => {
         errorMessage.value = ''; 
-    }, 3000);
+    }, 4000);
 };
 
 const goToAdmin = () => {
@@ -49,7 +49,7 @@ const goToAdmin = () => {
 
 <template>
     <div>
-        <div v-if="errorMessage" class="fixed bottom-5 right-5 bg-red-500 text-white py-2 px-4 rounded shadow-lg z-50">
+        <div v-if="errorMessage" class="absolute top-32 right-5 bg-red-500 text-white py-2 px-4 rounded shadow-lg z-50">
             {{ errorMessage }}
         </div>
 
