@@ -135,7 +135,7 @@ const postMateriales = async () => {
 				<div class="flex flex-col justify-start items-center gap-3 md:gap-8 p-2">
 					<h2 class="font-bold text-center text-2xl">Archivo</h2>
 					<button type="button" class="button relative overflow-hidden">Seleccionar Archivo
-						<input type="file" @change="loadFile($event)" required
+						<input type="file" title="" @change="loadFile($event)" required
 							class="absolute top-0 left-0 w-full h-[60px] text-transparent opacity-0" />
 					</button>
 				</div>
