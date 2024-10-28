@@ -2,7 +2,7 @@
 import { ref, onMounted } from 'vue';
 
 const sessionActive = ref(false); 
-
+const ruta = ref('');
 
 const checkSession = async () => {
     try {
@@ -24,6 +24,7 @@ const checkSession = async () => {
 
 onMounted(() => {
     checkSession(); 
+    ruta.value = window.location.pathname;
 });
 
 const logout = async () => {
@@ -58,7 +59,7 @@ const goToLogin = () => {
 
 <template>
     <div>
-        <div v-if="sessionActive">
+        <div v-if= "sessionActive && ruta == '/admin'"  >
             <button @click="logout" class="button">Cerrar Sesión</button>
         </div>
         <div v-else>
