@@ -7,6 +7,7 @@ const solicitante = ref("");
 const email = ref("");
 const matricula = ref("");
 const actividad = ref("");
+const accessMessage = ref(""); 
 
 // Variables de tipos de proyecto
 const tipo_proyecto = ref(null);
@@ -72,13 +73,39 @@ const postMateriales = async () => {
 		}
 		const data = await response.json();
 		console.log("Solicitud enviada:", data);
+		accessMessage.value = "Solicitud enviada correctamente";
+		showAccessBanner();
+
+		//Aquí vaciamos los campos 
+		solicitante.value = "";
+        email.value = "";
+        matricula.value = "";
+        actividad.value = "";
+        tipo_proyecto.value = null;
+        tipo_material.value = null;
+        fileInput.value = null;
+        fileData.value = null;
+
+
 	} catch (error) {
 		console.error("Error al enviar solicitud:", error);
 	}
 };
+
+const showAccessBanner = () => {
+	setTimeout(() => {
+		accessMessage.value = '';
+	}, 4000);
+};
+
 </script>
 
 <template>
+	<div></div>
+		<div v-if="accessMessage" class="absolute top-32 right-5 bg-green-500 text-white py-2 px-4 rounded shadow-lg z-50">
+			{{ accessMessage }}
+		</div>
+
 	<form @submit.prevent="handleSubmit"
 		class="flex flex-col justify-center items-center gap-4 my-4 w-full px-4 md:px-0">
 		<h1 class="text-3xl text-center font-bold">Solicitud Impresión</h1>

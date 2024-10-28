@@ -9,6 +9,7 @@ export default {
         const email = ref("");
         const matricula = ref("");
         const actividad = ref("");
+        const accessMessage = ref("");
 
         const equiposTypes = ref([
             { id: 1, name: 'Impresora Creality FDM', checked: false },
@@ -21,6 +22,13 @@ export default {
 
         let equiposSeleccionados = ref([]);
         const idSolicitud = ref();
+
+        const showAccessBanner = () => {
+            accessMessage.value = "Solicitud enviada exitosamente!";
+            setTimeout(() => {
+                accessMessage.value = ""; 
+            }, 4000);
+        };
 
         const postEquipos = async () => {
             try {
@@ -42,6 +50,7 @@ export default {
                 const data = await response.json();
                 console.log('Solicitud enviada:', data);
                 idSolicitud.value = data.insertId;
+                showAccessBanner();
             } catch (error) {
                 console.error('Error al enviar la solicitud:', error);
             }
@@ -85,13 +94,17 @@ export default {
             matricula,
             actividad,
             equiposTypes,  
-            postEquipos,  
+            postEquipos, 
+            accessMessage, 
         };
     },
 };
 </script>
 
 <template>
+    <div v-if="accessMessage" class="absolute top-32 right-5 bg-green-500 text-white py-2 px-4 rounded shadow-lg z-50">
+        {{ accessMessage }}
+    </div>
     <form @submit.prevent="postEquipos" class="flex flex-col justify-center items-center gap-4 my-4 w-full">
         <h1 class="text-3xl text-center font-bold">Equipos</h1>
         <div class="flex flex-col justify-center items-center gap-4 mx-auto px-10 py-6">
