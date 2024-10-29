@@ -136,6 +136,30 @@ const updateState = async (sol_id, state) => {
   }
 };
 
+const eliminarSolicitud = async (id) => {
+  try {
+    const response = await fetch('http://localhost:3000/solicitud', {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        id: id,
+      }),
+      credentials: 'include',
+    });
+    if (!response.ok) {
+      console.error('Status:', response.status);
+      throw new Error('Error en la respuesta del servidor: ' + response.statusText);
+    }
+    const data = await response.json();
+    console.log('Datos:', data);
+    fetchRequests();
+  } catch (err) {
+    console.error('Error al eliminar solicitud:', err);
+  }
+};
+
 const formatDate = (date) => {
   const d = new Date(date);
   const year = d.getFullYear();
@@ -202,10 +226,13 @@ onMounted(() => {
           <td class="td">{{ request.email }}</td>
           <td class="td">{{ request.matricula }}</td>
           <td class="td text-wrap overflow-x-scroll max-w-[180px]">{{ request.actividad }}</td>
-          <td class="td"><p v-if="request.fecha">{{ formatDate(request.fecha) }}</p></td>
+          <td class="td">
+            <p v-if="request.fecha">{{ formatDate(request.fecha) }}</p>
+          </td>
           <td class="td">{{ request.tipo_proyecto }}</td>
           <td class="td">{{ request.tipo_material }}</td>
-          <td class="td text-wrap overflow-x-scroll max-w-[180px]"><a target="_blank" :href="request.archivo" class="text-blue-500 underline">{{ request.archivo }}</a></td>
+          <td class="td text-wrap overflow-x-scroll max-w-[180px]"><a target="_blank" :href="request.archivo"
+              class="text-blue-500 underline">{{ request.archivo }}</a></td>
           <td class="td capitalize">{{ request.tipo_form }}</td>
 
           <!-- Selector que muestra y actualiza el estado -->
@@ -233,9 +260,12 @@ onMounted(() => {
             </select>
           </td>
 
-          <td class="px-4 py-2 text-sm whitespace-nowrap">
-            <button class="button" @click="sendEmail(request)" type="button">
-              Enviar Email
+          <td class="flex justify-center items-center py-4">
+            <button @click="eliminarSolicitud(request.id)" type="button">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" width="20" height="20">
+                <path
+                  d="M135.2 17.7C140.6 6.8 151.7 0 163.8 0h120.4c12.1 0 23.2 6.8 28.6 17.7L320 32h96c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 96 0 81.7 0 64s14.3-32 32-32h96l7.2-14.3zM32 128h384v320c0 35.3-28.7 64-64 64H96c-35.3 0-64-28.7-64-64V128zm96 64c-8.8 0-16 7.2-16 16v224c0 8.8 7.2 16 16 16s16-7.2 16-16V208c0-8.8-7.2-16-16-16zm96 0c-8.8 0-16 7.2-16 16v224c0 8.8 7.2 16 16 16s16-7.2 16-16V208c0-8.8-7.2-16-16-16zm96 0c-8.8 0-16 7.2-16 16v224c0 8.8 7.2 16 16 16s16-7.2 16-16V208c0-8.8-7.2-16-16-16z" />
+              </svg>
             </button>
           </td>
         </tr>
@@ -300,7 +330,8 @@ select:focus {
 
 .pagination-controls button {
   padding: 8px 8px;
-  background-color: #e5e7eb; /* Color de fondo del botón */
+  background-color: #e5e7eb;
+  /* Color de fondo del botón */
   color: #242424;
   border: none;
   border-radius: 9999px;
@@ -309,11 +340,13 @@ select:focus {
 }
 
 .pagination-controls button:hover {
-  background-color: #00cdcd; /* Color al pasar el mouse */
+  background-color: #00cdcd;
+  /* Color al pasar el mouse */
 }
 
 .pagination-controls button:disabled {
-  background-color: #c0c0c0; /* Color de fondo cuando está deshabilitado */
+  background-color: #c0c0c0;
+  /* Color de fondo cuando está deshabilitado */
   cursor: not-allowed;
   opacity: 0.7;
 }
@@ -322,5 +355,15 @@ select:focus {
   font-size: 15px;
   font-weight: bold;
   color: #333;
+}
+
+svg path {
+    fill: #6b7280;
+    transition: all 0.3s ease;
+}
+
+button:hover svg path {
+    fill: #ef4444;
+    transition: all 0.3s ease;
 }
 </style>

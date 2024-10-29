@@ -1,7 +1,6 @@
 // Consultas para obtener datos de solicitudes
 const getSolicitudes = "SELECT * FROM solicitud";
 const getSolicitudesById = "SELECT * FROM solicitud WHERE ref_enc = ?";
-const getEncargados = "SELECT DISTINCT id, email FROM usuario WHERE is_admin = 0";
 
 // Consultas para el envío de solicitudes
 const postAsesoria = "INSERT INTO solicitud (solicitante, email, matricula, actividad, fecha, tipo_form) VALUES (?, ?, ?, ?, ?, ?)";
@@ -12,45 +11,60 @@ const postEquipo = "INSERT INTO equipo (ref_sol, nombre_equipo) VALUES (?, ?)";
 // Consultas para la gestión de solicitudes
 const postEncargadoSolicitud = "UPDATE solicitud SET ref_enc = ? WHERE id = ?";
 const postEstadoSolicitud = "UPDATE solicitud SET estado = ? WHERE id = ?";
+const deleteSolicitud = "DELETE FROM solicitud WHERE id = ?";
 
 // Consultas para obtener los mantenedores
+const getEncargados = "SELECT DISTINCT id, email FROM usuario WHERE is_admin = 0";
 const getNombreEquipos = "SELECT * FROM nombreequipos";
 const getTipoMaterial = "SELECT * FROM tipomaterial";
 const getTipoProyecto = "SELECT * FROM tipoproyecto";
 
 // Consultas para agregar mantenedores
+const register = "INSERT INTO usuario (email, password, is_admin) VALUES (?, ?, ?)";
 const postNombreEquipos = "INSERT INTO nombreequipos (nombre) VALUES (?)";
 const postTipoMaterial = "INSERT INTO tipomaterial (nombre) VALUES (?)";
 const postTipoProyecto = "INSERT INTO tipoproyecto (nombre) VALUES (?)";
 
 // Consultas para eliminar mantenedores
+const deleteEncargado = "DELETE FROM usuario WHERE id = ?";
 const deleteNombreEquipos = "DELETE FROM nombreequipos WHERE id = ?";
 const deleteTipoMaterial = "DELETE FROM tipomaterial WHERE id = ?";
 const deleteTipoProyecto = "DELETE FROM tipoproyecto WHERE id = ?";
 
+// Consultas para editar mantenedores
+const putEncargado = "UPDATE usuario SET email = ? WHERE id = ?";
+const putNombreEquipos = "UPDATE nombreequipos SET nombre = ? WHERE id = ?";
+const putTipoMaterial = "UPDATE tipomaterial SET nombre = ? WHERE id = ?";
+const putTipoProyecto = "UPDATE tipoproyecto SET nombre = ? WHERE id = ?";
+
 // Consultas para la gestión de sesiones de usuarios
-const register = "INSERT INTO usuario (email, password, is_admin) VALUES (?, ?, ?)";
 const getUserByEmail = "SELECT * FROM usuario WHERE email = ?";
 
 export default {
     getSolicitudes,
     getSolicitudesById,
-    getEncargados,
     postAsesoria,
     postMateriales,
     postEquipos,
     postEquipo,
     postEncargadoSolicitud,
     postEstadoSolicitud,
+    deleteSolicitud,
+    getEncargados,
     getNombreEquipos,
     getTipoMaterial,
     getTipoProyecto,
+    register,
     postNombreEquipos,
     postTipoMaterial,
     postTipoProyecto,
+    deleteEncargado,
     deleteNombreEquipos,
     deleteTipoMaterial,
     deleteTipoProyecto,
-    register,
+    putEncargado,
+    putNombreEquipos,
+    putTipoMaterial,
+    putTipoProyecto,
     getUserByEmail,
 }
