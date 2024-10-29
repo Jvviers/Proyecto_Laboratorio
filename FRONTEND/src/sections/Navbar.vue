@@ -72,7 +72,6 @@ onMounted(() => {
     checkSession();
     ruta.value = window.location.pathname;
 
-    // Cleanup event listener when component is unmounted
     onUnmounted(() => {
         document.removeEventListener('click', handleClickOutside);
     });

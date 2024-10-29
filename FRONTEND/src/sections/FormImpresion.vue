@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
 import { UploadClient } from '@uploadcare/upload-client'
 
 // Variables de las entradas de texto
@@ -7,26 +7,12 @@ const solicitante = ref("");
 const email = ref("");
 const matricula = ref("");
 const actividad = ref("");
-
-// Variables de tipos de proyecto
-const tipo_proyecto = ref(null);
-const projectTypes = ref([
-	{ id: 1, name: "Personal" },
-	{ id: 2, name: "Curso" },
-	{ id: 3, name: "Proyecto" },
-	{ id: 4, name: "IPSUM" },
-	{ id: 5, name: "IPSUM" },
-]);
-
-// Variables de tipos de material
+const accessMessage = ref(""); 
+const projectTypes = ref([]);
+const materialTypes = ref([]);
 const tipo_material = ref(null);
-const materialTypes = ref([
-	{ id: 1, name: "PLA" },
-	{ id: 2, name: "ABS" },
-	{ id: 3, name: "LOREM" },
-	{ id: 4, name: "LOREM" },
-	{ id: 5, name: "LOREM" },
-]);
+const tipo_proyecto = ref(null);	
+
 
 // Variables del archivo
 const PUBLIC_UPLOADCARE_KEY = import.meta.env.PUBLIC_UPLOADCARE_KEY;
@@ -49,7 +35,43 @@ const handleSubmit = () => {
 		})
 };
 
-// Función para enviar el formulario
+const getTipoMaterial = async () => {
+	try {
+		const response = await fetch("http://localhost:3000/tipo-material", {
+			method: "GET",
+			headers: {
+				"Content-Type": "application/json",
+			},
+		});
+		if (!response.ok) {
+			throw new Error(`Error: ${response.statusText}`);
+		}
+		const data = await response.json();
+		materialTypes.value = data;
+	} catch (error) {
+		console.error("Error al obtener el tipo de material: ", error);
+	}
+};
+
+
+const getTipoProyecto = async () => {
+	try {
+		const response = await fetch("http://localhost:3000/tipo-proyecto", {
+			method: "GET",
+			headers: {
+				"Content-Type": "application/json",
+			},
+		});
+		if (!response.ok) {
+			throw new Error(`Error: ${response.statusText}`);
+		}
+		const data = await response.json();
+		projectTypes.value = data;
+	} catch (error) {
+		console.error("Error al obtener el tipo de proyecto: ", error);
+	}
+};
+
 const postMateriales = async () => {
 	try {
 		const response = await fetch("http://localhost:3000/materiales", {
@@ -72,13 +94,47 @@ const postMateriales = async () => {
 		}
 		const data = await response.json();
 		console.log("Solicitud enviada:", data);
+		accessMessage.value = "Solicitud enviada correctamente";
+		showAccessBanner();
+
+		//Aquí vaciamos los campos 
+		resetInputs();
+
+
 	} catch (error) {
 		console.error("Error al enviar solicitud:", error);
 	}
 };
+
+const showAccessBanner = () => {
+	setTimeout(() => {
+		accessMessage.value = '';
+	}, 4000);
+};
+
+const resetInputs = () => {
+	solicitante.value = '';
+	email.value = '';
+	matricula.value = '';
+	actividad.value = '';
+	tipo_proyecto.value = null;
+	tipo_material.value = null;
+	fileInput.value = null;
+	fileData.value = null;
+};
+onMounted(() => {
+	getTipoMaterial();
+	getTipoProyecto();
+});	
+
 </script>
 
 <template>
+	<div></div>
+		<div v-if="accessMessage" class="fixed top-32 right-5 bg-green-500 text-white py-2 px-4 rounded shadow-lg z-50">
+			{{ accessMessage }}
+		</div>
+
 	<form @submit.prevent="handleSubmit"
 		class="flex flex-col justify-center items-center gap-4 my-4 w-full px-4 md:px-0">
 		<h1 class="text-3xl text-center font-bold">Solicitud Impresión</h1>
@@ -109,10 +165,10 @@ const postMateriales = async () => {
 				<h2 class="font-bold text-center text-2xl">Tipo proyecto</h2>
 				<ul class="flex flex-col gap-2">
 					<li v-for="type in projectTypes" :key="type.id" class="flex items-center">
-						<input type="radio" v-model="tipo_proyecto" :id="'project-' + type.id" :value="type.name"
+						<input type="radio" v-model="tipo_proyecto" :id="'project-' + type.id" :value="type.nombre"
 							class="mr-3 w-6 h-6" required />
 						<label :for="'project-' + type.id" class="text-md">{{
-							type.name
+							type.nombre
 						}}</label>
 					</li>
 				</ul>
@@ -123,9 +179,9 @@ const postMateriales = async () => {
 				<ul class="flex flex-col gap-2">
 					<li v-for="material in materialTypes" :key="material.id" class="flex items-center">
 						<input type="radio" v-model="tipo_material" :id="'material-' + material.id"
-							:value="material.name" class="mr-3 w-6 h-6" required />
+							:value="material.nombre" class="mr-3 w-6 h-6" required />
 						<label :for="'material-' + material.id" class="text-md">{{
-							material.name
+							material.nombre
 						}}</label>
 					</li>
 				</ul>

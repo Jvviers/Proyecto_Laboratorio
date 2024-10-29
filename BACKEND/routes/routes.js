@@ -8,6 +8,7 @@ const router = Router();
 router.get('/solicitudes', authMiddleware, Controller.getSolicitudes);
 router.get('/solicitudes/:id', authMiddleware, Controller.getSolicitudesById);
 
+
 // Rutas para el envío de solicitudes
 router.post('/asesoria', Controller.postAsesoria);
 router.post('/materiales', Controller.postMateriales);

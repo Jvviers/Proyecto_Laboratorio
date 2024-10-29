@@ -15,6 +15,7 @@ export default {
         const matricula = ref("");
         const actividad = ref("");
         const selectedDate = ref(new Date());
+        const accessMessage = ref("");
 
         const disabledDates = ref([
             {
@@ -33,6 +34,20 @@ export default {
             const minutes = String(d.getMinutes()).padStart(2, '0');
             const seconds = String(d.getSeconds()).padStart(2, '0');
             return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+        };
+
+        const showAccessBanner = () => {
+            accessMessage.value = "Solicitud enviada exitosamente!";
+            setTimeout(() => {
+                accessMessage.value = ""; 
+            }, 4000);
+        };
+
+        const resetInputs = () => {
+            solicitante.value = "";
+            email.value = "";
+            matricula.value = "";
+            actividad.value = "";
         };
 
 
@@ -57,6 +72,8 @@ export default {
                 }
                 const data = await response.json();
                 console.log('Solicitud enviada:', data);
+                showAccessBanner();
+                resetInputs();
             } catch (error) {
                 console.error('Error al enviar solicitud:', error);
             }
@@ -74,13 +91,17 @@ export default {
             disabledDates,
             asesoria,
             selectedColor,
-            timeAccuracy
+            timeAccuracy,
+            accessMessage,
         };
     },
 };
 </script>
 
 <template>
+    <div v-if="accessMessage" class="fixed top-32 right-5 bg-green-500 text-white py-2 px-4 rounded shadow-lg z-50">
+        {{ accessMessage }}
+    </div>
     <form @submit.prevent="asesoria" class="flex flex-col justify-center items-center gap-4 my-4 w-full">
         <h1 class="text-3xl text-center font-bold">Agendar asesoría</h1>
         <div class="flex flex-col justify-center items-center gap-4 mx-auto px-10 py-6">
