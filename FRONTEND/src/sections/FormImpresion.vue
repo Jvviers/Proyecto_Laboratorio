@@ -77,14 +77,7 @@ const postMateriales = async () => {
 		showAccessBanner();
 
 		//Aquí vaciamos los campos 
-		solicitante.value = "";
-        email.value = "";
-        matricula.value = "";
-        actividad.value = "";
-        tipo_proyecto.value = null;
-        tipo_material.value = null;
-        fileInput.value = null;
-        fileData.value = null;
+		resetInputs();
 
 
 	} catch (error) {
@@ -98,11 +91,22 @@ const showAccessBanner = () => {
 	}, 4000);
 };
 
+const resetInputs = () => {
+	solicitante.value = '';
+	email.value = '';
+	matricula.value = '';
+	actividad.value = '';
+	tipo_proyecto.value = null;
+	tipo_material.value = null;
+	fileInput.value = null;
+	fileData.value = null;
+};
+
 </script>
 
 <template>
 	<div></div>
-		<div v-if="accessMessage" class="absolute top-32 right-5 bg-green-500 text-white py-2 px-4 rounded shadow-lg z-50">
+		<div v-if="accessMessage" class="fixed top-32 right-5 bg-green-500 text-white py-2 px-4 rounded shadow-lg z-50">
 			{{ accessMessage }}
 		</div>
 

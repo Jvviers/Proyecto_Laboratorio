@@ -43,6 +43,13 @@ export default {
             }, 4000);
         };
 
+        const resetInputs = () => {
+            solicitante.value = "";
+            email.value = "";
+            matricula.value = "";
+            actividad.value = "";
+        };
+
 
         const asesoria = async () => {
             try {
@@ -66,6 +73,7 @@ export default {
                 const data = await response.json();
                 console.log('Solicitud enviada:', data);
                 showAccessBanner();
+                resetInputs();
             } catch (error) {
                 console.error('Error al enviar solicitud:', error);
             }
