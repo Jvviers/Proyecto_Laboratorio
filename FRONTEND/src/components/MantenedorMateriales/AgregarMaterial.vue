@@ -17,9 +17,9 @@ const closeModal = () => {
 
 const name = ref('');
 
-const agregarMaquinaria = async () => {
+const agregarMaterial = async () => {
     try {
-        const response = await fetch('http://localhost:3000/nombre-equipos', {
+        const response = await fetch('http://localhost:3000/tipo-material', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -35,20 +35,18 @@ const agregarMaquinaria = async () => {
         console.log('Se ha agregado: ', data);
         closeModal();
     } catch (error) {
-        console.error('Error al agregar maquinaria: ', error);
+        console.error('Error al agregar material: ', error);
     }
 };
 </script>
 <template>
-    <form @submit.prevent="agregarMaquinaria" class="flex flex-col justify-center items-center gap-4 my-4 w-full">
-        <h1 class="text-3xl text-center font-bold">Agregar Maquinaria</h1>
-        <div class="flex flex-col justify-center items-center gap-4 mx-auto px-10 py-6">
-            <div class="flex justify-between items-center w-full gap-4">
-                <label for="name">Nombre:</label>
-                <input class="text-input input" type="text" id="name" v-model="name" required />
-            </div>
+    <form @submit.prevent="agregarMaterial" class="flex flex-col justify-center items-center gap-6 py-4 px-12 w-full">
+        <h1 class="text-3xl text-center font-bold">Agregar Material</h1>
+        <div class="flex justify-between items-center w-full gap-4">
+            <label for="name">Nombre:</label>
+            <input class="input" type="text" id="name" v-model="name" required />
         </div>
-        <div class="flex justify-center items-center gap-8">
+        <div class="flex w-full justify-center items-center gap-8">
             <button class="button" type="submit">Agregar</button>
             <button class="button" type="button" @click="closeModal">Cancelar</button>
         </div>
