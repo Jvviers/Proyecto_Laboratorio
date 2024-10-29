@@ -11,6 +11,7 @@ const postEquipo = "INSERT INTO equipo (ref_sol, nombre_equipo) VALUES (?, ?)";
 // Consultas para la gestión de solicitudes
 const postEncargadoSolicitud = "UPDATE solicitud SET ref_enc = ? WHERE id = ?";
 const postEstadoSolicitud = "UPDATE solicitud SET estado = ? WHERE id = ?";
+const deleteSolicitud = "DELETE FROM solicitud WHERE id = ?";
 
 // Consultas para obtener los mantenedores
 const getEncargados = "SELECT DISTINCT id, email FROM usuario WHERE is_admin = 0";
@@ -48,6 +49,7 @@ export default {
     postEquipo,
     postEncargadoSolicitud,
     postEstadoSolicitud,
+    deleteSolicitud,
     getEncargados,
     getNombreEquipos,
     getTipoMaterial,

@@ -17,6 +17,7 @@ router.post('/equipo', Controller.postEquipo);
 // Rutas para la gestión de solicitudes
 router.post('/encargado-solicitud', authMiddleware, Controller.postEncargadoSolicitud);
 router.post('/estado-solicitud', authMiddleware, Controller.postEstadoSolicitud);
+router.delete('/solicitud', authMiddleware, Controller.deleteSolicitud);
 
 // Rutas para obtener los mantenedores
 router.get('/encargados', authMiddleware, Controller.getEncargados);

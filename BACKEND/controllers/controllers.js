@@ -73,6 +73,14 @@ const postEstadoSolicitud = async (req, res) => {
         res.status(500).json({ message: error.message });
     }
 }
+const deleteSolicitud = async (req, res) => {
+    try {
+        const [data] = await db.query(Queries.deleteSolicitud, [req.body.id]);
+        res.json(data);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+}
 
 // Controladores para obtener los mantenedores
 const getEncargados = async (req, res) => {
@@ -255,6 +263,7 @@ export default {
     postEquipo,
     postEncargadoSolicitud,
     postEstadoSolicitud,
+    deleteSolicitud,
     getEncargados,
     getNombreEquipos,
     getTipoMaterial,
