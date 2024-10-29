@@ -37,15 +37,16 @@ const register = async () => {
         }
         const data = await response.json();
         console.log('Usuario registrado:', data);
+        closeModal();
     } catch (error) {
         console.error('Error al registrar:', error);
     }
 };
 </script>
 <template>
-    <form @submit.prevent="register" class="flex flex-col justify-center items-center gap-4 my-4 w-full">
+    <form @submit.prevent="register" class="flex flex-col justify-center items-center gap-6 py-4 px-12 w-full">
         <h1 class="text-3xl text-center font-bold">Agregar Encargado</h1>
-        <div class="flex flex-col justify-center items-center gap-4 mx-auto px-10 py-6">
+        <div class="flex flex-col justify-center items-center gap-4">
             <div class="flex justify-between items-center w-full gap-4">
                 <label for="email">Email:</label>
                 <input class="input" type="email" id="email" v-model="email" required />
@@ -59,7 +60,7 @@ const register = async () => {
                 <input class="input" type="checkbox" id="is_admin" v-model="is_admin" />
             </div> -->
         </div>
-        <div class="flex justify-center items-center gap-8">
+        <div class="flex w-full justify-center items-center gap-8">
             <button class="button" type="submit">Agregar</button>
             <button class="button" type="button" @click="closeModal">Cancelar</button>
         </div>

@@ -21,14 +21,6 @@ const getSolicitudesById = async (req, res) => {
         res.status(500).json({ message: error.message });
     }
 }
-const getEncargados = async (req, res) => {
-    try {
-        const [idEncargados] = await db.query(Queries.getEncargados);
-        res.json(idEncargados);
-    } catch (error) {
-        res.status(500).json({ message: error.message });
-    }
-}
 
 
 // Controladores para el envío de solicitudes
@@ -82,8 +74,24 @@ const postEstadoSolicitud = async (req, res) => {
         res.status(500).json({ message: error.message });
     }
 }
+const deleteSolicitud = async (req, res) => {
+    try {
+        const [data] = await db.query(Queries.deleteSolicitud, [req.body.id]);
+        res.json(data);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+}
 
 // Controladores para obtener los mantenedores
+const getEncargados = async (req, res) => {
+    try {
+        const [idEncargados] = await db.query(Queries.getEncargados);
+        res.json(idEncargados);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+}
 const getNombreEquipos = async (req, res) => {
     try {
         const [nombreEquipos] = await db.query(Queries.getNombreEquipos);
@@ -110,6 +118,15 @@ const getTipoProyecto = async (req, res) => {
 }
 
 // Controladores para agregar mantenedores
+const register = async (req, res) => {
+    try {
+        const hashedPassword = await bcrypt.hash(req.body.password, data.SALT_ROUNDS);
+        const [user] = await db.query(Queries.register, [req.body.email, hashedPassword, req.body.is_admin]);
+        res.json(user);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+}
 const postNombreEquipos = async (req, res) => {
     try {
         const [data] = await db.query(Queries.postNombreEquipos, [req.body.nombre]);
@@ -136,6 +153,14 @@ const postTipoProyecto = async (req, res) => {
 }
 
 // Controladores para eliminar mantenedores
+const deleteEncargado = async (req, res) => {
+    try {
+        const [data] = await db.query(Queries.deleteEncargado, [req.body.id]);
+        res.json(data);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+}
 const deleteNombreEquipos = async (req, res) => {
     try {
         const [data] = await db.query(Queries.deleteNombreEquipos, [req.body.id]);
@@ -161,16 +186,41 @@ const deleteTipoProyecto = async (req, res) => {
     }
 }
 
-// Controladores para la gestión de sesiones de usuarios
-const register = async (req, res) => {
+// Controladores para editar mantenedores
+const putEncargado = async (req, res) => {
     try {
-        const hashedPassword = await bcrypt.hash(req.body.password, data.SALT_ROUNDS);
-        const [user] = await db.query(Queries.register, [req.body.email, hashedPassword, req.body.is_admin]);
-        res.json(user);
+        const [data] = await db.query(Queries.putEncargado, [req.body.email, req.body.id]);
+        res.json(data);
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
 }
+const putNombreEquipos = async (req, res) => {
+    try {
+        const [data] = await db.query(Queries.putNombreEquipos, [req.body.nombre, req.body.id]);
+        res.json(data);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+}
+const putTipoMaterial = async (req, res) => {
+    try {
+        const [data] = await db.query(Queries.putTipoMaterial, [req.body.nombre, req.body.id]);
+        res.json(data);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+}
+const putTipoProyecto = async (req, res) => {
+    try {
+        const [data] = await db.query(Queries.putTipoProyecto, [req.body.nombre, req.body.id]);
+        res.json(data);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+}
+
+// Controladores para la gestión de sesiones de usuarios
 const login = async (req, res) => {
     try {
         const [users] = await db.query(Queries.getUserByEmail, [req.body.email]);
@@ -208,23 +258,29 @@ const logout = (req, res) => {
 export default {
     getSolicitudes,
     getSolicitudesById,
-    getEncargados,
     postAsesoria,
     postMateriales,
     postEquipos,
     postEquipo,
     postEncargadoSolicitud,
     postEstadoSolicitud,
+    deleteSolicitud,
+    getEncargados,
     getNombreEquipos,
     getTipoMaterial,
     getTipoProyecto,
+    register,
     postNombreEquipos,
     postTipoMaterial,
     postTipoProyecto,
+    deleteEncargado,
     deleteNombreEquipos,
     deleteTipoMaterial,
     deleteTipoProyecto,
-    register,
+    putEncargado,
+    putNombreEquipos,
+    putTipoMaterial,
+    putTipoProyecto,
     login,
     session,
     logout,

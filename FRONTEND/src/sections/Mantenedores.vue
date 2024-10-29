@@ -1,9 +1,9 @@
 <script setup>
 import { ref, onMounted } from 'vue';
-import Encargados from "../components/Encargados.vue";
-import Maquinarias from "../components/Maquinarias.vue"
-import Proyectos from "../components/Proyectos.vue"
-import Materiales from "../components/Materiales.vue"
+import Encargados from "../components/MantenedorEncargados/Encargados.vue";
+import Maquinarias from "../components/MantenedorMaquinarias/Maquinarias.vue"
+import Proyectos from "../components/MantenedorProyectos.vue/Proyectos.vue"
+import Materiales from "../components/MantenedorMateriales/Materiales.vue"
 
 const userRole = ref(false);
 const validSession = ref(false);
