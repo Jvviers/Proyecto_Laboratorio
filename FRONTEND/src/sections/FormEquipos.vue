@@ -13,7 +13,7 @@ export default {
     const equiposTypes = ref([]);
 
     const getNombreEquipo = async () => {
-      try {
+      try { 
         const response = await fetch("http://localhost:3000/nombre-equipos", {
           method: "GET",
           headers: {
