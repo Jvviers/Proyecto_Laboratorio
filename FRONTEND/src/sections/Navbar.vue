@@ -79,36 +79,45 @@ onMounted(() => {
 </script>
 
 <template>
-    <nav class="flex w-full justify-between items-center border-b px-4 md:px-20 border-gray-300">
-        <a href="/" aria-label="logo">
-            <div class="flex items-center gap-6 px-4 md:px-12 py-4">
-                <img src="/logo.svg" alt="logo utal" class="w-20 h-20" />
-                <div class="hidden md:flex flex-col justify-center items-center text-center text-nowrap">
-                    <h3 class="text-xl font-bold leading-tight">Vicerrectoría de Pregrado</h3>
-                    <h4 class="text-lg leading-tight">Universidad de Talca</h4>
+    <nav class="flex flex-col w-full px-8 md:px-32 border-b border-gray-300">
+        <div class="flex flex-col items-end w-full">
+            <span class="h-6 w-full bg-utal"></span>
+            <span class="h-6 w-2/3 border-b border-gray-300 hidden md:flex justify-end items-center gap-4 text-xs text-nowrap font-normal text-gray-500">
+                <h4>Visítanos en 19 norte #1665, Talca</h4>
+                <h4>Escríbenos a utal.adm@gmail.com</h4>
+            </span>
+        </div>
+        <div class="flex w-full justify-between items-center">
+            <a href="/" aria-label="logo" class="geologica">
+                <div class="flex items-center gap-2 py-4">
+                    <img src="/icons/logo.svg" alt="logo utal" class="w-20 h-20" />
+                    <div class="hidden md:flex flex-col justify-center items-start text-start border-l border-black pl-2 w-44 gap-[2px]">
+                        <h3 class="text-lg font-semibold leading-none">Dirección de Innovación y Transferencia</h3>
+                        <h4 class="text-sm font-medium leading-none">Vicerrectoría Académica</h4>
+                    </div>
+                </div>
+            </a>
+            <div class="hidden md:flex items-center text-sm font-medium">
+                <div v-if="sessionActive && ruta == '/admin'">
+                    <button @click="logout" class="button">CERRAR SESIÓN</button>
+                </div>
+                <div v-else>
+                    <button onclick="location.href='/admin'" class="button" type="button">ACCESO ADMIN</button>
                 </div>
             </div>
-        </a>
-        <div class="hidden md:flex items-center px-12">
-            <div v-if="sessionActive && ruta == '/admin'">
-                <button @click="logout" class="button">Cerrar Sesión</button>
+            <div class="flex items-center md:hidden cursor-pointer">
+                <button @click="toggleDropdown()" id="menu-toggle" class="text-gray-600 focus:outline-none">
+                    <img src="/icons/menu.svg" alt="menu" class="w-8 h-8" />
+                </button>
             </div>
-            <div v-else>
-                <button onclick="location.href='/admin'" class="button" type="button">Acceso Admin</button>
+            <div v-if="isDropdownVisible" id="dropdown"
+                class="absolute top-20 right-4 bg-white shadow-lg rounded w-48 p-2 z-20 md:hidden transitions">
+                <ul class="flex flex-col gap-2 w-full font-medium text-sm">
+                    <li class="w-full hover:bg-utal/10 py-2 px-4 rounded cursor-pointer transitions"><a href="/">INICIO</a></li>
+                    <li class="w-full hover:bg-utal/10 py-2 px-4 rounded cursor-pointer transitions"><a href="/admin">ACCESO ADMIN</a></li>
+                    <li v-if="sessionActive" @click="logout()" class="w-full hover:bg-utal/10 py-2 px-4 rounded cursor-pointer transitions"><a href="/">CERRAR SESIÓN</a></li>
+                </ul>
             </div>
-        </div>
-        <div class="flex items-center md:hidden cursor-pointer">
-            <button @click="toggleDropdown()" id="menu-toggle" class="text-gray-600 focus:outline-none">
-                <img src="/menu.svg" alt="menu" class="w-8 h-8" />
-            </button>
-        </div>
-        <div v-if="isDropdownVisible" id="dropdown"
-            class="absolute top-20 right-4 bg-white shadow-lg rounded w-48 p-2 z-20 md:hidden transitions">
-            <ul class="flex flex-col gap-2 w-full">
-                <li class="w-full hover:bg-utal/10 py-2 px-4 rounded cursor-pointer transitions"><a href="/">Inicio</a></li>
-                <li class="w-full hover:bg-utal/10 py-2 px-4 rounded cursor-pointer transitions"><a href="/admin">Acceso Admin</a></li>
-                <li v-if="sessionActive" @click="logout()" class="w-full hover:bg-utal/10 py-2 px-4 rounded cursor-pointer transitions"><a href="/">Cerrar Sesión</a></li>
-            </ul>
         </div>
     </nav>
 </template>
