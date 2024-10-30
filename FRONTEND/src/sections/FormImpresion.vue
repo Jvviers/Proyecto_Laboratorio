@@ -184,7 +184,7 @@ onMounted(() => {
     </div>
 
     <!-- Sección de selección de materiales y proyectos -->
-    <div class="flex flex-wrap gap-8 px-4 justify-evenly w-full bg-gray-100">
+    <div class="flex flex-wrap gap-8 px-4 justify-evenly w-ful">
       <div class="flex flex-wrap gap-8 px-4 justify-evenly w-full">
         <!-- Tipo Proyecto -->
         <div class="flex flex-col justify-start gap-4 p-2">
