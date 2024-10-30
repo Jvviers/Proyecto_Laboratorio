@@ -1,13 +1,15 @@
 <script setup>
 import { ref } from 'vue';
+const BACKEND_URL = import.meta.env.PUBLIC_BACKEND_URL;
 
 const email = ref('');
 const password = ref('');
 const errorMessage = ref('');
+
 const login = async () => {
     errorMessage.value = '';
     try {
-        const response = await fetch('http://localhost:3000/login', {
+        const response = await fetch(BACKEND_URL + '/login', {
             method: 'POST',
             credentials: 'include',
             headers: {

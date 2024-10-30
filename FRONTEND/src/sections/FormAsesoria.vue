@@ -1,101 +1,80 @@
-<script>
+<script setup>
 import { ref } from 'vue';
 import { DatePicker } from 'v-calendar';
 import 'v-calendar/style.css';
+const BACKEND_URL = import.meta.env.PUBLIC_BACKEND_URL;
 
-export default {
-    name: 'FormAsesoria',
-    components: {
-        DatePicker,
+// Variables del formulario
+const solicitante = ref("");
+const email = ref("");
+const matricula = ref("");
+const actividad = ref("");
+const selectedDate = ref(new Date());
+const accessMessage = ref("");
+
+const disabledDates = ref([
+    {
+        repeat: {
+            weekdays: [1, 7],
+        },
     },
-    setup() {
-        // Variables del formulario
-        const solicitante = ref("");
-        const email = ref("");
-        const matricula = ref("");
-        const actividad = ref("");
-        const selectedDate = ref(new Date());
-        const accessMessage = ref("");
+]);
 
-        const disabledDates = ref([
-            {
-                repeat: {
-                    weekdays: [1, 7],
-                },
-            },
-        ]);
-
-        const formatDate = (date) => {
-            const d = new Date(date);
-            const year = d.getFullYear();
-            const month = String(d.getMonth() + 1).padStart(2, '0');
-            const day = String(d.getDate()).padStart(2, '0');
-            const hours = String(d.getHours()).padStart(2, '0');
-            const minutes = String(d.getMinutes()).padStart(2, '0');
-            const seconds = String(d.getSeconds()).padStart(2, '0');
-            return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
-        };
-
-        const showAccessBanner = () => {
-            accessMessage.value = "Solicitud enviada exitosamente!";
-            setTimeout(() => {
-                accessMessage.value = ""; 
-            }, 4000);
-        };
-
-        const resetInputs = () => {
-            solicitante.value = "";
-            email.value = "";
-            matricula.value = "";
-            actividad.value = "";
-        };
-
-
-        const asesoria = async () => {
-            try {
-                const formattedDate = formatDate(selectedDate.value);
-                const response = await fetch('http://localhost:3000/asesoria', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        solicitante: solicitante.value,
-                        email: email.value,
-                        matricula: matricula.value,
-                        actividad: actividad.value,
-                        fecha: formattedDate,
-                    }),
-                });
-                if (!response.ok) {
-                    throw new Error(`Error: ${response.statusText}`);
-                }
-                const data = await response.json();
-                console.log('Solicitud enviada:', data);
-                showAccessBanner();
-                resetInputs();
-            } catch (error) {
-                console.error('Error al enviar solicitud:', error);
-            }
-        };
-
-        const selectedColor = ref('blue');
-        const timeAccuracy = ref(2);
-
-        return {
-            solicitante,
-            email,
-            matricula,
-            actividad,
-            selectedDate,
-            disabledDates,
-            asesoria,
-            selectedColor,
-            timeAccuracy,
-            accessMessage,
-        };
-    },
+const formatDate = (date) => {
+    const d = new Date(date);
+    const year = d.getFullYear();
+    const month = String(d.getMonth() + 1).padStart(2, '0');
+    const day = String(d.getDate()).padStart(2, '0');
+    const hours = String(d.getHours()).padStart(2, '0');
+    const minutes = String(d.getMinutes()).padStart(2, '0');
+    const seconds = String(d.getSeconds()).padStart(2, '0');
+    return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
 };
+
+const showAccessBanner = () => {
+    accessMessage.value = "Solicitud enviada exitosamente!";
+    setTimeout(() => {
+        accessMessage.value = "";
+    }, 4000);
+};
+
+const resetInputs = () => {
+    solicitante.value = "";
+    email.value = "";
+    matricula.value = "";
+    actividad.value = "";
+};
+
+const asesoria = async () => {
+    try {
+        const formattedDate = formatDate(selectedDate.value);
+        const response = await fetch(BACKEND_URL + '/asesoria', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                solicitante: solicitante.value,
+                email: email.value,
+                matricula: matricula.value,
+                actividad: actividad.value,
+                fecha: formattedDate,
+            }),
+        });
+        if (!response.ok) {
+            throw new Error(`Error: ${response.statusText}`);
+        }
+        const data = await response.json();
+        console.log('Solicitud enviada:', data);
+        showAccessBanner();
+        resetInputs();
+    } catch (error) {
+        console.error('Error al enviar solicitud:', error);
+    }
+};
+
+const selectedColor = ref('blue');
+const timeAccuracy = ref(2);
 </script>
 
 <template>
@@ -136,9 +115,10 @@ export default {
 
 <style scoped>
 .text-input {
-  width: 200px;
-  @media (min-width: 768px) {
-    width: 300px;
-  }
+    width: 200px;
+
+    @media (min-width: 768px) {
+        width: 300px;
+    }
 }
 </style>

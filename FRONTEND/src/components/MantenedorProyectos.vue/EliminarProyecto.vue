@@ -1,6 +1,7 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import { defineProps, defineEmits } from 'vue';
+const BACKEND_URL = import.meta.env.PUBLIC_BACKEND_URL;
 
 // Recibe la propiedad isModalOpen
 const props = defineProps({
@@ -19,7 +20,7 @@ const proyectos = ref([]);
 
 const eliminarProyecto = async (id) => {
     try {
-        const response = await fetch('http://localhost:3000/tipo-proyecto', {
+        const response = await fetch(BACKEND_URL + '/tipo-proyecto', {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',
@@ -41,7 +42,7 @@ const eliminarProyecto = async (id) => {
 
 const getProyectos = async () => {
     try {
-        const response = await fetch('http://localhost:3000/tipo-proyecto', {
+        const response = await fetch(BACKEND_URL + '/tipo-proyecto', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',

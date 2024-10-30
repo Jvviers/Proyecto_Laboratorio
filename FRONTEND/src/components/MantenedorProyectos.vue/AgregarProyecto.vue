@@ -1,6 +1,7 @@
 <script setup>
 import { ref } from 'vue';
 import { defineProps, defineEmits } from 'vue';
+const BACKEND_URL = import.meta.env.PUBLIC_BACKEND_URL;
 
 // Recibe la propiedad isModalOpen
 const props = defineProps({
@@ -19,7 +20,7 @@ const name = ref('');
 
 const agregarProyecto = async () => {
     try {
-        const response = await fetch('http://localhost:3000/tipo-proyecto', {
+        const response = await fetch(BACKEND_URL + '/tipo-proyecto', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

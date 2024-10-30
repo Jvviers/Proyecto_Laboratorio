@@ -1,6 +1,7 @@
 <script setup>
 import { onMounted, ref } from "vue";
 import { UploadClient } from '@uploadcare/upload-client'
+const BACKEND_URL = import.meta.env.PUBLIC_BACKEND_URL;
 
 // Variables de las entradas de texto
 const solicitante = ref("");
@@ -37,7 +38,7 @@ const handleSubmit = () => {
 
 const getTipoMaterial = async () => {
 	try {
-		const response = await fetch("http://localhost:3000/tipo-material", {
+		const response = await fetch(BACKEND_URL + "/tipo-material", {
 			method: "GET",
 			headers: {
 				"Content-Type": "application/json",
@@ -56,7 +57,7 @@ const getTipoMaterial = async () => {
 
 const getTipoProyecto = async () => {
 	try {
-		const response = await fetch("http://localhost:3000/tipo-proyecto", {
+		const response = await fetch(BACKEND_URL + "/tipo-proyecto", {
 			method: "GET",
 			headers: {
 				"Content-Type": "application/json",
@@ -74,7 +75,7 @@ const getTipoProyecto = async () => {
 
 const postMateriales = async () => {
 	try {
-		const response = await fetch("http://localhost:3000/materiales", {
+		const response = await fetch(BACKEND_URL + "/materiales", {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json",
