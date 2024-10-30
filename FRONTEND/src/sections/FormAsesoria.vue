@@ -136,7 +136,7 @@ export default {
 
 <style scoped>
 .text-input {
-  width: 240px;
+  width: 200px;
   @media (min-width: 768px) {
     width: 300px;
   }

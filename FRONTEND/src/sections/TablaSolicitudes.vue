@@ -184,7 +184,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="flex justify-center py-6">
+  <div class="flex justify-center py-6 px-8">
     <div v-if="validSession" class="flex flex-col justify-center items-center gap-6">
       <h1 class="text-3xl text-center font-bold">Bienvenido Administrador</h1>
       <h2 class="text-2xl text-center font-bold">Tabla de Solicitudes</h2>

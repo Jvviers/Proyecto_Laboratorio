@@ -79,13 +79,13 @@ onMounted(() => {
 </script>
 
 <template>
-    <nav class="flex w-full justify-between items-center border-b px-4 md:px-20 border-gray-300">
-        <a href="/" aria-label="logo">
-            <div class="flex items-center gap-6 px-4 md:px-12 py-4">
+    <nav class="flex w-full justify-between items-center border-b px-8 md:px-32 border-gray-300">
+        <a href="/" aria-label="logo" class="logo">
+            <div class="flex items-center gap-2 py-4">
                 <img src="/logo.svg" alt="logo utal" class="w-20 h-20" />
-                <div class="hidden md:flex flex-col justify-center items-center text-center text-nowrap">
-                    <h3 class="text-xl font-bold leading-tight">Vicerrectoría de Pregrado</h3>
-                    <h4 class="text-lg leading-tight">Universidad de Talca</h4>
+                <div class="hidden md:flex flex-col justify-center items-start text-start border-l border-black pl-2 w-44 gap-[2px]">
+                    <h3 class="text-lg font-semibold leading-none">Dirección de Innovación y Transferencia</h3>
+                    <h4 class="text-sm font-medium leading-none">Vicerrectoría Académica</h4>
                 </div>
             </div>
         </a>
@@ -112,3 +112,9 @@ onMounted(() => {
         </div>
     </nav>
 </template>
+
+<style scoped>
+    .logo {
+        font-family: 'Geologica Variable', sans-serif;
+    }
+</style>

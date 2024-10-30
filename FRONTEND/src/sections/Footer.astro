@@ -1,15 +1,16 @@
-<footer class="flex flex-col md:flex-row w-full mt-auto justify-between px-20 md:px-28 py-12 gap-4 md:gap-0 bg-[#1c1c1c] text-white">
-    <div class="flex flex-col justify-center items-center md:items-start text-center md:text-start md:w-64">
-        <h2 class="font-bold text-lg leading-none">DIRECCIÓN DE INNOVACIÓN Y TRANSFERENCIA</h2>
-        <h3 class="font-normal text-lg leading-none">Vicerrectoría Académica</h3>
-        <h3 class="font-normal text-lg leading-none">Universidad de Talca</h3>
-    </div>
-    <div class="flex flex-col md:flex-row justify-center items-center gap-3">
-        <!-- Redes sociales en la parte superior, alineados a la derecha -->
-        <div class="flex justify-center items-center mt-[2px]">
-            <h3 class="font-normal text-start text-sm">SÍGUENOS:</h3>
+<footer class="flex w-full mt-auto justify-between px-10 md:px-28 py-12 gap-0 bg-[#1c1c1c] text-white">
+    <a href="/" aria-label="logo" >
+        <div class="flex flex-col justify-center items-start text-start w-52 border-l border-white pl-2 gap-[2px]">
+            <h2 class="font-semibold text-lg leading-none">DIRECCIÓN DE INNOVACIÓN Y TRANSFERENCIA</h2>
+            <h3 class="font-medium text-base leading-none">Vicerrectoría Académica</h3>
+            <h3 class="font-normal text-sm leading-none">Universidad de Talca</h3>
         </div>
-        <div class="flex justify-end items-center gap-5">
+    </a>
+    <div class="flex flex-col md:flex-row justify-center items-center gap-2 md:gap-3">
+        <div class="flex justify-center items-center md:mt-[2px]">
+            <h3 class="font-normal text-start text-sm leading-none">SÍGUENOS:</h3>
+        </div>
+        <div class="flex justify-center items-center flex-wrap gap-1 md:gap-3 w-20 md:w-full media">
             <a href="https://www.facebook.com/" target="_blank"><img src="/facebook.svg" alt="Logo Facebook" class="aspect-square w-8 h-8" loading="lazy" /></a>
             <a href="https://www.linkedin.com/" target="_blank"><img src="/linkedin.svg" alt="Logo LinkedIn" class="aspect-square w-8 h-8" loading="lazy" /></a>
             <a href="https://www.instagram.com/" target="_blank"><img src="/instagram.svg" alt="Logo Instagram" class="aspect-square w-8 h-8" loading="lazy" /></a>
@@ -19,10 +20,13 @@
 </footer>
 
 <style>
-    a {
+    footer {
+        font-family: 'Geologica Variable', sans-serif;
+    }
+    .media a {
         opacity: 0.6;
     }
-    a:hover {
+    .media a:hover {
         opacity: 1;
         transform: scale(1.1);
         transition: all 0.2s ease;
