@@ -55,7 +55,7 @@ export default {
 <template>
   <div class="relative w-full bg-[#eeeeee] z-10" @mousedown="startDrag" @mousemove="onDrag" @mouseup="endDrag" @mouseleave="endDrag">
     <!-- Carousel wrapper -->
-    <div class="relative h-[80vh] overflow-hidden -z-20 mx-0 md:mx-32">
+    <div class="relative aspect-video overflow-hidden -z-20 mx-0 md:mx-32">
       <!-- Carrusel de items -->
       <div v-for="(image, index) in images" :key="index"
         class="absolute inset-0 transition-opacity duration-1000 ease-in-out"

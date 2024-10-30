@@ -3,9 +3,9 @@ import { ref } from 'vue';
 
 const email = ref('');
 const password = ref('');
-const errorMessage = ref(''); 
+const errorMessage = ref('');
 const login = async () => {
-    errorMessage.value = ''; 
+    errorMessage.value = '';
     try {
         const response = await fetch('http://localhost:3000/login', {
             method: 'POST',
@@ -18,10 +18,10 @@ const login = async () => {
                 password: password.value,
             }),
         });
-        
+
         if (!response.ok) {
             const data = await response.json();
-            errorMessage.value = data.message; 
+            errorMessage.value = data.message;
             showErrorBanner();
             return;
         }
@@ -38,7 +38,7 @@ const login = async () => {
 
 const showErrorBanner = () => {
     setTimeout(() => {
-        errorMessage.value = ''; 
+        errorMessage.value = '';
     }, 4000);
 };
 
@@ -48,12 +48,16 @@ const goToAdmin = () => {
 </script>
 
 <template>
-    <div>
-        <div v-if="errorMessage" class="absolute top-32 right-5 bg-red-500 text-white py-2 px-4 rounded shadow-lg z-50">
+    <section>
+        <span v-if="errorMessage"
+            class="absolute top-32 right-5 bg-red-500 text-white py-2 px-4 rounded shadow-lg z-50">
             {{ errorMessage }}
-        </div>
-
-        <form @submit.prevent="login" class="flex flex-col justify-center items-center gap-4 my-4 w-full">
+        </span>
+        <form @submit.prevent="login" class="flex flex-col justify-center items-center gap-4 py-6 w-full">
+            <header class="flex flex-col justify-center gap-2">
+                <h2 class="text-2xl text-center font-bold">INICIAR SESIÓN</h2>
+                <h3 class="text-lg text-center">Aquí los administradores y encargados de laboratorio pueden iniciar sesión</h3>
+            </header>
             <div class="flex flex-col justify-center items-center gap-4 mx-auto px-10 py-6">
                 <div class="flex justify-between items-center w-full gap-4">
                     <label for="email">Email:</label>
@@ -64,8 +68,7 @@ const goToAdmin = () => {
                     <input class="text-input input" type="password" id="password" v-model="password" required />
                 </div>
             </div>
-
-            <button class="button" type="submit">Iniciar Sesión</button>
+            <button class="button" type="submit">INICIAR SESIÓN</button>
         </form>
-    </div>
+    </section>
 </template>
