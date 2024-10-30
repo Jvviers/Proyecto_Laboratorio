@@ -97,7 +97,7 @@ onMounted(() => {
                     </div>
                 </div>
             </a>
-            <div class="hidden md:flex items-center text-sm font-medium">
+            <div class="hidden md:flex items-center">
                 <div v-if="sessionActive && ruta == '/admin'">
                     <button @click="logout" class="button">CERRAR SESIÓN</button>
                 </div>

@@ -34,13 +34,16 @@ onMounted(() => {
 </script>
 
 <template>
-	<div v-if="validSession && userRole" class="flex flex-col justify-center items-center mt-4">
-		<h2 class="text-2xl text-center font-bold">Mantenedores</h2>
+	<section v-if="validSession && userRole"
+		class="flex flex-col justify-center items-center w-full px-8 md:px-32 py-6 mt-6">
+		<div class="flex justify-center items-center w-full border-t border-gray-300 pt-6">
+			<h2 class="text-2xl text-center font-bold">MANTENEDORES</h2>
+		</div>
 		<div class="flex flex-wrap justify-evenly items-center gap-8 py-8">
 			<Encargados />
 			<Maquinarias />
 			<Proyectos />
 			<Materiales />
 		</div>
-	</div>
+	</section>
 </template>
