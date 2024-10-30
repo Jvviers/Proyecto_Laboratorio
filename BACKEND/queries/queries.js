@@ -1,6 +1,7 @@
 // Consultas para obtener datos de solicitudes
 const getSolicitudes = "SELECT * FROM solicitud";
 const getSolicitudesById = "SELECT * FROM solicitud WHERE ref_enc = ?";
+const getEquipoById = "SELECT * FROM equipo WHERE ref_sol = ?";
 
 // Consultas para el envío de solicitudes
 const postAsesoria = "INSERT INTO solicitud (solicitante, email, matricula, actividad, fecha, tipo_form) VALUES (?, ?, ?, ?, ?, ?)";
@@ -43,6 +44,7 @@ const getUserByEmail = "SELECT * FROM usuario WHERE email = ?";
 export default {
     getSolicitudes,
     getSolicitudesById,
+    getEquipoById,
     postAsesoria,
     postMateriales,
     postEquipos,

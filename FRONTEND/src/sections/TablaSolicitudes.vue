@@ -46,12 +46,49 @@ const fetchRequests = async () => {
 			console.error('Status:', response.status);
 			throw new Error('Error en la respuesta del servidor: ' + response.statusText);
 		}
-
 		const data = await response.json();
 		requests.value = data;
+		await loadEquipos();
 	} catch (err) {
 		error.value = err.message;
 		console.error('Error fetching solicitudes:', err);
+	}
+};
+
+const loadEquipos = async () => {
+	try {
+		const promises = requests.value.map(async (request) => {
+			const equipos = await getEquipos(request.id);
+			return { ...request, equipos };
+		});
+		requests.value = await Promise.all(promises);
+	} catch (err) {
+		console.error('Error cargando equipos:', err);
+	}
+};
+
+const getEquipos = async (id) => {
+	try {
+		const response = await fetch(BACKEND_URL + `/equipo/${id}`, {
+			method: 'GET',
+			credentials: 'include',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+		});
+		if (!response.ok) {
+			console.error('Status:', response.status);
+			throw new Error('Error en la respuesta del servidor: ' + response.statusText);
+		}
+		const data = await response.json();
+		const nombresEquipos = data
+			.filter(item => item.ref_sol === id)
+			.map(item => item.nombre_equipo)
+			.join(', ');
+		return nombresEquipos;
+	} catch (err) {
+		console.error('Error fetching solicitudes:', err);
+		return '';
 	}
 };
 
@@ -64,18 +101,12 @@ const getEncargados = async () => {
 				'Content-Type': 'application/json',
 			},
 		});
-
 		if (!response.ok) {
 			console.error('Status:', response.status);
 			throw new Error('Error en la respuesta del servidor: ' + response.statusText);
 		}
-
 		const data = await response.json();
 		encargados.value = data;
-		console.log('Encargados:', encargados.value);
-		for (const encargado of encargados.value) {
-			console.log('Encargado:', encargado.id);
-		}
 	} catch (err) {
 		console.error('Error fetching solicitudes:', err);
 	}
@@ -106,8 +137,7 @@ const updateEncargado = async (sol_id, ref_enc) => {
 			console.error('Status:', response.status);
 			throw new Error('Error en la respuesta del servidor: ' + response.statusText);
 		}
-		const data = await response.json();
-		console.log('Datos:', data);
+		await response.json();
 	} catch (err) {
 		console.error('Error fetching solicitudes:', err);
 	}
@@ -130,8 +160,7 @@ const updateState = async (sol_id, state) => {
 			console.error('Status:', response.status);
 			throw new Error('Error en la respuesta del servidor: ' + response.statusText);
 		}
-		const data = await response.json();
-		console.log('Datos:', data);
+		await response.json();
 	} catch (err) {
 		console.error('Error fetching solicitudes:', err);
 	}
@@ -153,8 +182,7 @@ const eliminarSolicitud = async (id) => {
 			console.error('Status:', response.status);
 			throw new Error('Error en la respuesta del servidor: ' + response.statusText);
 		}
-		const data = await response.json();
-		console.log('Datos:', data);
+		await response.json();
 		fetchRequests();
 	} catch (err) {
 		console.error('Error al eliminar solicitud:', err);
@@ -212,6 +240,7 @@ onMounted(() => {
 						<th>Matricula</th>
 						<th>Actividad</th>
 						<th>Fecha</th>
+						<th>Equipos</th>
 						<th>Tipo Proyecto</th>
 						<th>Tipo Material</th>
 						<th>Archivo</th>
@@ -235,14 +264,16 @@ onMounted(() => {
 						<td class="td">{{ request.solicitante }}</td>
 						<td class="td">{{ request.email }}</td>
 						<td class="td">{{ request.matricula }}</td>
-						<td class="td text-wrap overflow-x-scroll max-w-[180px]">{{ request.actividad }}</td>
+						<td class="td overflow-x-scroll max-w-[180px]">{{ request.actividad }}</td>
 						<td class="td">
 							<p v-if="request.fecha">{{ formatDate(request.fecha) }}</p>
 						</td>
+						<td class="td overflow-x-scroll max-w-[180px]">
+							{{ request.equipos }}</td>
 						<td class="td">{{ request.tipo_proyecto }}</td>
 						<td class="td">{{ request.tipo_material }}</td>
-						<td class="td text-wrap overflow-x-scroll max-w-[180px]"><a target="_blank"
-								:href="request.archivo" class="text-blue-500 underline">{{ request.archivo }}</a></td>
+						<td class="td overflow-x-scroll max-w-[180px]"><a target="_blank" :href="request.archivo"
+								class="text-blue-500 underline">{{ request.archivo }}</a></td>
 						<td class="td capitalize">{{ request.tipo_form }}</td>
 
 						<!-- Selector que muestra y actualiza el estado -->

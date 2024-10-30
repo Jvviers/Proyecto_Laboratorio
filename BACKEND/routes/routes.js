@@ -7,7 +7,7 @@ const router = Router();
 // Rutas para obtener datos de solicitudes
 router.get('/solicitudes', authMiddleware, Controller.getSolicitudes);
 router.get('/solicitudes/:id', authMiddleware, Controller.getSolicitudesById);
-
+router.get('/equipo/:id', authMiddleware, Controller.getEquipoById);
 
 // Rutas para el envío de solicitudes
 router.post('/asesoria', Controller.postAsesoria);

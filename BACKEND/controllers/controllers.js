@@ -21,7 +21,14 @@ const getSolicitudesById = async (req, res) => {
         res.status(500).json({ message: error.message });
     }
 }
-
+const getEquipoById = async (req, res) => {
+    try {
+        const [equipo] = await db.query(Queries.getEquipoById, [req.params.id]);
+        res.json(equipo);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+}
 
 // Controladores para el envío de solicitudes
 const postAsesoria = async (req, res) => {
@@ -258,6 +265,7 @@ const logout = (req, res) => {
 export default {
     getSolicitudes,
     getSolicitudesById,
+    getEquipoById,
     postAsesoria,
     postMateriales,
     postEquipos,
