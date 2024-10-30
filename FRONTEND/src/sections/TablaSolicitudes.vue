@@ -275,11 +275,11 @@ onMounted(() => {
 
   <div v-if="validSession" class="pagination-controls">
     <button @click="currentPage > 1 && currentPage--" :disabled="currentPage <= 1">
-      <img src="/arrow.svg" alt="Flecha Izquierda Tabla" class="w-4 h-4 rotate-180" />
+      <img src="/icons/arrow.svg" alt="Flecha Izquierda Tabla" class="w-4 h-4 rotate-180" />
     </button>
     <span>Página {{ currentPage }}</span>
     <button @click="currentPage++" :disabled="currentPage >= Math.ceil(requests.length / itemsPerPage)">
-      <img src="/arrow.svg" alt="Flecha Derecha Tabla" class="w-4 h-4" />
+      <img src="/icons/arrow.svg" alt="Flecha Derecha Tabla" class="w-4 h-4" />
     </button>
   </div>
 

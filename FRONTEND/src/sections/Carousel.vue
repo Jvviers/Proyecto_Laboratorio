@@ -75,13 +75,13 @@ export default {
     <button type="button" class="px-4 mx-0 md:mx-32 absolute top-0 left-0 z-10 h-full outline-none bg-transparent hover:bg-transparent transitions"
       @click="prevSlide">
       <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 transitions">
-        <img src="/arrow.svg" alt="Flecha Izquierda Carrusel" class="w-4 h-4 rotate-180" />
+        <img src="/icons/arrow.svg" alt="Flecha Izquierda Carrusel" class="w-4 h-4 rotate-180" />
       </span>
     </button>
     <button type="button" class="px-4 mx-0 md:mx-32 absolute top-0 right-0 z-10 h-full outline-none bg-transparent hover:bg-transparent transitions"
       @click="nextSlide">
       <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 transitions">
-        <img src="/arrow.svg" alt="Flecha Derecha Carrusel" class="w-4 h-4" />
+        <img src="/icons/arrow.svg" alt="Flecha Derecha Carrusel" class="w-4 h-4" />
       </span>
     </button>
   </div>
