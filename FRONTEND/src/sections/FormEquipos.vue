@@ -136,6 +136,8 @@ export default {
   >
     {{ accessMessage }}
   </div>
+  <div class="container bg-gray-200 min-h-[20px]">
+  </div>
   <form
     @submit.prevent="postEquipos"
     class="flex flex-col justify-center items-center gap-4 my-4 w-full"
