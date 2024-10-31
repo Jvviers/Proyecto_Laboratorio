@@ -2,7 +2,7 @@
 const getSolicitudes = "SELECT * FROM solicitud";
 const getSolicitudesById = "SELECT * FROM solicitud WHERE ref_enc = ?";
 const getEquipoById = "SELECT * FROM equipo WHERE ref_sol = ?";
-const downloadMaterial = "SELECT nombre_archivo, contenido_archivo FROM solicitud WHERE id = ? AND tipo_form = 'impresion'";
+const downloadMaterial = "SELECT nombre_archivo, contenido_archivo FROM solicitud WHERE id = ?";
 
 // Consultas para el envío de solicitudes
 const postAsesoria = "INSERT INTO solicitud (solicitante, email, matricula, actividad, fecha, tipo_form) VALUES (?, ?, ?, ?, ?, ?)";
@@ -39,6 +39,10 @@ const putNombreEquipos = "UPDATE nombreequipos SET nombre = ? WHERE id = ?";
 const putTipoMaterial = "UPDATE tipomaterial SET nombre = ? WHERE id = ?";
 const putTipoProyecto = "UPDATE tipoproyecto SET nombre = ? WHERE id = ?";
 
+// Consultas para noticias y carrusel
+const getNoticias = "SELECT * FROM noticia";
+const postNoticia = "INSERT INTO noticia (titulo, descripcion, nombre_archivo, contenido_archivo) VALUES (?, ?, ?, ?)";
+
 // Consultas para la gestión de sesiones de usuarios
 const getUserByEmail = "SELECT * FROM usuario WHERE email = ?";
 
@@ -70,5 +74,7 @@ export default {
     putNombreEquipos,
     putTipoMaterial,
     putTipoProyecto,
+    getNoticias,
+    postNoticia,
     getUserByEmail,
 }

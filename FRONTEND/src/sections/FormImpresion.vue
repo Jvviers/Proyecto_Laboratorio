@@ -1,6 +1,5 @@
 <script setup>
 import { onMounted, ref } from "vue";
-import { UploadClient } from '@uploadcare/upload-client'
 const BACKEND_URL = import.meta.env.PUBLIC_BACKEND_URL;
 
 // Variables de las entradas de texto
@@ -15,26 +14,10 @@ const tipo_material = ref(null);
 const tipo_proyecto = ref(null);
 const file = ref(null);
 
-// Variables del archivo
-/* const PUBLIC_UPLOADCARE_KEY = import.meta.env.PUBLIC_UPLOADCARE_KEY;
-const client = new UploadClient({ publicKey: PUBLIC_UPLOADCARE_KEY });
-const fileInput = ref(null);
-const fileData = ref(null); */
-
 // Actualización del archivo en el input
 const onFileChange = (event) => {
 	file.value = event.target.files[0];
 }
-
-// Subir el archivo y obtener sus datos
-/* const handleSubmit = () => {
-	client.uploadFile(fileInput.value)
-		.then((file) => {
-			fileData.value = file;
-			// Si el archivo se ha subido correctamente, enviar el formulario
-			postMateriales();
-		})
-}; */
 
 const getTipoMaterial = async () => {
 	try {
