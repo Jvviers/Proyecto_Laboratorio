@@ -2,7 +2,7 @@
 const getSolicitudes = "SELECT * FROM solicitud";
 const getSolicitudesById = "SELECT * FROM solicitud WHERE ref_enc = ?";
 const getEquipoById = "SELECT * FROM equipo WHERE ref_sol = ?";
-const downloadMaterial = "SELECT nombre_archivo, contenido_archivo FROM solicitud WHERE id = ? AND tipo_form = 'impresion'";
+const downloadMaterial = "SELECT nombre_archivo, contenido_archivo FROM solicitud WHERE id = ?";
 
 // Consultas para el envío de solicitudes
 const postAsesoria = "INSERT INTO solicitud (solicitante, email, matricula, actividad, fecha, tipo_form) VALUES (?, ?, ?, ?, ?, ?)";

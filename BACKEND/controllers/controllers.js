@@ -33,10 +33,10 @@ const downloadMaterial = async (req, res) => {
     try {
         const [result] = await db.query(Queries.downloadMaterial, [req.params.id]);
         if (result.length === 0) return res.status(404).send('Archivo no encontrado');
-        const { nombre_archivo, archivo } = result[0];
+        const { nombre_archivo, contenido_archivo } = result[0];
         res.setHeader('Content-Disposition', `attachment; filename=${nombre_archivo}`);
         res.setHeader('Content-Type', 'application/octet-stream');
-        res.end(archivo, 'binary');
+        res.end(contenido_archivo, 'binary');
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
