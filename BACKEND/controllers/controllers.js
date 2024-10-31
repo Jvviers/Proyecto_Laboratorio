@@ -249,6 +249,26 @@ const putTipoProyecto = async (req, res) => {
     }
 }
 
+// Controladores para noticias y carrusel
+const getNoticias = async (req, res) => {
+    try {
+        const [noticias] = await db.query(Queries.getNoticias);
+        res.json(noticias);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+}
+const postNoticia = async (req, res) => {
+    try {
+        const file = req.file;
+        if (!file) return res.status(400).send('No se ha subido ningún archivo.');
+        const [data] = await db.query(Queries.postNoticia, [req.body.title, req.body.description, file.originalname, file.buffer]);
+        res.json(data);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+}
+
 // Controladores para la gestión de sesiones de usuarios
 const login = async (req, res) => {
     try {
@@ -312,6 +332,8 @@ export default {
     putNombreEquipos,
     putTipoMaterial,
     putTipoProyecto,
+    getNoticias,
+    postNoticia,
     login,
     session,
     logout,

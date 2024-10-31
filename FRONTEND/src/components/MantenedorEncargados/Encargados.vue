@@ -32,17 +32,17 @@ const toggleModalEditar = () => {
     </div>
 
     <!-- Modales -->
-	<div v-if="modalAgregar" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+	<div v-if="modalAgregar" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-10">
 		<div class="bg-white p-4 rounded shadow-lg relative">
 			<Register :isModalOpen="modalAgregar" @close-modal="toggleModalAgregar" />
 		</div>
 	</div>
-    <div v-if="modalEliminar" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+    <div v-if="modalEliminar" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-10">
 		<div class="bg-white p-4 rounded shadow-lg relative">
 			<EliminarEncargado :isModalOpen="modalEliminar" @close-modal="toggleModalEliminar" />
 		</div>
 	</div>
-    <div v-if="modalEditar" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+    <div v-if="modalEditar" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-10">
 		<div class="bg-white p-4 rounded shadow-lg relative">
 			<EditarEncargado :isModalOpen="modalEditar" @close-modal="toggleModalEditar" />
 		</div>

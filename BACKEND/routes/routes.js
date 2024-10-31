@@ -51,6 +51,10 @@ router.put('/nombre-equipos', Controller.putNombreEquipos);
 router.put('/tipo-material', Controller.putTipoMaterial);
 router.put('/tipo-proyecto', Controller.putTipoProyecto);
 
+// Rutas para noticias y carrusel
+router.get('/noticias', Controller.getNoticias);
+router.post('/noticias', upload.single('file'), Controller.postNoticia);
+
 // Rutas para la gestión de sesiones de usuarios
 router.post('/login', Controller.login);
 router.post('/session', authMiddleware, Controller.session);

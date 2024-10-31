@@ -4,6 +4,7 @@ import Encargados from "../components/MantenedorEncargados/Encargados.vue";
 import Maquinarias from "../components/MantenedorMaquinarias/Maquinarias.vue"
 import Proyectos from "../components/MantenedorProyectos.vue/Proyectos.vue"
 import Materiales from "../components/MantenedorMateriales/Materiales.vue"
+import Noticias from "../components/MantenedorNoticias/Noticias.vue"
 const BACKEND_URL = import.meta.env.PUBLIC_BACKEND_URL;
 
 const userRole = ref(false);
@@ -45,6 +46,7 @@ onMounted(() => {
 			<Maquinarias />
 			<Proyectos />
 			<Materiales />
+			<Noticias />
 		</div>
 	</section>
 </template>

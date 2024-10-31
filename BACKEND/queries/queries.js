@@ -39,6 +39,10 @@ const putNombreEquipos = "UPDATE nombreequipos SET nombre = ? WHERE id = ?";
 const putTipoMaterial = "UPDATE tipomaterial SET nombre = ? WHERE id = ?";
 const putTipoProyecto = "UPDATE tipoproyecto SET nombre = ? WHERE id = ?";
 
+// Consultas para noticias y carrusel
+const getNoticias = "SELECT * FROM noticia";
+const postNoticia = "INSERT INTO noticia (titulo, descripcion, nombre_archivo, contenido_archivo) VALUES (?, ?, ?, ?)";
+
 // Consultas para la gestión de sesiones de usuarios
 const getUserByEmail = "SELECT * FROM usuario WHERE email = ?";
 
@@ -70,5 +74,7 @@ export default {
     putNombreEquipos,
     putTipoMaterial,
     putTipoProyecto,
+    getNoticias,
+    postNoticia,
     getUserByEmail,
 }
