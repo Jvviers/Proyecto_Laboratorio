@@ -226,10 +226,10 @@ onMounted(() => {
 			</div>
 		</div>
 	</header>
-	<section class="flex flex-col justify-center items-center w-full px-8 md:px-32 gap-6 py-6">
+	<section v-if="validSession" class="flex flex-col justify-center items-center w-full px-8 md:px-32 gap-6 py-6">
 		<h2 class="text-2xl text-center font-bold">TABLA DE SOLICITUDES</h2>
 		<!-- Contenedor de la tabla -->
-		<div v-if="validSession" class="w-full overflow-x-scroll border">
+		<div class="w-full overflow-x-scroll border">
 			<table class="table-auto bg-white">
 				<thead class="bg-gray-100 sticky top-0">
 					<tr>
@@ -243,7 +243,6 @@ onMounted(() => {
 						<th>Equipos</th>
 						<th>Tipo Proyecto</th>
 						<th>Tipo Material</th>
-						<th>Archivo</th>
 						<th>Tipo Solicitud</th>
 						<th>Estado</th>
 						<th>Acción</th>
@@ -272,8 +271,6 @@ onMounted(() => {
 							{{ request.equipos }}</td>
 						<td class="td">{{ request.tipo_proyecto }}</td>
 						<td class="td">{{ request.tipo_material }}</td>
-						<td class="td overflow-x-scroll max-w-[180px]"><a target="_blank" :href="request.archivo"
-								class="text-blue-500 underline">{{ request.archivo }}</a></td>
 						<td class="td capitalize">{{ request.tipo_form }}</td>
 
 						<!-- Selector que muestra y actualiza el estado -->
@@ -304,13 +301,18 @@ onMounted(() => {
 							</select>
 						</td>
 
-						<td class="flex justify-center items-center py-4">
-							<button @click="eliminarSolicitud(request.id)" type="button">
+						<td class="flex justify-center items-center py-4 gap-4">
+							<button @click="eliminarSolicitud(request.id)" type="button" class="delete">
 								<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" width="20" height="20">
-									<path
-										d="M135.2 17.7C140.6 6.8 151.7 0 163.8 0h120.4c12.1 0 23.2 6.8 28.6 17.7L320 32h96c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 96 0 81.7 0 64s14.3-32 32-32h96l7.2-14.3zM32 128h384v320c0 35.3-28.7 64-64 64H96c-35.3 0-64-28.7-64-64V128zm96 64c-8.8 0-16 7.2-16 16v224c0 8.8 7.2 16 16 16s16-7.2 16-16V208c0-8.8-7.2-16-16-16zm96 0c-8.8 0-16 7.2-16 16v224c0 8.8 7.2 16 16 16s16-7.2 16-16V208c0-8.8-7.2-16-16-16zm96 0c-8.8 0-16 7.2-16 16v224c0 8.8 7.2 16 16 16s16-7.2 16-16V208c0-8.8-7.2-16-16-16z" />
+									<path d="M135.2 17.7C140.6 6.8 151.7 0 163.8 0h120.4c12.1 0 23.2 6.8 28.6 17.7L320 32h96c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 96 0 81.7 0 64s14.3-32 32-32h96l7.2-14.3zM32 128h384v320c0 35.3-28.7 64-64 64H96c-35.3 0-64-28.7-64-64V128zm96 64c-8.8 0-16 7.2-16 16v224c0 8.8 7.2 16 16 16s16-7.2 16-16V208c0-8.8-7.2-16-16-16zm96 0c-8.8 0-16 7.2-16 16v224c0 8.8 7.2 16 16 16s16-7.2 16-16V208c0-8.8-7.2-16-16-16zm96 0c-8.8 0-16 7.2-16 16v224c0 8.8 7.2 16 16 16s16-7.2 16-16V208c0-8.8-7.2-16-16-16z" />
 								</svg>
 							</button>
+							<a v-if="request.tipo_form === 'impresion'" :href="`${BACKEND_URL}/download/${request.id}`"
+								target="_blank" rel="noopener noreferrer" class="download">
+								<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="20" height="20">
+									<path d="M288 32c0-17.7-14.3-32-32-32s-32 14.3-32 32v242.7l-73.4-73.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l128 128c12.5 12.5 32.8 12.5 45.3 0l128-128c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L288 274.7V32zM64 352c-35.3 0-64 28.7-64 64v32c0 35.3 28.7 64 64 64h384c35.3 0 64-28.7 64-64v-32c0-35.3-28.7-64-64-64H346.5l-45.3 45.3c-25 25-65.5 25-90.5 0L165.5 352H64zm368 56a24 24 0 1 1 0 48 24 24 0 1 1 0-48z"/>
+								</svg>
+							</a>
 						</td>
 					</tr>
 				</tbody>
@@ -402,8 +404,13 @@ svg path {
 	transition: all 0.3s ease;
 }
 
-button:hover svg path {
+.delete:hover svg path {
 	fill: #ef4444;
+	transition: all 0.3s ease;
+}
+
+.download:hover svg path {
+	fill: #00cdcd;
 	transition: all 0.3s ease;
 }
 </style>

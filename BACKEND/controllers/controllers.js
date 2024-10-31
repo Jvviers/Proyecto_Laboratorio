@@ -29,6 +29,18 @@ const getEquipoById = async (req, res) => {
         res.status(500).json({ message: error.message });
     }
 }
+const downloadMaterial = async (req, res) => {
+    try {
+        const [result] = await db.query(Queries.downloadMaterial, [req.params.id]);
+        if (result.length === 0) return res.status(404).send('Archivo no encontrado');
+        const { nombre_archivo, archivo } = result[0];
+        res.setHeader('Content-Disposition', `attachment; filename=${nombre_archivo}`);
+        res.setHeader('Content-Type', 'application/octet-stream');
+        res.end(archivo, 'binary');
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+}
 
 // Controladores para el envío de solicitudes
 const postAsesoria = async (req, res) => {
@@ -41,7 +53,9 @@ const postAsesoria = async (req, res) => {
 }
 const postMateriales = async (req, res) => {
     try {
-        const [data] = await db.query(Queries.postMateriales, [req.body.solicitante, req.body.email, req.body.matricula, req.body.actividad, req.body.tipo_proyecto, req.body.tipo_material, req.body.archivo, "impresion"]);
+        const file = req.file;
+        if (!file) return res.status(400).send('No se ha subido ningún archivo.');
+        const [data] = await db.query(Queries.postMateriales, [req.body.solicitante, req.body.email, req.body.matricula, req.body.actividad, req.body.tipo_proyecto, req.body.tipo_material, file.originalname, file.buffer, "impresion"]);
         res.json(data);
     } catch (error) {
         res.status(500).json({ message: error.message });
@@ -237,9 +251,9 @@ const login = async (req, res) => {
         const user = users[0];
         const isValidPassword = await bcrypt.compare(req.body.password, user.password);
 
-    if (!isValidPassword) return res.status(401).json({ message: "La contraseña es incorrecta" });
-    
-    const role = user.is_admin ? 'admin' : 'encargado'; // Cambiar a 'admin' si el usuario es administrador
+        if (!isValidPassword) return res.status(401).json({ message: "La contraseña es incorrecta" });
+
+        const role = user.is_admin ? 'admin' : 'encargado'; // Cambiar a 'admin' si el usuario es administrador
 
         const tokenPayload = { id: user.id, email: user.email, is_admin: user.is_admin };
         const accessToken = jwt.sign(tokenPayload, data.SECRET_JWT_KEY, { expiresIn: '16h' });
@@ -266,6 +280,7 @@ export default {
     getSolicitudes,
     getSolicitudesById,
     getEquipoById,
+    downloadMaterial,
     postAsesoria,
     postMateriales,
     postEquipos,
