@@ -111,10 +111,32 @@ const getEncargados = async () => {
 		console.error('Error fetching solicitudes:', err);
 	}
 };
-
-const sendEmail = (request) => {
-	alert(`Email sent to ${request.email} regarding request ${request.id}`);
+ 
+const sendEmail = async (email, id) => {
+	try {
+		const response = await fetch(BACKEND_URL + '/estado-solicitud', {
+			method: 'POST',
+			credentials: 'include',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify({
+				email: email,
+				id: id,
+			}),
+		});
+		if (!response.ok) {
+			throw new Error('Error en la respuesta del servidor: ' + response.statusText);
+		}
+		const data = await response.json();
+		console.log('Email enviado');
+		alert('Correo enviado a ${email} para la solicitud ${id}')
+	} catch (err) {
+		console.error('Error fetching solicitudes:', err);
+		alert('Error al enviar correo')
+	}
 };
+	
 
 const goToLogin = () => {
 	window.location.href = '/login';

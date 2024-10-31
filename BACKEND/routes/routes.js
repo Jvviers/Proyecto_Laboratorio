@@ -8,6 +8,7 @@ const upload = multer({ storage: storage });
 
 const router = Router();
 
+
 // Rutas para obtener datos de solicitudes
 router.get('/solicitudes', Controller.getSolicitudes);
 router.get('/solicitudes/:id', Controller.getSolicitudesById);

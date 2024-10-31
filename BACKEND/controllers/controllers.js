@@ -1,8 +1,36 @@
+import nodemailer from 'nodemailer';
 import Queries from '../queries/queries.js';
 import db from '../db/db.js';
 import bcrypt from 'bcrypt';
 import data from '../config.js';
 import jwt from 'jsonwebtoken'
+
+
+
+//Controlador para el envío de correos
+export const transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+      user: "utal.adm@gmail.com",
+      pass: 'f k k a l m q b p f p e k a l x',
+    },
+});
+
+const sendEmail = async (to, subject, text) => {
+    try {
+        await transporter.sendMail({
+            from: '"UTALCA Admin" <utal.adm@gmail.com>',
+            to,
+            subject,
+            text,
+        });
+    } catch (error) {
+        console.error('Error enviando correo:', error);
+    }
+};
+
+
+
 
 // Controladores para obtener datos de solicitudes
 const getSolicitudes = async (req, res) => {
@@ -89,12 +117,42 @@ const postEncargadoSolicitud = async (req, res) => {
 }
 const postEstadoSolicitud = async (req, res) => {
     try {
-        const [data] = await db.query(Queries.postEstadoSolicitud, [req.body.estado, req.body.id]);
+        const { estado, id } = req.body;
+        const [data] = await db.query(Queries.postEstadoSolicitud, [estado, id]);
+
+        if (estado !== "En espera") {
+            const subject = `Solicitud ${estado}`;
+            let message = "";
+
+            switch (estado) {
+                case "Aprobada":
+                    message = "Su solicitud ha sido aprobada. Puede proceder con el siguiente paso.";
+                    break;
+                case "Rechazada":
+                    message = "Lamentamos informarle que su solicitud ha sido rechazada.";
+                    break;
+                case "En Proceso":
+                    message = "Su solicitud está en proceso. Pronto recibirá una actualización.";
+                    break;
+                case "Completada":
+                    message = "Su solicitud ha sido completada.";
+                    break;
+                default:
+                    message = "Su solicitud ha sido actualizada.";
+            }
+            const [solicitud] = await db.query(Queries.getSolicitudById, [id]);
+            const to = solicitud[0]?.email;
+
+            if (to){
+                await sendEmail(to, subject, message);
+            }
+        }
         res.json(data);
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
 }
+
 const deleteSolicitud = async (req, res) => {
     try {
         const [data] = await db.query(Queries.deleteSolicitud, [req.body.id]);
@@ -307,4 +365,5 @@ export default {
     login,
     session,
     logout,
+    sendEmail,
 }
