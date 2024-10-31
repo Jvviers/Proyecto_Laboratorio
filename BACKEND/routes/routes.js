@@ -2,6 +2,7 @@ import { Router } from 'express';
 import Controller from '../controllers/controllers.js';
 import authMiddleware from '../middlewares/authMiddleware.js';
 import multer from 'multer';
+import sseController from '../controllers/sseController.js';
 
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
@@ -13,6 +14,7 @@ router.get('/solicitudes', Controller.getSolicitudes);
 router.get('/solicitudes/:id', Controller.getSolicitudesById);
 router.get('/equipo/:id', Controller.getEquipoById);
 router.get('/download/:id', Controller.downloadMaterial);
+router.get('/observer', sseController.eventsHandler);
 
 // Rutas para el envío de solicitudes
 router.post('/asesoria', Controller.postAsesoria);

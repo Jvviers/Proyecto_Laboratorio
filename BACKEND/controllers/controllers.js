@@ -3,6 +3,7 @@ import db from '../db/db.js';
 import bcrypt from 'bcrypt';
 import data from '../config.js';
 import jwt from 'jsonwebtoken'
+import sseController from './sseController.js';
 
 // Controladores para obtener datos de solicitudes
 const getSolicitudes = async (req, res) => {
@@ -46,6 +47,7 @@ const downloadMaterial = async (req, res) => {
 const postAsesoria = async (req, res) => {
     try {
         const [data] = await db.query(Queries.postAsesoria, [req.body.solicitante, req.body.email, req.body.matricula, req.body.actividad, req.body.fecha, "asesoria"]);
+        sseController.sendEventsToAll({ type: 'UPDATE', message: 'Update solicitudes' });
         res.json(data);
     } catch (error) {
         res.status(500).json({ message: error.message });
@@ -56,6 +58,7 @@ const postMateriales = async (req, res) => {
         const file = req.file;
         if (!file) return res.status(400).send('No se ha subido ningún archivo.');
         const [data] = await db.query(Queries.postMateriales, [req.body.solicitante, req.body.email, req.body.matricula, req.body.actividad, req.body.tipo_proyecto, req.body.tipo_material, file.originalname, file.buffer, "impresion"]);
+        sseController.sendEventsToAll({ type: 'UPDATE', message: 'Update solicitudes' });
         res.json(data);
     } catch (error) {
         res.status(500).json({ message: error.message });
@@ -64,6 +67,7 @@ const postMateriales = async (req, res) => {
 const postEquipos = async (req, res) => {
     try {
         const [data] = await db.query(Queries.postEquipos, [req.body.solicitante, req.body.email, req.body.matricula, req.body.actividad, "laboratorio"]);
+        sseController.sendEventsToAll({ type: 'UPDATE', message: 'Update solicitudes' });
         res.json(data);
     } catch (error) {
         res.status(500).json({ message: error.message });
@@ -72,6 +76,7 @@ const postEquipos = async (req, res) => {
 const postEquipo = async (req, res) => {
     try {
         const [data] = await db.query(Queries.postEquipo, [req.body.ref_sol, req.body.nombre_equipo]);
+        sseController.sendEventsToAll({ type: 'UPDATE', message: 'Update solicitudes' });
         res.json(data);
     } catch (error) {
         res.status(500).json({ message: error.message });
@@ -143,6 +148,7 @@ const register = async (req, res) => {
     try {
         const hashedPassword = await bcrypt.hash(req.body.password, data.SALT_ROUNDS);
         const [user] = await db.query(Queries.register, [req.body.email, hashedPassword, req.body.is_admin]);
+        sseController.sendEventsToAll({ type: 'UPDATE', message: 'Update encargados' });
         res.json(user);
     } catch (error) {
         res.status(500).json({ message: error.message });
@@ -177,6 +183,7 @@ const postTipoProyecto = async (req, res) => {
 const deleteEncargado = async (req, res) => {
     try {
         const [data] = await db.query(Queries.deleteEncargado, [req.body.id]);
+        sseController.sendEventsToAll({ type: 'UPDATE', message: 'Update encargados' });
         res.json(data);
     } catch (error) {
         res.status(500).json({ message: error.message });
@@ -211,6 +218,7 @@ const deleteTipoProyecto = async (req, res) => {
 const putEncargado = async (req, res) => {
     try {
         const [data] = await db.query(Queries.putEncargado, [req.body.email, req.body.id]);
+        sseController.sendEventsToAll({ type: 'UPDATE', message: 'Update encargados' });
         res.json(data);
     } catch (error) {
         res.status(500).json({ message: error.message });
