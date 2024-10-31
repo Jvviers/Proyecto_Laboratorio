@@ -17,14 +17,16 @@ CREATE TABLE solicitud(
 	fecha TIMESTAMP,
     tipo_proyecto TEXT,
     tipo_material TEXT,
-    archivo TEXT,
+    nombre_archivo VARCHAR(255),
+    contenido_archivo LONGBLOB,
     tipo_form TEXT NOT NULL CHECK (tipo_form IN ('asesoria', 'laboratorio', 'impresion')),
     estado TEXT NOT NULL DEFAULT('en espera'),
     
     CONSTRAINT chk_fecha CHECK ((tipo_form = 'asesoria' AND fecha IS NOT NULL) OR (tipo_form != 'asesoria' AND fecha IS NULL)),
     CONSTRAINT chk_tipo_proyecto CHECK ((tipo_form = 'impresion' AND tipo_proyecto IS NOT NULL) OR (tipo_form != 'impresion' AND tipo_proyecto IS NULL)),
     CONSTRAINT chk_tipo_material CHECK ((tipo_form = 'impresion' AND tipo_material IS NOT NULL) OR (tipo_form != 'impresion' AND tipo_material IS NULL)),
-    CONSTRAINT chk_archivo CHECK ((tipo_form != 'impresion' AND archivo IS NULL) OR (tipo_form = 'impresion')),
+    CONSTRAINT chk_nombre_archivo CHECK ((tipo_form != 'impresion' AND nombre_archivo IS NULL) OR (tipo_form = 'impresion')),
+    CONSTRAINT chk_contenido_archivo CHECK ((tipo_form != 'impresion' AND contenido_archivo IS NULL) OR (tipo_form = 'impresion')),
     CONSTRAINT chk_ref_enc CHECK ((tipo_form = 'asesoria' AND ref_enc IS NULL) OR (tipo_form != 'asesoria'))
 );
 

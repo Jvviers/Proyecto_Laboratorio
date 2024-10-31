@@ -1,7 +1,7 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import { defineProps, defineEmits } from 'vue';
-import Encargados from './Encargados.vue';
+const BACKEND_URL = import.meta.env.PUBLIC_BACKEND_URL;
 
 // Recibe la propiedad isModalOpen
 const props = defineProps({
@@ -20,7 +20,7 @@ const encargados = ref([]);
 
 const editarEncargado = async (id, email) => {
     try {
-        const response = await fetch('http://localhost:3000/encargado', {
+        const response = await fetch(BACKEND_URL + '/encargado', {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
@@ -42,7 +42,7 @@ const editarEncargado = async (id, email) => {
 
 const getEncargados = async () => {
     try {
-        const response = await fetch('http://localhost:3000/encargados', {
+        const response = await fetch(BACKEND_URL + '/encargados', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -73,7 +73,7 @@ onMounted(() => {
 </script>
 <template>
     <section class="flex flex-col justify-center items-center gap-6 py-4 px-12 w-full">
-        <h1 class="text-3xl text-center font-bold">Editar Encargado</h1>
+        <h1 class="text-2xl text-center font-bold">EDITAR ENCARGADO</h1>
         <div class="flex flex-col justify-center items-stretch w-full gap-1">
             <li v-for="encargado in encargados" :key="encargado.id" class="flex justify-between items-center px-2 w-full">
                 <input type="text" :disabled="encargado.disabled" v-model="encargado.email"
@@ -87,7 +87,7 @@ onMounted(() => {
             </li>
         </div>
         <div class="flex w-full justify-center items-center gap-8">
-            <button class="button" type="button" @click="closeModal">Volver</button>
+            <button class="button" type="button" @click="closeModal">VOLVER</button>
         </div>
     </section>
 </template>

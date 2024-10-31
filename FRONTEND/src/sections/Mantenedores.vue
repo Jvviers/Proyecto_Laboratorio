@@ -4,13 +4,14 @@ import Encargados from "../components/MantenedorEncargados/Encargados.vue";
 import Maquinarias from "../components/MantenedorMaquinarias/Maquinarias.vue"
 import Proyectos from "../components/MantenedorProyectos.vue/Proyectos.vue"
 import Materiales from "../components/MantenedorMateriales/Materiales.vue"
+const BACKEND_URL = import.meta.env.PUBLIC_BACKEND_URL;
 
 const userRole = ref(false);
 const validSession = ref(false);
 
 const validateSession = async () => {
 	try {
-		const response = await fetch('http://localhost:3000/session', {
+		const response = await fetch(BACKEND_URL + '/session', {
 			method: 'POST',
 			credentials: 'include',
 		});

@@ -1,6 +1,7 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import { defineProps, defineEmits } from 'vue';
+const BACKEND_URL = import.meta.env.PUBLIC_BACKEND_URL;
 
 // Recibe la propiedad isModalOpen
 const props = defineProps({
@@ -19,7 +20,7 @@ const materiales = ref([]);
 
 const eliminarMaterial = async (id) => {
     try {
-        const response = await fetch('http://localhost:3000/tipo-material', {
+        const response = await fetch(BACKEND_URL + '/tipo-material', {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',
@@ -41,7 +42,7 @@ const eliminarMaterial = async (id) => {
 
 const getMateriales = async () => {
     try {
-        const response = await fetch('http://localhost:3000/tipo-material', {
+        const response = await fetch(BACKEND_URL + '/tipo-material', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -63,7 +64,7 @@ onMounted(() => {
 </script>
 <template>
     <section class="flex flex-col justify-center items-center gap-6 py-4 px-12 w-full">
-        <h1 class="text-3xl text-center font-bold">Eliminar Material</h1>
+        <h1 class="text-2xl text-center font-bold">ELIMINAR MATERIAL</h1>
         <div class="flex flex-col justify-center items-stretch w-full gap-1">
             <li v-for="material in materiales" :key="material.id" class="flex justify-between items-center px-2 w-full">
                 <span class="bg-gray-50 border border-gray-200 px-2 py-1 rounded w-full">{{ material.nombre }}</span>
@@ -76,7 +77,7 @@ onMounted(() => {
             </li>
         </div>
         <div class="flex w-full justify-center items-center gap-8">
-            <button class="button" type="button" @click="closeModal">Volver</button>
+            <button class="button" type="button" @click="closeModal">VOLVER</button>
         </div>
     </section>
 </template>

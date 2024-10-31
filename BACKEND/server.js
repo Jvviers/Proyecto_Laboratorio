@@ -9,7 +9,6 @@ const PORT = process.env.PORT ?? 3000;
 const HOST = process.env.HOST ?? 'http://localhost:4321';
 
 app.use(cors({ origin: HOST, credentials: true }));
-
 app.use(express.json());
 app.use(cookieParser());
 app.use(router);

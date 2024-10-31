@@ -1,5 +1,6 @@
 <script setup>
 import { ref, onMounted, onUnmounted } from 'vue';
+const BACKEND_URL = import.meta.env.PUBLIC_BACKEND_URL;
 
 const sessionActive = ref(false);
 const ruta = ref('');
@@ -12,7 +13,7 @@ const toggleDropdown = () => {
 
 const checkSession = async () => {
     try {
-        const response = await fetch('http://localhost:3000/session', {
+        const response = await fetch(BACKEND_URL + '/session', {
             method: 'POST',
             credentials: 'include',
             headers: {
@@ -30,7 +31,7 @@ const checkSession = async () => {
 
 const logout = async () => {
     try {
-        const response = await fetch('http://localhost:3000/logout', {
+        const response = await fetch(BACKEND_URL + '/logout', {
             method: 'POST',
             credentials: 'include',
             headers: {
