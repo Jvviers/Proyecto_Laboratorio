@@ -113,7 +113,7 @@ const postEquipos = async () => {
 		{{ accessMessage }}
 	</div>
 	<form @submit.prevent="postEquipos" class="flex flex-col justify-center items-center gap-4 my-4 w-full">
-		<h1 class="text-3xl text-center font-bold">Equipos</h1>
+		<h1 class="text-2xl text-center font-bold">EQUIPOS</h1>
 		<div class="flex flex-col justify-center items-center gap-4 mx-auto px-10 py-6">
 			<div class="flex justify-between items-center w-full gap-4">
 				<label for="solicitante">Solicitante:</label>
@@ -143,7 +143,7 @@ const postEquipos = async () => {
 				</li>
 			</div>
 		</div>
-		<button class="button" type="submit">Enviar</button>
+		<button class="button" type="submit">ENVIAR</button>
 	</form>
 </template>
 

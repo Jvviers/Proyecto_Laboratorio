@@ -82,7 +82,7 @@ const timeAccuracy = ref(2);
         {{ accessMessage }}
     </div>
     <form @submit.prevent="asesoria" class="flex flex-col justify-center items-center gap-4 my-4 w-full">
-        <h1 class="text-3xl text-center font-bold">Agendar asesoría</h1>
+        <h1 class="text-2xl text-center font-bold">AGENDAR ASESORÍA</h1>
         <div class="flex flex-col justify-center items-center gap-4 mx-auto px-10 py-6">
             <div class="flex justify-between items-center w-full gap-4">
                 <label for="solicitante">Solicitante:</label>
@@ -102,13 +102,13 @@ const timeAccuracy = ref(2);
             </div>
         </div>
         <div class="flex flex-col items-center gap-4 p-4">
-            <label class="text-2xl" for="date">Seleccione una fecha:</label>
+            <label class="text-lg font-bold" for="date">SELECCIONE UNA FECHA:</label>
             <DatePicker v-model="selectedDate" id="date" mode="dateTime" is-required is24hr hide-time-header
                 :disabled-dates="disabledDates" :min-date="new Date()" :color="selectedColor"
                 :time-accuracy="timeAccuracy" />
         </div>
         <button class="button" type="submit">
-            Agendar
+            AGENDAR
         </button>
     </form>
 </template>

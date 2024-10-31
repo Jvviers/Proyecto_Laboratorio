@@ -73,7 +73,7 @@ onMounted(() => {
 </script>
 <template>
     <section class="flex flex-col justify-center items-center gap-6 py-4 px-12 w-full">
-        <h1 class="text-3xl text-center font-bold">Editar Encargado</h1>
+        <h1 class="text-2xl text-center font-bold">EDITAR ENCARGADO</h1>
         <div class="flex flex-col justify-center items-stretch w-full gap-1">
             <li v-for="encargado in encargados" :key="encargado.id" class="flex justify-between items-center px-2 w-full">
                 <input type="text" :disabled="encargado.disabled" v-model="encargado.email"
@@ -87,7 +87,7 @@ onMounted(() => {
             </li>
         </div>
         <div class="flex w-full justify-center items-center gap-8">
-            <button class="button" type="button" @click="closeModal">Volver</button>
+            <button class="button" type="button" @click="closeModal">VOLVER</button>
         </div>
     </section>
 </template>
