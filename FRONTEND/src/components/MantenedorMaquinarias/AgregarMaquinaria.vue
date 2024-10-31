@@ -1,6 +1,7 @@
 <script setup>
 import { ref } from 'vue';
 import { defineProps, defineEmits } from 'vue';
+const BACKEND_URL = import.meta.env.PUBLIC_BACKEND_URL;
 
 // Recibe la propiedad isModalOpen
 const props = defineProps({
@@ -19,7 +20,7 @@ const name = ref('');
 
 const agregarMaquinaria = async () => {
     try {
-        const response = await fetch('http://localhost:3000/nombre-equipos', {
+        const response = await fetch(BACKEND_URL + '/nombre-equipos', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -41,14 +42,14 @@ const agregarMaquinaria = async () => {
 </script>
 <template>
     <form @submit.prevent="agregarMaquinaria" class="flex flex-col justify-center items-center gap-6 py-4 px-12 w-full">
-        <h1 class="text-3xl text-center font-bold">Agregar Maquinaria</h1>
+        <h1 class="text-2xl text-center font-bold">AGREGAR MAQUINARIA</h1>
         <div class="flex justify-between items-center w-full gap-4">
             <label for="name">Nombre:</label>
             <input class="text-input input" type="text" id="name" v-model="name" required />
         </div>
         <div class="flex w-full justify-center items-center gap-8">
-            <button class="button" type="submit">Agregar</button>
-            <button class="button" type="button" @click="closeModal">Cancelar</button>
+            <button class="button" type="submit">AGREGAR</button>
+            <button class="button" type="button" @click="closeModal">CANCELAR</button>
         </div>
     </form>
 </template>

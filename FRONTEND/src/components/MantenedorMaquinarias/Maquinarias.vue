@@ -22,12 +22,12 @@ const toggleModalEditar = () => {
 </script>
 
 <template>
-    <div class="flex flex-col justify-center items-center gap-2 py-2 border border-gray-400 w-[200px] rounded">
-        <h2 class="text-xl font-bold">Maquinarias</h2>
-        <div class="flex flex-col justify-center items-center gap-1 w-full px-8">
-            <button class="button w-full" @click="toggleModalAgregar">Agregar</button>
-            <button class="button w-full" @click="toggleModalEliminar">Eliminar</button>
-            <button class="button w-full" @click="toggleModalEditar">Editar</button>
+    <div class="flex flex-col justify-center items-center gap-2 px-8 py-4 w-[200px] border border-gray-300 shadow-md rounded">
+        <h2 class="text-lg font-bold">MAQUINARIAS</h2>
+        <div class="flex flex-col justify-center items-center gap-1 w-full">
+            <button class="button w-full" @click="toggleModalAgregar">AGREGAR</button>
+            <button class="button w-full" @click="toggleModalEliminar">ELIMINAR</button>
+            <button class="button w-full" @click="toggleModalEditar">EDITAR</button>
         </div>
     </div>
 

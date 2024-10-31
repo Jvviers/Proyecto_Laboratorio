@@ -1,17 +1,22 @@
 import { Router } from 'express';
 import Controller from '../controllers/controllers.js';
 import authMiddleware from '../middlewares/authMiddleware.js';
+import multer from 'multer';
+
+const storage = multer.memoryStorage();
+const upload = multer({ storage: storage });
 
 const router = Router();
 
 // Rutas para obtener datos de solicitudes
-router.get('/solicitudes', authMiddleware, Controller.getSolicitudes);
-router.get('/solicitudes/:id', authMiddleware, Controller.getSolicitudesById);
-
+router.get('/solicitudes', Controller.getSolicitudes);
+router.get('/solicitudes/:id', Controller.getSolicitudesById);
+router.get('/equipo/:id', Controller.getEquipoById);
+router.get('/download/:id', Controller.downloadMaterial);
 
 // Rutas para el envío de solicitudes
 router.post('/asesoria', Controller.postAsesoria);
-router.post('/materiales', Controller.postMateriales);
+router.post('/materiales', upload.single('file'), Controller.postMateriales);
 router.post('/equipos', Controller.postEquipos);
 router.post('/equipo', Controller.postEquipo);
 
@@ -21,7 +26,7 @@ router.post('/estado-solicitud', authMiddleware, Controller.postEstadoSolicitud)
 router.delete('/solicitud', authMiddleware, Controller.deleteSolicitud);
 
 // Rutas para obtener los mantenedores
-router.get('/encargados', authMiddleware, Controller.getEncargados);
+router.get('/encargados', Controller.getEncargados);
 router.get('/nombre-equipos', Controller.getNombreEquipos);
 router.get('/tipo-material', Controller.getTipoMaterial);
 router.get('/tipo-proyecto', Controller.getTipoProyecto);

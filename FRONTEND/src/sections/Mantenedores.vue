@@ -4,13 +4,14 @@ import Encargados from "../components/MantenedorEncargados/Encargados.vue";
 import Maquinarias from "../components/MantenedorMaquinarias/Maquinarias.vue"
 import Proyectos from "../components/MantenedorProyectos.vue/Proyectos.vue"
 import Materiales from "../components/MantenedorMateriales/Materiales.vue"
+const BACKEND_URL = import.meta.env.PUBLIC_BACKEND_URL;
 
 const userRole = ref(false);
 const validSession = ref(false);
 
 const validateSession = async () => {
 	try {
-		const response = await fetch('http://localhost:3000/session', {
+		const response = await fetch(BACKEND_URL + '/session', {
 			method: 'POST',
 			credentials: 'include',
 		});
@@ -34,13 +35,16 @@ onMounted(() => {
 </script>
 
 <template>
-	<div v-if="validSession && userRole" class="flex flex-col justify-center items-center mt-4">
-		<h2 class="text-2xl text-center font-bold">Mantenedores</h2>
+	<section v-if="validSession && userRole"
+		class="flex flex-col justify-center items-center w-full px-8 md:px-32 py-6 mt-6">
+		<div class="flex justify-center items-center w-full border-t border-gray-300 pt-6">
+			<h2 class="text-2xl text-center font-bold">MANTENEDORES</h2>
+		</div>
 		<div class="flex flex-wrap justify-evenly items-center gap-8 py-8">
 			<Encargados />
 			<Maquinarias />
 			<Proyectos />
 			<Materiales />
 		</div>
-	</div>
+	</section>
 </template>

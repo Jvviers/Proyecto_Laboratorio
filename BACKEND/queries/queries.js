@@ -1,10 +1,12 @@
 // Consultas para obtener datos de solicitudes
 const getSolicitudes = "SELECT * FROM solicitud";
 const getSolicitudesById = "SELECT * FROM solicitud WHERE ref_enc = ?";
+const getEquipoById = "SELECT * FROM equipo WHERE ref_sol = ?";
+const downloadMaterial = "SELECT nombre_archivo, contenido_archivo FROM solicitud WHERE id = ? AND tipo_form = 'impresion'";
 
 // Consultas para el envío de solicitudes
 const postAsesoria = "INSERT INTO solicitud (solicitante, email, matricula, actividad, fecha, tipo_form) VALUES (?, ?, ?, ?, ?, ?)";
-const postMateriales = "INSERT INTO solicitud (solicitante, email, matricula, actividad, tipo_proyecto, tipo_material, archivo, tipo_form) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+const postMateriales = "INSERT INTO solicitud (solicitante, email, matricula, actividad, tipo_proyecto, tipo_material, nombre_archivo, contenido_archivo, tipo_form) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 const postEquipos = "INSERT INTO solicitud (solicitante, email, matricula, actividad, tipo_form) VALUES (?, ?, ?, ?, ?)";
 const postEquipo = "INSERT INTO equipo (ref_sol, nombre_equipo) VALUES (?, ?)";
 
@@ -43,6 +45,8 @@ const getUserByEmail = "SELECT * FROM usuario WHERE email = ?";
 export default {
     getSolicitudes,
     getSolicitudesById,
+    getEquipoById,
+    downloadMaterial,
     postAsesoria,
     postMateriales,
     postEquipos,

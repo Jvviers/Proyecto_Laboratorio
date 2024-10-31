@@ -1,6 +1,7 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import { defineProps, defineEmits } from 'vue';
+const BACKEND_URL = import.meta.env.PUBLIC_BACKEND_URL;
 
 // Recibe la propiedad isModalOpen
 const props = defineProps({
@@ -19,7 +20,7 @@ const maquinarias = ref([]);
 
 const editarMaquinaria = async (id, name) => {
     try {
-        const response = await fetch('http://localhost:3000/nombre-equipos', {
+        const response = await fetch(BACKEND_URL + '/nombre-equipos', {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
@@ -41,7 +42,7 @@ const editarMaquinaria = async (id, name) => {
 
 const getMaquinarias = async () => {
     try {
-        const response = await fetch('http://localhost:3000/nombre-equipos', {
+        const response = await fetch(BACKEND_URL + '/nombre-equipos', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -71,7 +72,7 @@ onMounted(() => {
 </script>
 <template>
     <section class="flex flex-col justify-center items-center gap-6 py-4 px-12 w-full">
-        <h1 class="text-3xl text-center font-bold">Editar Maquinaria</h1>
+        <h1 class="text-2xl text-center font-bold">EDITAR MAQUINARIA</h1>
         <div class="flex flex-col justify-center items-stretch w-full gap-1">
             <li v-for="maquinaria in maquinarias" :key="maquinaria.id" class="flex justify-between items-center px-2 w-full">
                 <input type="text" :disabled="maquinaria.disabled" v-model="maquinaria.nombre"
@@ -85,7 +86,7 @@ onMounted(() => {
             </li>
         </div>
         <div class="flex w-full justify-center items-center gap-8">
-            <button class="button" type="button" @click="closeModal">Volver</button>
+            <button class="button" type="button" @click="closeModal">VOLVER</button>
         </div>
     </section>
 </template>
