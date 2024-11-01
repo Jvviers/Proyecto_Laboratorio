@@ -268,6 +268,32 @@ const postNoticia = async (req, res) => {
         res.status(500).json({ message: error.message });
     }
 }
+const deleteNoticia = async (req, res) => {
+    try {
+        const [data] = await db.query(Queries.deleteNoticia, [req.body.id]);
+        res.json(data);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+}
+const putNoticia = async (req, res) => {
+    try {
+        const file = req.file;
+        if (!file) return res.status(400).send('No se ha subido ningún archivo.');
+        const [data] = await db.query(Queries.putNoticia, [req.body.id, req.body.title, req.body.description, file.originalname, file.buffer]);
+        res.json(data);
+    } catch (error) {
+        res.status(500).json({ message: error });
+    }
+}
+const putNoticiaWithoutFile = async (req, res) => {
+    try {
+        const [data] = await db.query(Queries.putNoticiaWithoutFile, [req.body.id, req.body.title, req.body.description]);
+        res.json(data);
+    } catch (error) {
+        res.status(500).json({ message: error });
+    }
+}
 
 // Controladores para la gestión de sesiones de usuarios
 const login = async (req, res) => {
@@ -334,6 +360,9 @@ export default {
     putTipoProyecto,
     getNoticias,
     postNoticia,
+    deleteNoticia,
+    putNoticia,
+    putNoticiaWithoutFile,
     login,
     session,
     logout,

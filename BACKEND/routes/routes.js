@@ -54,6 +54,9 @@ router.put('/tipo-proyecto', Controller.putTipoProyecto);
 // Rutas para noticias y carrusel
 router.get('/noticias', Controller.getNoticias);
 router.post('/noticias', upload.single('file'), Controller.postNoticia);
+router.delete('/noticias', Controller.deleteNoticia);
+router.put('/noticias', upload.single('file'), Controller.putNoticia);
+router.put('/noticiasWithoutFile', Controller.putNoticiaWithoutFile);
 
 // Rutas para la gestión de sesiones de usuarios
 router.post('/login', Controller.login);
