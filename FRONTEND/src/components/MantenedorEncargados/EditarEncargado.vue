@@ -72,9 +72,9 @@ onMounted(() => {
 });
 </script>
 <template>
-    <section class="flex flex-col justify-center items-center gap-6 py-4 px-12 w-full">
+    <section class="flex flex-col justify-center items-center gap-6 py-4 px-12 w-full max-h-[80vh]">
         <h1 class="text-2xl text-center font-bold">EDITAR ENCARGADO</h1>
-        <div class="flex flex-col justify-center items-stretch w-full gap-1">
+        <div class="flex flex-col justify-start items-stretch w-full gap-1 overflow-y-scroll">
             <li v-for="encargado in encargados" :key="encargado.id" class="flex justify-between items-center px-2 w-full">
                 <input type="text" :disabled="encargado.disabled" v-model="encargado.email"
                     @change="editarEncargado(encargado.id, encargado.email)" class="input" />
