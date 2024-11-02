@@ -32,27 +32,26 @@ const validateSession = async () => {
 };
 
 const fetchRequests = async () => {
-	try {
-		const route = userRole.value ? '/solicitudes' : `/solicitudes/${userId.value}`;
-		const response = await fetch(BACKEND_URL + route, {
-			method: 'GET',
-			credentials: 'include',
-			headers: {
-				'Content-Type': 'application/json',
-			},
-		});
+    try {
+        const route = userRole.value ? '/solicitudes' : `/solicitudes/${userId.value}`;
+        const response = await fetch(BACKEND_URL + route, {
+            method: 'GET',
+            credentials: 'include',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
 
-		if (!response.ok) {
-			console.error('Status:', response.status);
-			throw new Error('Error en la respuesta del servidor: ' + response.statusText);
-		}
-		const data = await response.json();
-		requests.value = data;
-		await loadEquipos();
-	} catch (err) {
-		error.value = err.message;
-		console.error('Error fetching solicitudes:', err);
-	}
+        if (!response.ok) {
+            throw new Error('Error en la respuesta del servidor: ' + response.statusText);
+        }
+        const data = await response.json();
+        requests.value = data;
+        await loadEquipos();
+    } catch (err) {
+        error.value = err.message;
+        console.error('Error fetching solicitudes:', err);
+    }
 };
 
 const loadEquipos = async () => {
@@ -112,29 +111,26 @@ const getEncargados = async () => {
 	}
 };
  
-const sendEmail = async (email, id) => {
-	try {
-		const response = await fetch(BACKEND_URL + '/estado-solicitud', {
-			method: 'POST',
-			credentials: 'include',
-			headers: {
-				'Content-Type': 'application/json',
-			},
-			body: JSON.stringify({
-				email: email,
-				id: id,
-			}),
-		});
-		if (!response.ok) {
-			throw new Error('Error en la respuesta del servidor: ' + response.statusText);
-		}
-		const data = await response.json();
-		console.log('Email enviado');
-		alert('Correo enviado a ${email} para la solicitud ${id}')
-	} catch (err) {
-		console.error('Error fetching solicitudes:', err);
-		alert('Error al enviar correo')
-	}
+const sendEmail = async (email, estado, id) => {
+    try {
+        const response = await fetch(BACKEND_URL + '/estado-solicitud', {
+            method: 'POST',
+            credentials: 'include',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                email: email,
+                estado: estado,
+                id: id,
+            }),
+        });
+        if (!response.ok) {
+            throw new Error('Error en la respuesta del servidor: ' + response.statusText);
+        }
+    } catch (err) {
+        console.error('Error sending email:', err);
+    }
 };
 	
 
