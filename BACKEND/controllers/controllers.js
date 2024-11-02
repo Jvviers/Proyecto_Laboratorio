@@ -6,14 +6,6 @@ import data from '../config.js';
 import jwt from 'jsonwebtoken';
 
 
-//Controlador para el envío de correos
-export const transporter = nodemailer.createTransport({
-    service: 'gmail',
-    auth: {
-      user: "utal.adm@gmail.com",
-      pass: 'f k k a l m q b p f p e k a l x',
-    },
-});
 
 const sendEmail = async (to, subject, text) => {
     try {
@@ -114,29 +106,45 @@ const postEncargadoSolicitud = async (req, res) => {
         res.status(500).json({ message: error.message });
     }
 }
+
 const postEstadoSolicitud = async (req, res) => {
-    const postEstadoSolicitud = async (req, res) => {
-        try {
-            const { estado, id } = req.body;
-            const [data] = await db.query(Queries.postEstadoSolicitud, [estado, id]);
-    
-            if (estado === "Completada") {  // Envía el correo solo cuando esté completada
-                const subject = `Solicitud ${estado}`;
-                const message = "Su solicitud ha sido completada exitosamente.";
-    
-                const [solicitud] = await db.query(Queries.getSolicitudById, [id]);
-                const to = solicitud[0]?.email;
-    
-                if (to) {
-                    await sendEmail(to, subject, message);
-                }
+    try {
+        const { estado, id } = req.body;
+        const [data] = await db.query(Queries.postEstadoSolicitud, [estado, id]);
+
+        if (estado !== "En espera") {
+            const subject = `Solicitud ${estado}`;
+            let message = "";
+
+            switch (estado) {
+                case "Aprobada":
+                    message = "Su solicitud ha sido aprobada. Puede proceder con el siguiente paso.";
+                    break;
+                case "Rechazada":
+                    message = "Lamentamos informarle que su solicitud ha sido rechazada.";
+                    break;
+                case "En Proceso":
+                    message = "Su solicitud está en proceso. Pronto recibirá una actualización.";
+                    break;
+                case "Completada":
+                    message = "Su solicitud ha sido completada.";
+                    break;
+                default:
+                    message = "Su solicitud ha sido actualizada.";
             }
-            res.json(data);
-        } catch (error) {
-            res.status(500).json({ message: error.message });
+
+            const [solicitud] = await db.query(Queries.getSolicitudById, [id]);
+            const to = solicitud[0]?.email;
+
+            if (to) {
+                await sendEmail(to, subject, message);
+            }
         }
-    };
-}
+        res.json(data);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
 
 const deleteSolicitud = async (req, res) => {
     try {

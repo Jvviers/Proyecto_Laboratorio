@@ -1,5 +1,6 @@
 <script setup>
 import { ref, onMounted, computed } from 'vue';
+import nodemailer from 'nodemailer';	
 const BACKEND_URL = import.meta.env.PUBLIC_BACKEND_URL;
 
 const requests = ref([]);
@@ -111,27 +112,38 @@ const getEncargados = async () => {
 	}
 };
  
-const sendEmail = async (email, estado, id) => {
+const nodemailer = require('nodemailer');
+
+const sendEmail = async (to, subject, message) => {
     try {
-        const response = await fetch(BACKEND_URL + '/estado-solicitud', {
-            method: 'POST',
-            credentials: 'include',
-            headers: {
-                'Content-Type': 'application/json',
+        // Configuración del transporte SMTP
+        const transporter = nodemailer.createTransport({
+            host: "smtp.tuservidordecorreo.com", // Reemplaza con el host de tu servidor SMTP
+            port: 587, // Usa 587 o 465 según tu proveedor
+            secure: false, // true para 465, false para otros puertos
+            auth: {
+                user: "tu-email@dominio.com", // Reemplaza con tu correo electrónico
+                pass: "tu-contraseña", // Reemplaza con tu contraseña o token de acceso
             },
-            body: JSON.stringify({
-                email: email,
-                estado: estado,
-                id: id,
-            }),
         });
-        if (!response.ok) {
-            throw new Error('Error en la respuesta del servidor: ' + response.statusText);
-        }
+
+        // Opciones del correo electrónico
+        const mailOptions = {
+            from: '"Nombre del Remitente" <tu-email@dominio.com>', // Reemplaza con el remitente
+            to: to, // Dirección del destinatario
+            subject: subject, // Asunto del correo
+            text: message, // Mensaje en texto plano
+            // html: "<b>Mensaje HTML</b>" // Opcionalmente, puedes enviar un mensaje en formato HTML
+        };
+
+        // Enviar correo
+        const info = await transporter.sendMail(mailOptions);
+        console.log(`Correo enviado: ${info.messageId}`);
     } catch (err) {
-        console.error('Error sending email:', err);
+        console.error('Error enviando el correo:', err);
     }
 };
+
 	
 
 const goToLogin = () => {
@@ -227,6 +239,7 @@ const paginatedRequests = computed(() => {
 onMounted(() => {
 	validateSession();
 	getEncargados();
+	sendEmail();
 });
 </script>
 
