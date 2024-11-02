@@ -120,7 +120,7 @@ const sendEmail = async (to, subject, message) => {
             host: "gmail.com", 
             auth: {
                 user: "utal.adm@gmail.com", 
-                pass: "f k k a l m q b p f p e k a l x", 
+                pass: "", 
             },
         });
 
