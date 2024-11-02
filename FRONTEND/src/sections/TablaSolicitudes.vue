@@ -116,14 +116,11 @@ const nodemailer = require('nodemailer');
 
 const sendEmail = async (to, subject, message) => {
     try {
-        // Configuración del transporte SMTP
         const transporter = nodemailer.createTransport({
-            host: "smtp.tuservidordecorreo.com", // Reemplaza con el host de tu servidor SMTP
-            port: 587, // Usa 587 o 465 según tu proveedor
-            secure: false, // true para 465, false para otros puertos
+            host: "gmail.com", 
             auth: {
-                user: "tu-email@dominio.com", // Reemplaza con tu correo electrónico
-                pass: "tu-contraseña", // Reemplaza con tu contraseña o token de acceso
+                user: "utal.adm@gmail.com", 
+                pass: "f k k a l m q b p f p e k a l x", 
             },
         });
 
