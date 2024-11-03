@@ -2,3 +2,4 @@ node_modules
 credentials.js
 config.js
 admin.sql
+.env

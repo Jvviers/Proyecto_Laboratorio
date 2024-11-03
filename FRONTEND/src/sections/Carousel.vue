@@ -1,55 +1,69 @@
-<script>
-export default {
-	data() {
-		return {
-			activeIndex: 0,
-			images: [
-				{ url: "/images/paisaje.jpg", alt: "paisaje" },
-				{ url: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80", alt: "rostro 1" },
-				{ url: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80", alt: "rostro 2" },
-				{ url: "https://images.unsplash.com/photo-1550525811-e5869dd03032?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80", alt: "rostro 3" },
-				{ url: "https://images.unsplash.com/photo-1502685104226-ee32379fefbe?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80", alt: "rostro 4" },
-				{ url: "https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80", alt: "rostro 5" },
-			],
-			isDragging: false,
-			startX: 0,
-		};
-	},
-	methods: {
-		nextSlide() {
-			this.activeIndex = (this.activeIndex + 1) % this.images.length;
-		},
-		prevSlide() {
-			this.activeIndex =
-				(this.activeIndex - 1 + this.images.length) % this.images.length;
-		},
-		goToSlide(index) {
-			this.activeIndex = index;
-		},
-		startDrag(event) {
-			this.isDragging = true;
-			this.startX = event.clientX;
-		},
-		onDrag(event) {
-			if (!this.isDragging) return;
+<script setup>
+import { ref, onMounted } from 'vue';
+const BACKEND_URL = import.meta.env.PUBLIC_BACKEND_URL;
 
-			const deltaX = event.clientX - this.startX;
+const images = ref([]);
 
-			if (deltaX > 50) {
-				// Si arrastra a la derecha
-				this.prevSlide();
-				this.isDragging = false;
-			} else if (deltaX < -50) {
-
-				this.nextSlide();
-				this.isDragging = false;
-			}
-		},
-		endDrag() {
-			this.isDragging = false;
-		},
-	},
+const getImagenes = async () => {
+	try {
+		const response = await fetch(BACKEND_URL + '/carrusel', {
+			method: 'GET',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+		});
+		if (!response.ok) {
+			throw new Error(`Error: ${response.statusText}`);
+		}
+		const data = await response.json();
+		images.value = data;
+	} catch (error) {
+		console.error('Error al obtener imagenes: ', error);
+	}
 };
+
+const activeIndex = ref(0);
+const isDragging = ref(false);
+const startX = ref(0);
+
+const nextSlide = () => {
+	activeIndex.value = (activeIndex.value + 1) % images.value.length;
+}
+
+const prevSlide = () => {
+	activeIndex.value = (activeIndex.value - 1 + images.value.length) % images.value.length;
+};
+
+const goToSlide = (index) => {
+	activeIndex.value = index;
+};
+
+const startDrag = (event) => {
+	isDragging.value = true;
+	startX.value = event.clientX;
+};
+
+const onDrag = (event) => {
+	if (!isDragging.value) return;
+
+	const deltaX = event.clientX - startX.value;
+
+	if (deltaX > 50) {
+		prevSlide();
+		isDragging.value = false;
+	} else if (deltaX < -50) {
+		nextSlide();
+		isDragging.value = false;
+	}
+};
+
+const endDrag = () => {
+	isDragging.value = false;
+};
+
+onMounted(() => {
+	getImagenes();
+});
 </script>
 
 <template>
@@ -59,9 +73,9 @@ export default {
 		<div class="relative aspect-video overflow-hidden -z-20 mx-0 md:mx-32">
 			<!-- Carrusel de items -->
 			<div v-for="(image, index) in images" :key="index"
-				class="absolute inset-0 transition-opacity duration-1000 ease-in-out"
+				class="absolute inset-0 transition-opacity duration-1000 ease-in-out aspect-video"
 				:class="{ 'opacity-100': activeIndex === index, 'opacity-0': activeIndex !== index }">
-				<img :src=image.url :alt=image.alt class="block w-full h-full object-cover" draggable="false" />
+				<img :src=image.url :alt="'imagen '+index+1" class="block aspect-video w-full" draggable="false" />
 			</div>
 		</div>
 		<!-- Indicadores -->

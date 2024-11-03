@@ -1,6 +1,7 @@
 import Queries from '../queries/queries.js';
 import db from '../db/db.js';
 import bcrypt from 'bcrypt';
+import crypto from 'crypto';
 import data from '../config.js';
 import jwt from 'jsonwebtoken'
 import sseController from './sseController.js';
@@ -249,7 +250,56 @@ const putTipoProyecto = async (req, res) => {
     }
 }
 
-// Controladores para noticias y carrusel
+// Controladores para la gestión de imagenes del carrusel
+const getCarrusel = async (req, res) => {
+    try {
+        const [data] = await db.query(Queries.getCarrusel);
+        res.json(data);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+}
+const postCarrusel = async (req, res) => {
+    try {
+        const [data] = await db.query(Queries.postCarrusel, [req.body.id, req.body.url]);
+        res.json(data);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+}
+const deleteCarrusel = async (req, res) => {
+    const cloudName = process.env.PUBLIC_CLOUDINARY_CLOUDNAME;
+    const apiKey = process.env.PUBLIC_CLOUDINARY_APIKEY;
+    const apiSecret = process.env.PUBLIC_CLOUDINARY_APISECRET;
+
+    const timestamp = Math.floor(Date.now() / 1000);
+    const stringToSign = `public_id=${req.body.id}&timestamp=${timestamp}${apiSecret}`;
+    const signature = crypto.createHash('sha1').update(stringToSign).digest('hex');
+
+    const formData = new URLSearchParams();
+    formData.append('public_id', req.body.id);
+    formData.append('api_key', apiKey);
+    formData.append('timestamp', timestamp);
+    formData.append('signature', signature);
+
+    try {
+        const response = await fetch(`https://api.cloudinary.com/v1_1/${cloudName}/image/destroy`, {
+            method: 'POST',
+            body: formData
+        });
+        const result = await response.json();
+        if (result.result === 'ok') {
+            const [data] = await db.query(Queries.deleteCarrusel, [req.body.id]);
+            res.json(data);
+        } else {
+            res.status(500).json({ message: 'Error al eliminar la imagen en la nube' });
+        }
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+}
+
+// Controladores para noticias
 const getNoticias = async (req, res) => {
     try {
         const [noticias] = await db.query(Queries.getNoticias);
@@ -358,6 +408,9 @@ export default {
     putNombreEquipos,
     putTipoMaterial,
     putTipoProyecto,
+    getCarrusel,
+    postCarrusel,
+    deleteCarrusel,
     getNoticias,
     postNoticia,
     deleteNoticia,

@@ -4,6 +4,7 @@ import Encargados from "../components/MantenedorEncargados/Encargados.vue";
 import Maquinarias from "../components/MantenedorMaquinarias/Maquinarias.vue"
 import Proyectos from "../components/MantenedorProyectos.vue/Proyectos.vue"
 import Materiales from "../components/MantenedorMateriales/Materiales.vue"
+import ImagenesCarrusel from '../components/MantenedorCarrusel/ImagenesCarrusel.vue';
 import Noticias from "../components/MantenedorNoticias/Noticias.vue"
 const BACKEND_URL = import.meta.env.PUBLIC_BACKEND_URL;
 
@@ -46,6 +47,7 @@ onMounted(() => {
 			<Maquinarias />
 			<Proyectos />
 			<Materiales />
+			<ImagenesCarrusel />
 			<Noticias />
 		</div>
 	</section>

@@ -51,7 +51,12 @@ router.put('/nombre-equipos', Controller.putNombreEquipos);
 router.put('/tipo-material', Controller.putTipoMaterial);
 router.put('/tipo-proyecto', Controller.putTipoProyecto);
 
-// Rutas para noticias y carrusel
+// Rutas para la gestión de imagenes del carrusel
+router.get('/carrusel', Controller.getCarrusel);
+router.post('/carrusel', Controller.postCarrusel);
+router.delete('/carrusel', Controller.deleteCarrusel);
+
+// Rutas para noticias
 router.get('/noticias', Controller.getNoticias);
 router.post('/noticias', upload.single('file'), Controller.postNoticia);
 router.delete('/noticias', Controller.deleteNoticia);
