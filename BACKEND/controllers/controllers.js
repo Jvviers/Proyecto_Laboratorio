@@ -310,18 +310,39 @@ const getNoticias = async (req, res) => {
 }
 const postNoticia = async (req, res) => {
     try {
-        const file = req.file;
-        if (!file) return res.status(400).send('No se ha subido ningún archivo.');
-        const [data] = await db.query(Queries.postNoticia, [req.body.title, req.body.description, file.originalname, file.buffer]);
+        const [data] = await db.query(Queries.postNoticia, [req.body.titulo, req.body.descripcion, req.body.url, req.body.public_id]);
         res.json(data);
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
 }
 const deleteNoticia = async (req, res) => {
+    const cloudName = process.env.PUBLIC_CLOUDINARY_CLOUDNAME;
+    const apiKey = process.env.PUBLIC_CLOUDINARY_APIKEY;
+    const apiSecret = process.env.PUBLIC_CLOUDINARY_APISECRET;
+
+    const timestamp = Math.floor(Date.now() / 1000);
+    const stringToSign = `public_id=${req.body.public_id}&timestamp=${timestamp}${apiSecret}`;
+    const signature = crypto.createHash('sha1').update(stringToSign).digest('hex');
+
+    const formData = new URLSearchParams();
+    formData.append('public_id', req.body.public_id);
+    formData.append('api_key', apiKey);
+    formData.append('timestamp', timestamp);
+    formData.append('signature', signature);
+
     try {
-        const [data] = await db.query(Queries.deleteNoticia, [req.body.id]);
-        res.json(data);
+        const response = await fetch(`https://api.cloudinary.com/v1_1/${cloudName}/image/destroy`, {
+            method: 'POST',
+            body: formData
+        });
+        const result = await response.json();
+        if (result.result === 'ok') {
+            const [data] = await db.query(Queries.deleteNoticia, [req.body.id]);
+            res.json(data);
+        } else {
+            res.status(500).json({ message: 'Error al eliminar la imagen en la nube' });
+        }
     } catch (error) {
         res.status(500).json({ message: error.message });
     }

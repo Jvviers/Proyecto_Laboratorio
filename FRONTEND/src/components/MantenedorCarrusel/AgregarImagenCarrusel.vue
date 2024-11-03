@@ -79,7 +79,7 @@ const postImage = async () => {
             <h1 class="text-2xl text-center font-bold">AGREGAR IMAGEN AL CARRUSEL</h1>
         </div>
         <div class="flex flex-col justify-center items-center w-full gap-4">
-            <div v-if="imageUrl" class="flex flex-col justify-center items-center w-full gap-2">
+            <div v-if="imageUrl" class="flex flex-col justify-center items-center w-3/4 gap-2">
                 <img :src="imageUrl" alt="Preview imagen subida" class="aspect-video w-full" />
                 <span class="text-center text-sm">La imagen se ha subido correctamente!</span>
             </div>

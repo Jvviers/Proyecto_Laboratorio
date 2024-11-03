@@ -46,8 +46,8 @@ CREATE TABLE noticia(
     id INTEGER AUTO_INCREMENT NOT NULL PRIMARY KEY,
     titulo VARCHAR(255) NOT NULL,
     descripcion TEXT NOT NULL,
-    nombre_archivo VARCHAR(255),
-    contenido_archivo LONGBLOB
+    url TEXT NOT NULL,
+    public_id VARCHAR(255) NOT NULL
 );
 
 -- MANTENEDORES

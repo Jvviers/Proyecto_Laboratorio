@@ -58,7 +58,7 @@ router.delete('/carrusel', Controller.deleteCarrusel);
 
 // Rutas para noticias
 router.get('/noticias', Controller.getNoticias);
-router.post('/noticias', upload.single('file'), Controller.postNoticia);
+router.post('/noticias', Controller.postNoticia);
 router.delete('/noticias', Controller.deleteNoticia);
 router.put('/noticias', upload.single('file'), Controller.putNoticia);
 router.put('/noticiasWithoutFile', Controller.putNoticiaWithoutFile);

@@ -38,7 +38,7 @@ const toggleModalEliminar = () => {
 		</div>
 	</div>
     <div v-if="modalEliminar" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-10">
-		<div class="bg-white p-4 rounded shadow-lg relative">
+		<div class="bg-white p-4 rounded shadow-lg relative w-3/4">
 			<EliminarNoticia :isModalOpen="modalEliminar" @close-modal="toggleModalEliminar" />
 		</div>
 	</div>

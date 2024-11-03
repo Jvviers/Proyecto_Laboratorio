@@ -46,7 +46,7 @@ const deleteCarrusel = "DELETE FROM imagencarrusel WHERE id = ?";
 
 // Consultas para noticias
 const getNoticias = "SELECT * FROM noticia";
-const postNoticia = "INSERT INTO noticia (titulo, descripcion, nombre_archivo, contenido_archivo) VALUES (?, ?, ?, ?)";
+const postNoticia = "INSERT INTO noticia (titulo, descripcion, url, public_id) VALUES (?, ?, ?, ?)";
 const deleteNoticia = "DELETE FROM noticia WHERE id = ?";
 const putNoticia = "UPDATE noticia SET titulo = ?, descripcion = ?, nombre_archivo = ?, contenido_archivo = ? WHERE id = ?";
 const putNoticiaWithoutFile = "UPDATE noticia SET titulo = ?, descripcion = ? WHERE id = ?";
