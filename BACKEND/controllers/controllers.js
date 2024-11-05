@@ -157,7 +157,7 @@ const sendEmailNotification = async (to, subject, text) => {
         <h2 style="color: #ba0c2f; text-align: center;">${subject}</h2>
         <hr style="border: 1px solid #ba0c2f; margin: 20px 0;">
         <p style="font-size: 16px; color: #242424;">Estimado/a,</p>
-        <p style="font-size: 16px; line-height: 1.5;">${text}</p>
+        <p style="font-size: 16px; color: #242424; line-height: 1.5;">${text}</p>
         <hr style="border: 1px solid #e0e0e0; margin: 20px 0;">
         <footer style="margin-top: 20px; font-size: 14px; color: #999; text-align: center;">
             <p style="margin: 5px 0;">Atentamente,</p>

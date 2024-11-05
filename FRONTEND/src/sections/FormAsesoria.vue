@@ -78,8 +78,8 @@ const timeAccuracy = ref(2);
 </script>
 
 <template>
-    <div v-if="accessMessage" class="fixed top-32 right-5 bg-green-500 text-white py-2 px-4 rounded shadow-lg z-50">
-        {{ accessMessage }}
+    <div v-if="accessMessage" class="fixed top-4 left-1/2 transform -translate-x-1/2 bg-green-500 text-white py-2 px-4 rounded shadow-lg z-50">
+    {{ accessMessage }}
     </div>
     <div class="container bg-gray-200 min-h-[20px]">
     </div>

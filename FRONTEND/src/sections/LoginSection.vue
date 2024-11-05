@@ -52,7 +52,7 @@ const goToAdmin = () => {
 <template>
     <section>
         <span v-if="errorMessage"
-            class="absolute top-32 right-5 bg-red-500 text-white py-2 px-4 rounded shadow-lg z-50">
+            class="fixed top-4 left-1/2 transform -translate-x-1/2 bg-red-500 text-white py-2 px-4 rounded shadow-lg z-50">
             {{ errorMessage }}
         </span>
         <form @submit.prevent="login" class="flex flex-col justify-center items-center gap-4 py-6 w-full">

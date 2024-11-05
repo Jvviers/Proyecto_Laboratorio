@@ -105,9 +105,8 @@ onMounted(() => {
 </script>
 
 <template>
-	<div></div>
-	<div v-if="accessMessage" class="fixed top-32 right-5 bg-green-500 text-white py-2 px-4 rounded shadow-lg z-50">
-		{{ accessMessage }}
+	<div v-if="accessMessage" class="fixed top-2.5 left-1/2 transform -translate-x-1/2 bg-green-500 text-white py-2 px-4 rounded shadow-lg z-50">
+    {{ accessMessage }}
 	</div>
 
 	<form @submit.prevent="postMateriales"
