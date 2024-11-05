@@ -17,6 +17,14 @@ const closeModal = () => {
 };
 
 const name = ref('');
+const accessMessage = ref("");
+
+const showAccessBanner = () => {
+    accessMessage.value = "Maquinaria agregada correctamente";
+    setTimeout(() => {
+        accessMessage.value = "";
+    }, 4000);
+};
 
 const agregarProyecto = async () => {
     try {
@@ -34,6 +42,7 @@ const agregarProyecto = async () => {
         }
         const data = await response.json();
         console.log('Se ha agregado: ', data);
+        showAccessBanner();
         closeModal();
     } catch (error) {
         console.error('Error al agregar proyecto: ', error);
@@ -41,6 +50,9 @@ const agregarProyecto = async () => {
 };
 </script>
 <template>
+    <div v-if="accessMessage" class="fixed top-4 left-1/2 transform -translate-x-1/2 bg-green-500 text-white py-2 px-4 rounded shadow-lg z-50">
+        {{ accessMessage }}
+    </div>
     <form @submit.prevent="agregarProyecto" class="flex flex-col justify-center items-center gap-6 py-4 px-12 w-full">	
         <h1 class="text-2xl text-center font-bold">AGREGAR PROYECTO</h1>
         <div class="flex justify-between items-center w-full gap-4">

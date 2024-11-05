@@ -10,10 +10,16 @@ const props = defineProps({
 
 // Emitir eventos
 const emit = defineEmits(['close-modal']);
-
+const accessMessage = ref("");
 // Función para cerrar el modal desde dentro de Register
 const closeModal = () => {
     emit('close-modal');
+};
+const showAccessBanner = () => {
+    accessMessage.value = "Maquinaria agregada correctamente";
+    setTimeout(() => {
+        accessMessage.value = "";
+    }, 4000);
 };
 
 const name = ref('');
@@ -29,12 +35,15 @@ const agregarMaquinaria = async () => {
                 nombre: name.value,
             }),
         });
+        
         if (!response.ok) {
             throw new Error(`Error: ${response.statusText}`);
+            
         }
         const data = await response.json();
         console.log('Se ha agregado: ', data);
         closeModal();
+        showAccessBanner();
     } catch (error) {
         console.error('Error al agregar maquinaria: ', error);
     }
