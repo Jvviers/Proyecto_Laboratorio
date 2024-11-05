@@ -14,6 +14,7 @@ router.get('/solicitudes', Controller.getSolicitudes);
 router.get('/solicitudes/:id', Controller.getSolicitudesById);
 router.get('/equipo/:id', Controller.getEquipoById);
 router.get('/download/:id', Controller.downloadMaterial);
+router.get('/encargado', Controller.getMailEncargado);
 
 // Rutas para el envío de solicitudes
 router.post('/asesoria', Controller.postAsesoria);

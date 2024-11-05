@@ -1,6 +1,6 @@
 <script setup>
 import { ref, onMounted, computed } from 'vue';
-import nodemailer from 'nodemailer';	
+
 const BACKEND_URL = import.meta.env.PUBLIC_BACKEND_URL;
 
 const requests = ref([]);
@@ -91,7 +91,6 @@ const getEquipos = async (id) => {
 		return '';
 	}
 };
-
 const getEncargados = async () => {
 	try {
 		const response = await fetch(BACKEND_URL + '/encargados', {
@@ -111,43 +110,12 @@ const getEncargados = async () => {
 		console.error('Error fetching solicitudes:', err);
 	}
 };
- 
-const nodemailer = require('nodemailer');
-
-const sendEmail = async (to, subject, message) => {
-    try {
-        const transporter = nodemailer.createTransport({
-            host: "gmail.com", 
-            auth: {
-                user: "utal.adm@gmail.com", 
-                pass: "", 
-            },
-        });
-
-        // Opciones del correo electrónico
-        const mailOptions = {
-            from: '"Nombre del Remitente" <tu-email@dominio.com>', // Reemplaza con el remitente
-            to: to, // Dirección del destinatario
-            subject: subject, // Asunto del correo
-            text: message, // Mensaje en texto plano
-            // html: "<b>Mensaje HTML</b>" // Opcionalmente, puedes enviar un mensaje en formato HTML
-        };
-
-        // Enviar correo
-        const info = await transporter.sendMail(mailOptions);
-        console.log(`Correo enviado: ${info.messageId}`);
-    } catch (err) {
-        console.error('Error enviando el correo:', err);
-    }
-};
-
-	
 
 const goToLogin = () => {
 	window.location.href = '/login';
 };
 
-const updateEncargado = async (sol_id, ref_enc) => {
+const updateEncargado = async (sol_id, ref_enc, solicitante) => {
 	try {
 		const response = await fetch(BACKEND_URL + '/encargado-solicitud', {
 			method: 'POST',
@@ -158,6 +126,7 @@ const updateEncargado = async (sol_id, ref_enc) => {
 			body: JSON.stringify({
 				ref_enc: ref_enc,
 				id: sol_id,
+				solicitante: solicitante
 			}),
 		});
 		if (!response.ok) {
@@ -170,7 +139,7 @@ const updateEncargado = async (sol_id, ref_enc) => {
 	}
 };
 
-const updateState = async (sol_id, state) => {
+const updateState = async (sol_id, state, email) => {
 	try {
 		const response = await fetch(BACKEND_URL + '/estado-solicitud', {
 			method: 'POST',
@@ -179,6 +148,7 @@ const updateState = async (sol_id, state) => {
 				'Content-Type': 'application/json',
 			},
 			body: JSON.stringify({
+				email: email,
 				estado: state,
 				id: sol_id,
 			}),
@@ -187,6 +157,7 @@ const updateState = async (sol_id, state) => {
 			console.error('Status:', response.status);
 			throw new Error('Error en la respuesta del servidor: ' + response.statusText);
 		}
+
 		await response.json();
 	} catch (err) {
 		console.error('Error fetching solicitudes:', err);
@@ -236,7 +207,6 @@ const paginatedRequests = computed(() => {
 onMounted(() => {
 	validateSession();
 	getEncargados();
-	sendEmail();
 });
 </script>
 
@@ -282,7 +252,7 @@ onMounted(() => {
 						<td class="td">{{ request.id }}</td>
 						<td>
 							<select v-if="request.tipo_form != 'asesoria'" v-model="request.ref_enc"
-								@change="updateEncargado(request.id, request.ref_enc)" class="border rounded px-2 py-1">
+								@change="updateEncargado(request.id, request.ref_enc, request.solicitante)" class="border rounded px-2 py-1">
 								<option v-for="encargado in encargados" :key="encargado.id" :value="encargado.id">{{
 									encargado.email }}
 								</option>
@@ -304,28 +274,28 @@ onMounted(() => {
 						<!-- Selector que muestra y actualiza el estado -->
 						<td>
 							<select v-if="request.tipo_form == 'asesoria'" v-model="request.estado"
-								@change="updateState(request.id, request.estado)"
+								@change="updateState(request.id, request.estado, request.email)"
 								class="border rounded px-2 py-1 w-[170px]">
 								<option value="en espera">En espera</option>
 								<option value="agendado">Agendado</option>
 								<option value="terminado">Terminado</option>
 							</select>
 							<select v-if="request.tipo_form == 'impresion'" v-model="request.estado"
-								@change="updateState(request.id, request.estado)"
+								@change="updateState(request.id, request.estado, request.email)"
 								class="border rounded px-2 py-1 w-[170px]">
 								<option value="en espera">En espera</option>
-								<option value="cola_impresion">Cola de Impresión</option>
-								<option value="listo_retirar">Listo para Retirar</option>
-								<option value="rechazado">Rechazado</option>
-								<option value="terminado">Terminado</option>
+								<option value="En cola de Impresión">Cola de Impresión</option>
+								<option value="Listo para Retirar">Listo para Retirar</option>
+								<option value="Rechazado">Rechazado</option>
+								<option value="Terminado">Terminado</option>
 							</select>
 							<select v-if="request.tipo_form == 'laboratorio'" v-model="request.estado"
-								@change="updateState(request.id, request.estado)"
+								@change="updateState(request.id, request.estado, request.email)"
 								class="border rounded px-2 py-1 w-[170px]">
 								<option value="en espera">En espera</option>
-								<option value="agendado">Agendado</option>
-								<option value="rechazado">Rechazado</option>
-								<option value="terminado">Terminado</option>
+								<option value="Agendado">Agendado</option>
+								<option value="Rechazado">Rechazado</option>
+								<option value="Terminado">Terminado</option>
 							</select>
 						</td>
 
