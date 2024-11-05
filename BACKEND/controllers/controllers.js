@@ -47,6 +47,15 @@ const downloadMaterial = async (req, res) => {
     }
 }
 
+const getMailEncargado = async (req, res) => {
+  try {
+    const [email] = await db.query(Queries.getMailEncargado, [req.body.id]);
+    res.json(email);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+}
+
 // Controladores para el envío de solicitudes
 const postAsesoria = async (req, res) => {
     try {
@@ -494,6 +503,7 @@ export default {
     getSolicitudesById,
     getEquipoById,
     downloadMaterial,
+    getMailEncargado,
     postAsesoria,
     postMateriales,
     postEquipos,
