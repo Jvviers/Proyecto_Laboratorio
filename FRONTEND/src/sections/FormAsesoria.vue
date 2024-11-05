@@ -81,8 +81,6 @@ const timeAccuracy = ref(2);
     <div v-if="accessMessage" class="fixed top-4 left-1/2 transform -translate-x-1/2 bg-green-500 text-white py-2 px-4 rounded shadow-lg z-50">
     {{ accessMessage }}
     </div>
-    <div class="container bg-gray-200 min-h-[20px]">
-    </div>
     <form @submit.prevent="asesoria" class="flex flex-col justify-center items-center gap-4 py-12 px-8 md:px-32 w-full">
         <header class="flex flex-col justify-center gap-3 w-full">
             <h2 class="text-2xl font-bold text-center text-utal">AGENDAR ASESORÍA</h2>
