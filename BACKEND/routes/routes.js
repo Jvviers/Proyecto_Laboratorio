@@ -2,6 +2,7 @@ import { Router } from 'express';
 import Controller from '../controllers/controllers.js';
 import authMiddleware from '../middlewares/authMiddleware.js';
 import multer from 'multer';
+import sseController from '../controllers/sseController.js';
 
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
@@ -15,6 +16,7 @@ router.get('/solicitudes/:id', Controller.getSolicitudesById);
 router.get('/equipo/:id', Controller.getEquipoById);
 router.get('/download/:id', Controller.downloadMaterial);
 router.get('/encargado', Controller.getMailEncargado);
+router.get('/observer', sseController.eventsHandler);
 
 // Rutas para el envío de solicitudes
 router.post('/asesoria', Controller.postAsesoria);
@@ -50,6 +52,18 @@ router.put('/encargado', Controller.putEncargado);
 router.put('/nombre-equipos', Controller.putNombreEquipos);
 router.put('/tipo-material', Controller.putTipoMaterial);
 router.put('/tipo-proyecto', Controller.putTipoProyecto);
+
+// Rutas para la gestión de imagenes del carrusel
+router.get('/carrusel', Controller.getCarrusel);
+router.post('/carrusel', Controller.postCarrusel);
+router.delete('/carrusel', Controller.deleteCarrusel);
+
+// Rutas para noticias
+router.get('/noticias', Controller.getNoticias);
+router.post('/noticias', Controller.postNoticia);
+router.delete('/noticias', Controller.deleteNoticia);
+router.put('/noticias', upload.single('file'), Controller.putNoticia);
+router.put('/noticiasWithoutFile', Controller.putNoticiaWithoutFile);
 
 // Rutas para la gestión de sesiones de usuarios
 router.post('/login', Controller.login);

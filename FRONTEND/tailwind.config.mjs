@@ -4,7 +4,7 @@ export default {
 	theme: {
 		extend: {
 			colors: {
-				utal: '#00cdcd',
+				utal: '#ba0c2f',
 			},
 		},
 	},

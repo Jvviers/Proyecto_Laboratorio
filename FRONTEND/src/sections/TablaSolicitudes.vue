@@ -1,6 +1,5 @@
 <script setup>
-import { ref, onMounted, computed } from 'vue';
-
+import { ref, onMounted, computed, onUnmounted } from 'vue';
 const BACKEND_URL = import.meta.env.PUBLIC_BACKEND_URL;
 
 const requests = ref([]);
@@ -204,28 +203,42 @@ const paginatedRequests = computed(() => {
 	return requests.value.slice(start, end);
 });
 
+let eventSource;
+
 onMounted(() => {
 	validateSession();
 	getEncargados();
+
+	eventSource = new EventSource(BACKEND_URL + '/observer');
+	eventSource.onmessage = (event) => {
+		const data = JSON.parse(event.data);
+		if (data.type === 'UPDATE' && data.message === 'Update solicitudes') {
+			fetchRequests();
+		}
+		if (data.type === 'UPDATE' && data.message === 'Update encargados') {
+			getEncargados();
+		}
+	};
+});
+
+onUnmounted(() => {
+	eventSource.close();
 });
 </script>
 
 <template>
-	<header class="flex justify-center py-6 px-8">
-		<div v-if="validSession" class="flex flex-col justify-center items-center gap-2">
-			<h1 v-if="userRole" class="text-2xl text-center font-bold">BIENVENIDO ADMINISTRADOR</h1>
-			<h1 v-if="!userRole" class="text-2xl text-center font-bold">BIENVENIDO ENCARGADO</h1>
-		</div>
-		<div v-if="!validSession" class="flex flex-col justify-center items-center gap-2">
-			<h2 class="text-2xl text-center font-bold">BIENVENIDO</h2>
-			<h3 class="text-lg text-center">Inicia sesión para ver las solicitudes</h3>
-			<div class="flex justify-center items-center py-6">
-				<button class="button" @click="goToLogin">INICIAR SESIÓN</button>
-			</div>
+	<header v-if="!validSession" class="flex flex-col justify-center items-center gap-2 py-12">
+		<h2 class="text-2xl text-center font-bold text-utal">BIENVENIDO</h2>
+		<h3 class="text-lg text-center">Inicia sesión para ver las solicitudes</h3>
+		<div class="flex justify-center items-center py-6">
+			<button class="button" @click="goToLogin">INICIAR SESIÓN</button>
 		</div>
 	</header>
-	<section v-if="validSession" class="flex flex-col justify-center items-center w-full px-8 md:px-32 gap-6 py-6">
-		<h2 class="text-2xl text-center font-bold">TABLA DE SOLICITUDES</h2>
+	<section v-if="validSession" class="flex flex-col justify-center items-center w-full px-8 md:px-32 gap-6 py-12">
+		<div class="flex flex-col justify-center items-center gap-2">
+			<h2 class="text-2xl text-center font-bold text-utal">TABLA DE SOLICITUDES</h2>
+			<h3 class="text-lg text-center">Aquí puedes ver las solicitudes que han sido enviadas</h3>
+		</div>
 		<!-- Contenedor de la tabla -->
 		<div class="w-full overflow-x-scroll border">
 			<table class="table-auto bg-white">
@@ -302,13 +315,15 @@ onMounted(() => {
 						<td class="flex justify-center items-center py-4 gap-4">
 							<button @click="eliminarSolicitud(request.id)" type="button" class="delete">
 								<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" width="20" height="20">
-									<path d="M135.2 17.7C140.6 6.8 151.7 0 163.8 0h120.4c12.1 0 23.2 6.8 28.6 17.7L320 32h96c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 96 0 81.7 0 64s14.3-32 32-32h96l7.2-14.3zM32 128h384v320c0 35.3-28.7 64-64 64H96c-35.3 0-64-28.7-64-64V128zm96 64c-8.8 0-16 7.2-16 16v224c0 8.8 7.2 16 16 16s16-7.2 16-16V208c0-8.8-7.2-16-16-16zm96 0c-8.8 0-16 7.2-16 16v224c0 8.8 7.2 16 16 16s16-7.2 16-16V208c0-8.8-7.2-16-16-16zm96 0c-8.8 0-16 7.2-16 16v224c0 8.8 7.2 16 16 16s16-7.2 16-16V208c0-8.8-7.2-16-16-16z" />
+									<path
+										d="M135.2 17.7C140.6 6.8 151.7 0 163.8 0h120.4c12.1 0 23.2 6.8 28.6 17.7L320 32h96c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 96 0 81.7 0 64s14.3-32 32-32h96l7.2-14.3zM32 128h384v320c0 35.3-28.7 64-64 64H96c-35.3 0-64-28.7-64-64V128zm96 64c-8.8 0-16 7.2-16 16v224c0 8.8 7.2 16 16 16s16-7.2 16-16V208c0-8.8-7.2-16-16-16zm96 0c-8.8 0-16 7.2-16 16v224c0 8.8 7.2 16 16 16s16-7.2 16-16V208c0-8.8-7.2-16-16-16zm96 0c-8.8 0-16 7.2-16 16v224c0 8.8 7.2 16 16 16s16-7.2 16-16V208c0-8.8-7.2-16-16-16z" />
 								</svg>
 							</button>
 							<a v-if="request.tipo_form === 'impresion'" :href="`${BACKEND_URL}/download/${request.id}`"
 								target="_blank" rel="noopener noreferrer" class="download">
 								<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="20" height="20">
-									<path d="M288 32c0-17.7-14.3-32-32-32s-32 14.3-32 32v242.7l-73.4-73.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l128 128c12.5 12.5 32.8 12.5 45.3 0l128-128c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L288 274.7V32zM64 352c-35.3 0-64 28.7-64 64v32c0 35.3 28.7 64 64 64h384c35.3 0 64-28.7 64-64v-32c0-35.3-28.7-64-64-64H346.5l-45.3 45.3c-25 25-65.5 25-90.5 0L165.5 352H64zm368 56a24 24 0 1 1 0 48 24 24 0 1 1 0-48z"/>
+									<path
+										d="M288 32c0-17.7-14.3-32-32-32s-32 14.3-32 32v242.7l-73.4-73.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l128 128c12.5 12.5 32.8 12.5 45.3 0l128-128c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L288 274.7V32zM64 352c-35.3 0-64 28.7-64 64v32c0 35.3 28.7 64 64 64h384c35.3 0 64-28.7 64-64v-32c0-35.3-28.7-64-64-64H346.5l-45.3 45.3c-25 25-65.5 25-90.5 0L165.5 352H64zm368 56a24 24 0 1 1 0 48 24 24 0 1 1 0-48z" />
 								</svg>
 							</a>
 						</td>
@@ -358,7 +373,7 @@ select {
 }
 
 select:focus {
-	border: #00cdcd 1px solid;
+	border: #ba0c2f 1px solid;
 }
 
 .pagination-controls {
@@ -380,7 +395,7 @@ select:focus {
 }
 
 .pagination-controls button:hover {
-	background-color: #00cdcd;
+	background-color: #ba0c2f;
 	/* Color al pasar el mouse */
 }
 
@@ -408,7 +423,7 @@ svg path {
 }
 
 .download:hover svg path {
-	fill: #00cdcd;
+	fill: #286532;
 	transition: all 0.3s ease;
 }
 </style>

@@ -73,7 +73,7 @@ const asesoria = async () => {
     }
 };
 
-const selectedColor = ref('blue');
+const selectedColor = ref('red');
 const timeAccuracy = ref(2);
 </script>
 
@@ -83,44 +83,43 @@ const timeAccuracy = ref(2);
     </div>
     <div class="container bg-gray-200 min-h-[20px]">
     </div>
-    <form @submit.prevent="asesoria" class="flex flex-col justify-center items-center gap-4 my-4 w-full">
-        <h1 class="text-2xl text-center font-bold">AGENDAR ASESORÍA</h1>
-        <div class="flex flex-col justify-center items-center gap-4 mx-auto px-10 py-6">
-            <div class="flex justify-between items-center w-full gap-4">
-                <label for="solicitante">Solicitante:</label>
-                <input class="text-input input" type="text" id="solicitante" v-model="solicitante" required />
+    <form @submit.prevent="asesoria" class="flex flex-col justify-center items-center gap-4 py-12 px-8 md:px-32 w-full">
+        <header class="flex flex-col justify-center gap-3 w-full">
+            <h2 class="text-2xl font-bold text-center text-utal">AGENDAR ASESORÍA</h2>
+            <h3 class="text-lg text-center">Aquí puedes solicitar asesoría para tu laboratorio</h3>
+        </header>
+        <div class="flex flex-col lg:flex-row justify-center items-start gap-2 w-full border border-gray-300 rounded-lg shadow-md">
+            <div class="flex flex-col justify-start w-3/4 lg:w-1/2 items-center gap-4 mx-auto px-8 py-6">
+                <div class="flex flex-col justify-start items-start w-full gap-1">
+                    <label for="solicitante">Solicitante:</label>
+                    <input class="input w-full" type="text" id="solicitante" v-model="solicitante"
+                        placeholder="Nombre del solicitante" required />
+                </div>
+                <div class="flex flex-col justify-start items-start w-full gap-1">
+                    <label for="email">Email:</label>
+                    <input class="input w-full" type="email" id="email" v-model="email"
+                        placeholder="Correo del solicitante" required />
+                </div>
+                <div class="flex flex-col justify-start items-start w-full gap-1">
+                    <label for="matricula">Matrícula:</label>
+                    <input class="input w-full" type="text" id="matricula" v-model="matricula"
+                        placeholder="Matrícula del solicitante" required />
+                </div>
+                <div class="flex flex-col justify-start items-start w-full gap-1">
+                    <label for="actividad">Actividad:</label>
+                    <input class="input w-full" type="text" id="actividad" v-model="actividad"
+                        placeholder="Actividad a realizar" required />
+                </div>
             </div>
-            <div class="flex justify-between items-center w-full gap-4">
-                <label for="email">Email:</label>
-                <input class="text-input input" type="email" id="email" v-model="email" required />
-            </div>
-            <div class="flex justify-between items-center w-full gap-4">
-                <label for="matricula">Matrícula:</label>
-                <input class="text-input input" type="text" id="matricula" v-model="matricula" required />
-            </div>
-            <div class="flex justify-between items-center w-full gap-4">
-                <label for="actividad">Actividad:</label>
-                <input class="text-input input" type="text" id="actividad" v-model="actividad" required />
+            <div class="flex flex-col justify-start w-3/4 lg:w-1/2 items-center gap-4 mx-auto px-8 py-6"">
+                <header class="flex flex-col justify-center gap-3 w-full">
+					<h3 class="text-base text-center">Seleccione una fecha:</h3>
+				</header>
+                <DatePicker v-model="selectedDate" id="date" mode="dateTime" is-required is24hr hide-time-header
+                    :disabled-dates="disabledDates" :min-date="new Date()" :color="selectedColor"
+                    :time-accuracy="timeAccuracy" />
             </div>
         </div>
-        <div class="flex flex-col items-center gap-4 p-4">
-            <label class="text-lg font-bold" for="date">SELECCIONE UNA FECHA:</label>
-            <DatePicker v-model="selectedDate" id="date" mode="dateTime" is-required is24hr hide-time-header
-                :disabled-dates="disabledDates" :min-date="new Date()" :color="selectedColor"
-                :time-accuracy="timeAccuracy" />
-        </div>
-        <button class="button" type="submit">
-            AGENDAR
-        </button>
+        <button class="button" type="submit">AGENDAR</button>
     </form>
 </template>
-
-<style scoped>
-.text-input {
-    width: 200px;
-
-    @media (min-width: 768px) {
-        width: 300px;
-    }
-}
-</style>

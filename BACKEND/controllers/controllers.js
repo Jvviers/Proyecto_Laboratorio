@@ -1,8 +1,10 @@
-import Queries from "../queries/queries.js";
-import db from "../db/db.js";
-import bcrypt from "bcrypt";
-import data from "../config.js";
-import jwt from "jsonwebtoken";
+import Queries from '../queries/queries.js';
+import db from '../db/db.js';
+import bcrypt from 'bcrypt';
+import crypto from 'crypto';
+import data from '../config.js';
+import jwt from 'jsonwebtoken'
+import sseController from './sseController.js';
 import nodemailer from "nodemailer";
 
 // Controladores para obtener datos de solicitudes
@@ -33,91 +35,57 @@ const getEquipoById = async (req, res) => {
   }
 };
 const downloadMaterial = async (req, res) => {
-  try {
-    const [result] = await db.query(Queries.downloadMaterial, [req.params.id]);
-    if (result.length === 0)
-      return res.status(404).send("Archivo no encontrado");
-    const { nombre_archivo, archivo } = result[0];
-    res.setHeader(
-      "Content-Disposition",
-      `attachment; filename=${nombre_archivo}`
-    );
-    res.setHeader("Content-Type", "application/octet-stream");
-    res.end(archivo, "binary");
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-};
-const getMailEncargado = async (req, res) => {
-  try {
-    const [encargado] = await db.query(Queries.getMailEncargado, [req.body.id]);
-    res.json(encargado);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-};
+    try {
+        const [result] = await db.query(Queries.downloadMaterial, [req.params.id]);
+        if (result.length === 0) return res.status(404).send('Archivo no encontrado');
+        const { nombre_archivo, contenido_archivo } = result[0];
+        res.setHeader('Content-Disposition', `attachment; filename=${nombre_archivo}`);
+        res.setHeader('Content-Type', 'application/octet-stream');
+        res.end(contenido_archivo, 'binary');
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+}
 
 // Controladores para el envío de solicitudes
 const postAsesoria = async (req, res) => {
-  try {
-    const [data] = await db.query(Queries.postAsesoria, [
-      req.body.solicitante,
-      req.body.email,
-      req.body.matricula,
-      req.body.actividad,
-      req.body.fecha,
-      "asesoria",
-    ]);
-    res.json(data);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-};
+    try {
+        const [data] = await db.query(Queries.postAsesoria, [req.body.solicitante, req.body.email, req.body.matricula, req.body.actividad, req.body.fecha, "asesoria"]);
+        sseController.sendEventsToAll({ type: 'UPDATE', message: 'Update solicitudes' });
+        res.json(data);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+}
 const postMateriales = async (req, res) => {
-  try {
-    const file = req.file;
-    if (!file) return res.status(400).send("No se ha subido ningún archivo.");
-    const [data] = await db.query(Queries.postMateriales, [
-      req.body.solicitante,
-      req.body.email,
-      req.body.matricula,
-      req.body.actividad,
-      req.body.tipo_proyecto,
-      req.body.tipo_material,
-      file.originalname,
-      file.buffer,
-      "impresion",
-    ]);
-    res.json(data);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-};
+    try {
+        const file = req.file;
+        if (!file) return res.status(400).send('No se ha subido ningún archivo.');
+        const [data] = await db.query(Queries.postMateriales, [req.body.solicitante, req.body.email, req.body.matricula, req.body.actividad, req.body.tipo_proyecto, req.body.tipo_material, file.originalname, file.buffer, "impresion"]);
+        sseController.sendEventsToAll({ type: 'UPDATE', message: 'Update solicitudes' });
+        res.json(data);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+}
 const postEquipos = async (req, res) => {
-  try {
-    const [data] = await db.query(Queries.postEquipos, [
-      req.body.solicitante,
-      req.body.email,
-      req.body.matricula,
-      req.body.actividad,
-      "laboratorio",
-    ]);
-    res.json(data);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-};
+    try {
+        const [data] = await db.query(Queries.postEquipos, [req.body.solicitante, req.body.email, req.body.matricula, req.body.actividad, "laboratorio"]);
+        sseController.sendEventsToAll({ type: 'UPDATE', message: 'Update solicitudes' });
+        res.json(data);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+}
 const postEquipo = async (req, res) => {
-  try {
-    const [data] = await db.query(Queries.postEquipo, [
-      req.body.ref_sol,
-      req.body.nombre_equipo,
-    ]);
-    res.json(data);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-};
+    try {
+        const [data] = await db.query(Queries.postEquipo, [req.body.ref_sol, req.body.nombre_equipo]);
+        sseController.sendEventsToAll({ type: 'UPDATE', message: 'Update solicitudes' });
+        res.json(data);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+}
 
 // Controladores para la gestión de solicitudes
 const postEncargadoSolicitud = async (req, res) => {
@@ -245,21 +213,15 @@ const getTipoProyecto = async (req, res) => {
 
 // Controladores para agregar mantenedores
 const register = async (req, res) => {
-  try {
-    const hashedPassword = await bcrypt.hash(
-      req.body.password,
-      data.SALT_ROUNDS
-    );
-    const [user] = await db.query(Queries.register, [
-      req.body.email,
-      hashedPassword,
-      req.body.is_admin,
-    ]);
-    res.json(user);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-};
+    try {
+        const hashedPassword = await bcrypt.hash(req.body.password, data.SALT_ROUNDS);
+        const [user] = await db.query(Queries.register, [req.body.email, hashedPassword, req.body.is_admin]);
+        sseController.sendEventsToAll({ type: 'UPDATE', message: 'Update encargados' });
+        res.json(user);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+}
 const postNombreEquipos = async (req, res) => {
   try {
     const [data] = await db.query(Queries.postNombreEquipos, [req.body.nombre]);
@@ -287,13 +249,14 @@ const postTipoProyecto = async (req, res) => {
 
 // Controladores para eliminar mantenedores
 const deleteEncargado = async (req, res) => {
-  try {
-    const [data] = await db.query(Queries.deleteEncargado, [req.body.id]);
-    res.json(data);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-};
+    try {
+        const [data] = await db.query(Queries.deleteEncargado, [req.body.id]);
+        sseController.sendEventsToAll({ type: 'UPDATE', message: 'Update encargados' });
+        res.json(data);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+}
 const deleteNombreEquipos = async (req, res) => {
   try {
     const [data] = await db.query(Queries.deleteNombreEquipos, [req.body.id]);
@@ -321,16 +284,14 @@ const deleteTipoProyecto = async (req, res) => {
 
 // Controladores para editar mantenedores
 const putEncargado = async (req, res) => {
-  try {
-    const [data] = await db.query(Queries.putEncargado, [
-      req.body.email,
-      req.body.id,
-    ]);
-    res.json(data);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-};
+    try {
+        const [data] = await db.query(Queries.putEncargado, [req.body.email, req.body.id]);
+        sseController.sendEventsToAll({ type: 'UPDATE', message: 'Update encargados' });
+        res.json(data);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+}
 const putNombreEquipos = async (req, res) => {
   try {
     const [data] = await db.query(Queries.putNombreEquipos, [
@@ -354,16 +315,129 @@ const putTipoMaterial = async (req, res) => {
   }
 };
 const putTipoProyecto = async (req, res) => {
-  try {
-    const [data] = await db.query(Queries.putTipoProyecto, [
-      req.body.nombre,
-      req.body.id,
-    ]);
-    res.json(data);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-};
+    try {
+        const [data] = await db.query(Queries.putTipoProyecto, [req.body.nombre, req.body.id]);
+        res.json(data);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+}
+
+// Controladores para la gestión de imagenes del carrusel
+const getCarrusel = async (req, res) => {
+    try {
+        const [data] = await db.query(Queries.getCarrusel);
+        res.json(data);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+}
+const postCarrusel = async (req, res) => {
+    try {
+        const [data] = await db.query(Queries.postCarrusel, [req.body.id, req.body.url]);
+        res.json(data);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+}
+const deleteCarrusel = async (req, res) => {
+    const cloudName = process.env.PUBLIC_CLOUDINARY_CLOUDNAME;
+    const apiKey = process.env.PUBLIC_CLOUDINARY_APIKEY;
+    const apiSecret = process.env.PUBLIC_CLOUDINARY_APISECRET;
+
+    const timestamp = Math.floor(Date.now() / 1000);
+    const stringToSign = `public_id=${req.body.id}&timestamp=${timestamp}${apiSecret}`;
+    const signature = crypto.createHash('sha1').update(stringToSign).digest('hex');
+
+    const formData = new URLSearchParams();
+    formData.append('public_id', req.body.id);
+    formData.append('api_key', apiKey);
+    formData.append('timestamp', timestamp);
+    formData.append('signature', signature);
+
+    try {
+        const response = await fetch(`https://api.cloudinary.com/v1_1/${cloudName}/image/destroy`, {
+            method: 'POST',
+            body: formData
+        });
+        const result = await response.json();
+        if (result.result === 'ok') {
+            const [data] = await db.query(Queries.deleteCarrusel, [req.body.id]);
+            res.json(data);
+        } else {
+            res.status(500).json({ message: 'Error al eliminar la imagen en la nube' });
+        }
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+}
+
+// Controladores para noticias
+const getNoticias = async (req, res) => {
+    try {
+        const [noticias] = await db.query(Queries.getNoticias);
+        res.json(noticias);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+}
+const postNoticia = async (req, res) => {
+    try {
+        const [data] = await db.query(Queries.postNoticia, [req.body.titulo, req.body.descripcion, req.body.url, req.body.public_id]);
+        res.json(data);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+}
+const deleteNoticia = async (req, res) => {
+    const cloudName = process.env.PUBLIC_CLOUDINARY_CLOUDNAME;
+    const apiKey = process.env.PUBLIC_CLOUDINARY_APIKEY;
+    const apiSecret = process.env.PUBLIC_CLOUDINARY_APISECRET;
+
+    const timestamp = Math.floor(Date.now() / 1000);
+    const stringToSign = `public_id=${req.body.public_id}&timestamp=${timestamp}${apiSecret}`;
+    const signature = crypto.createHash('sha1').update(stringToSign).digest('hex');
+
+    const formData = new URLSearchParams();
+    formData.append('public_id', req.body.public_id);
+    formData.append('api_key', apiKey);
+    formData.append('timestamp', timestamp);
+    formData.append('signature', signature);
+
+    try {
+        const response = await fetch(`https://api.cloudinary.com/v1_1/${cloudName}/image/destroy`, {
+            method: 'POST',
+            body: formData
+        });
+        const result = await response.json();
+        if (result.result === 'ok') {
+            const [data] = await db.query(Queries.deleteNoticia, [req.body.id]);
+            res.json(data);
+        } else {
+            res.status(500).json({ message: 'Error al eliminar la imagen en la nube' });
+        }
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+}
+const putNoticia = async (req, res) => {
+    try {
+        const file = req.file;
+        if (!file) return res.status(400).send('No se ha subido ningún archivo.');
+        const [data] = await db.query(Queries.putNoticia, [req.body.id, req.body.title, req.body.description, file.originalname, file.buffer]);
+        res.json(data);
+    } catch (error) {
+        res.status(500).json({ message: error });
+    }
+}
+const putNoticiaWithoutFile = async (req, res) => {
+    try {
+        const [data] = await db.query(Queries.putNoticiaWithoutFile, [req.body.id, req.body.title, req.body.description]);
+        res.json(data);
+    } catch (error) {
+        res.status(500).json({ message: error });
+    }
+}
 
 // Controladores para la gestión de sesiones de usuarios
 const login = async (req, res) => {
@@ -416,35 +490,43 @@ const logout = (req, res) => {
 };
 
 export default {
-  getSolicitudes,
-  getSolicitudesById,
-  getEquipoById,
-  downloadMaterial,
-  getMailEncargado,
-  postAsesoria,
-  postMateriales,
-  postEquipos,
-  postEquipo,
-  postEncargadoSolicitud,
-  postEstadoSolicitud,
-  deleteSolicitud,
-  getEncargados,
-  getNombreEquipos,
-  getTipoMaterial,
-  getTipoProyecto,
-  register,
-  postNombreEquipos,
-  postTipoMaterial,
-  postTipoProyecto,
-  deleteEncargado,
-  deleteNombreEquipos,
-  deleteTipoMaterial,
-  deleteTipoProyecto,
-  putEncargado,
-  putNombreEquipos,
-  putTipoMaterial,
-  putTipoProyecto,
-  login,
-  session,
-  logout,
-};
+    getSolicitudes,
+    getSolicitudesById,
+    getEquipoById,
+    downloadMaterial,
+    getMailEncargado,
+    postAsesoria,
+    postMateriales,
+    postEquipos,
+    postEquipo,
+    postEncargadoSolicitud,
+    postEstadoSolicitud,
+    deleteSolicitud,
+    getEncargados,
+    getNombreEquipos,
+    getTipoMaterial,
+    getTipoProyecto,
+    register,
+    postNombreEquipos,
+    postTipoMaterial,
+    postTipoProyecto,
+    deleteEncargado,
+    deleteNombreEquipos,
+    deleteTipoMaterial,
+    deleteTipoProyecto,
+    putEncargado,
+    putNombreEquipos,
+    putTipoMaterial,
+    putTipoProyecto,
+    getCarrusel,
+    postCarrusel,
+    deleteCarrusel,
+    getNoticias,
+    postNoticia,
+    deleteNoticia,
+    putNoticia,
+    putNoticiaWithoutFile,
+    login,
+    session,
+    logout,
+}

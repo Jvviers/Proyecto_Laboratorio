@@ -63,9 +63,9 @@ onMounted(() => {
 });
 </script>
 <template>
-    <section class="flex flex-col justify-center items-center gap-6 py-4 px-12 w-full">
-        <h1 class="text-2xl text-center font-bold">ELIMINAR MATERIAL</h1>
-        <div class="flex flex-col justify-center items-stretch w-full gap-1">
+    <section class="flex flex-col justify-center items-center gap-6 py-4 px-12 w-full max-h-[80vh]">
+        <h2 class="text-2xl font-bold text-center text-utal">ELIMINAR MATERIAL</h2>
+        <div class="flex flex-col justify-start items-stretch w-full gap-1 overflow-y-scroll">
             <li v-for="material in materiales" :key="material.id" class="flex justify-between items-center px-2 w-full">
                 <span class="bg-gray-50 border border-gray-200 px-2 py-1 rounded w-full">{{ material.nombre }}</span>
                 <button class="ml-6" type="button" @click="eliminarMaterial(material.id)">

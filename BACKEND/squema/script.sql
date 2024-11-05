@@ -36,6 +36,20 @@ CREATE TABLE equipo(
     PRIMARY KEY (ref_sol, nombre_equipo(50))
 );
 
+-- CARRUSEL Y NOTICIAS
+CREATE TABLE imagencarrusel(
+    id VARCHAR(255) NOT NULL PRIMARY KEY,
+	url TEXT NOT NULL,
+);
+
+CREATE TABLE noticia(
+    id INTEGER AUTO_INCREMENT NOT NULL PRIMARY KEY,
+    titulo VARCHAR(255) NOT NULL,
+    descripcion TEXT NOT NULL,
+    url TEXT NOT NULL,
+    public_id VARCHAR(255) NOT NULL
+);
+
 -- MANTENEDORES
 CREATE TABLE nombreequipos(
     id INT AUTO_INCREMENT PRIMARY KEY,
