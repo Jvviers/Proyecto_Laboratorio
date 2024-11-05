@@ -80,7 +80,7 @@ const postNoticia = async () => {
     <form @submit.prevent="uploadImageToCloud"
         class="flex flex-col justify-center items-center gap-6 py-4 px-12 w-full">
         <div class="flex justify-center items-center w-full">
-            <h1 class="text-2xl text-center font-bold">AGREGAR NOTICIA</h1>
+            <h2 class="text-2xl font-bold text-center text-utal">AGREGAR NOTICIA</h2>
         </div>
         <div class="flex flex-col justify-center items-center w-full gap-4">
             <div v-if="!imageUrl" class="flex flex-col justify-center items-center w-full gap-4">
@@ -105,7 +105,7 @@ const postNoticia = async () => {
                 </div>
             </div>
             <div v-if="imageUrl" class="flex flex-col justify-center items-center w-full gap-2">
-                <div class="flex flex-col justify-start items-start w-3/4 p-2 gap-2 text-start border border-gray-300 rounded bg-gray-200">
+                <div class="flex flex-col justify-start items-start w-3/4 p-2 gap-2 text-start border border-gray-300 rounded-lg shadow-md">
                     <img :src="imageUrl" alt="Preview imagen subida" class="aspect-video w-full" />
                     <h2 class="text-base font-bold leading-5">{{ title }}</h2>
                     <p class="text-xs text-gray-500">{{ description }}</p>

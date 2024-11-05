@@ -80,7 +80,7 @@ onMounted(() => {
 </script>
 
 <template>
-    <nav class="flex flex-col w-full px-8 md:px-32 border-b border-gray-300">
+    <nav class="flex flex-col w-full px-8 md:px-32 shadow-md ">
         <div class="flex flex-col items-end w-full">
             <span class="h-6 w-full bg-utal"></span>
             <span class="h-6 w-2/3 border-b border-gray-300 hidden md:flex justify-end items-center gap-4 text-xs text-nowrap font-normal text-gray-500">
@@ -91,10 +91,10 @@ onMounted(() => {
         <div class="flex w-full justify-between items-center">
             <a href="/" aria-label="logo" class="geologica">
                 <div class="flex items-center gap-2 py-4">
-                    <img src="/icons/logo.svg" alt="logo utal" class="w-20 h-20" />
-                    <div class="hidden md:flex flex-col justify-center items-start text-start border-l border-black pl-2 w-44 gap-[2px]">
+                    <img src="/icons/logo.svg" alt="logo utal" class="w-20 h-20 pr-1 border-r border-[#9d9d9d]" />
+                    <div class="hidden md:flex flex-col justify-center items-start text-start pl-1 w-44 gap-[2px]">
                         <h3 class="text-lg font-semibold leading-none">Dirección de Innovación y Transferencia</h3>
-                        <h4 class="text-sm font-medium leading-none">Vicerrectoría Académica</h4>
+                        <h4 class="text-sm font-medium leading-none text-[#9d9d9d]">Vicerrectoría Académica</h4>
                     </div>
                 </div>
             </a>

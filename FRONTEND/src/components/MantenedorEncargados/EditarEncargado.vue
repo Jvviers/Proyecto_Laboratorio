@@ -73,7 +73,7 @@ onMounted(() => {
 </script>
 <template>
     <section class="flex flex-col justify-center items-center gap-6 py-4 px-12 w-full max-h-[80vh]">
-        <h1 class="text-2xl text-center font-bold">EDITAR ENCARGADO</h1>
+        <h2 class="text-2xl font-bold text-center text-utal">EDITAR ENCARGADO</h2>
         <div class="flex flex-col justify-start items-stretch w-full gap-1 overflow-y-scroll">
             <li v-for="encargado in encargados" :key="encargado.id" class="flex justify-between items-center px-2 w-full">
                 <input type="text" :disabled="encargado.disabled" v-model="encargado.email"
@@ -94,7 +94,7 @@ onMounted(() => {
 
 <style scoped>
 button:hover svg path {
-    fill: #00cdcd;
+    fill: #286532;
     transition: all 0.3s ease;
 }
 

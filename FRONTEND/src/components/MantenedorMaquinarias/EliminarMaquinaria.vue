@@ -64,7 +64,7 @@ onMounted(() => {
 </script>
 <template>
     <section class="flex flex-col justify-center items-center gap-6 py-4 px-12 w-full max-h-[80vh]">
-        <h1 class="text-2xl text-center font-bold">ELIMINAR MAQUINARIA</h1>
+        <h2 class="text-2xl font-bold text-center text-utal">ELIMINAR MAQUINARIA</h2>
         <div class="flex flex-col justify-start items-stretch w-full gap-1 overflow-y-scroll">
             <li v-for="maquinaria in maquinarias" :key="maquinaria.id" class="flex justify-between items-center px-2 w-full">
                 <span class="bg-gray-50 border border-gray-200 px-2 py-1 rounded w-full">{{ maquinaria.nombre }}</span>

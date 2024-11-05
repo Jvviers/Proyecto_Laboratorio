@@ -76,7 +76,7 @@ const postImage = async () => {
 <template>
     <form @submit.prevent="uploadImageToCloud" class="flex flex-col justify-center items-center gap-6 py-4 px-12 w-full">
         <div class="flex justify-center items-center w-full">
-            <h1 class="text-2xl text-center font-bold">AGREGAR IMAGEN AL CARRUSEL</h1>
+            <h2 class="text-2xl font-bold text-center text-utal">AGREGAR IMAGEN AL CARRUSEL</h2>
         </div>
         <div class="flex flex-col justify-center items-center w-full gap-4">
             <div v-if="imageUrl" class="flex flex-col justify-center items-center w-3/4 gap-2">

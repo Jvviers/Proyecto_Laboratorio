@@ -107,7 +107,7 @@ onMounted(() => {
 <style scoped>
 button:hover {
 	span {
-		background-color: #00cdcd;
+		background-color: #ba0c2f;
 	}
 }
 </style>

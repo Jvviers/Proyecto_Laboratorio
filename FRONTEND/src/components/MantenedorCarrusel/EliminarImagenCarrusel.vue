@@ -64,10 +64,10 @@ onMounted(() => {
 </script>
 <template>
     <section class="flex flex-col justify-center items-center gap-6 py-4 px-12 w-full max-h-[80vh]">
-        <h1 class="text-2xl text-center font-bold">ELIMINAR IMAGEN DEL CARRUSEL</h1>
+        <h2 class="text-2xl font-bold text-center text-utal">ELIMINAR IMAGEN DEL CARRUSEL</h2>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 overflow-y-scroll">
             <li v-for="imagen in imagenes" :key="imagen.id"
-                class="flex justify-between items-center p-2 w-full border border-gray-300 bg-gray-200 rounded relative">
+                class="flex justify-between items-center p-2 w-full border border-gray-300 rounded shadow-md relative">
                 <img :src="imagen.url" :alt="'imagen ' + imagen.id" class="aspect-video w-full" />
                 <button class="absolute top-0 right-0 p-4" type="button" @click="deleteImage(imagen.id)">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" width="20" height="20">

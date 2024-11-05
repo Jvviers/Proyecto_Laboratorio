@@ -65,11 +65,11 @@ onMounted(() => {
 </script>
 <template>
     <section class="flex flex-col justify-center items-center gap-6 py-4 px-12 w-full max-h-[80vh]">
-        <h1 class="text-2xl text-center font-bold">ELIMINAR NOTICIA</h1>
+        <h2 class="text-2xl font-bold text-center text-utal">ELIMINAR NOTICIA</h2>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 overflow-y-scroll">
             <li v-for="noticia in noticias" :key="noticia.id"
                 class="flex justify-between items-start w-full relative">
-                <div class="flex flex-col justify-start items-start w-full p-2 gap-2 text-start border border-gray-300 rounded bg-gray-200">
+                <div class="flex flex-col justify-start items-start w-full p-2 gap-2 text-start border border-gray-200 rounded-lg shadow-md">
                     <img :src="noticia.url" :alt="'imagen ' + noticia.id" class="aspect-video w-full" />
                     <h2 class="text-base font-bold leading-5">{{ noticia.titulo }}</h2>
                     <p class="text-xs text-gray-500">{{ noticia.descripcion }}</p>
