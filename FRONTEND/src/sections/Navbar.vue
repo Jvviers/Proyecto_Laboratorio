@@ -92,7 +92,7 @@ onMounted(() => {
             <a href="/" aria-label="logo" class="geologica">
                 <div class="flex items-center gap-2 py-4">
                     <img src="/icons/logo.svg" alt="logo utal" class="w-20 h-20 pr-1 border-r border-[#9d9d9d]" />
-                    <div class="hidden md:flex flex-col justify-center items-start text-start pl-1 w-44 gap-[2px]">
+                    <div class="flex flex-col justify-center items-start text-start pl-1 w-44 gap-[2px]">
                         <h3 class="text-lg font-semibold leading-none">Dirección de Innovación y Transferencia</h3>
                         <h4 class="text-sm font-medium leading-none text-[#9d9d9d]">Vicerrectoría Académica</h4>
                     </div>
@@ -100,10 +100,10 @@ onMounted(() => {
             </a>
             <div class="hidden md:flex items-center">
                 <div v-if="sessionActive && ruta == '/admin'">
-                    <button @click="logout" class="button">CERRAR SESIÓN</button>
+                    <button @click="logout" class="button-red">CERRAR SESIÓN</button>
                 </div>
                 <div v-else>
-                    <button onclick="location.href='/admin'" class="button" type="button">ACCESO ADMIN</button>
+                    <button onclick="location.href='/admin'" class="button-red" type="button">ACCESO ADMIN</button>
                 </div>
             </div>
             <div class="flex items-center md:hidden cursor-pointer">
@@ -112,7 +112,7 @@ onMounted(() => {
                 </button>
             </div>
             <div v-if="isDropdownVisible" id="dropdown"
-                class="absolute top-20 right-4 bg-white shadow-lg rounded w-48 p-2 z-20 md:hidden transitions">
+                class="absolute top-24 right-4 bg-white shadow-lg rounded w-48 p-2 z-20 md:hidden transitions">
                 <ul class="flex flex-col gap-2 w-full font-medium text-sm">
                     <li class="w-full hover:bg-utal/10 py-2 px-4 rounded cursor-pointer transitions"><a href="/">INICIO</a></li>
                     <li class="w-full hover:bg-utal/10 py-2 px-4 rounded cursor-pointer transitions"><a href="/admin">ACCESO ADMIN</a></li>

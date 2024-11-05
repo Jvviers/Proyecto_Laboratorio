@@ -156,6 +156,6 @@ const postEquipos = async () => {
 				</div>
 			</div>
 		</div>
-		<button class="button" type="submit">ENVIAR</button>
+		<button class="button-red" type="submit">ENVIAR</button>
 	</form>
 </template>

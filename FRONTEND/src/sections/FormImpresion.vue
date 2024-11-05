@@ -193,7 +193,7 @@ onMounted(() => {
 		</div>
 		<!-- Botón enviar -->
 		<div class="flex justify-center py-4">
-			<button class="button" type="submit">
+			<button class="button-red" type="submit">
 				ENVIAR
 			</button>
 		</div>

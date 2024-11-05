@@ -118,6 +118,6 @@ const timeAccuracy = ref(2);
                     :time-accuracy="timeAccuracy" />
             </div>
         </div>
-        <button class="button" type="submit">AGENDAR</button>
+        <button class="button-red" type="submit">AGENDAR</button>
     </form>
 </template>

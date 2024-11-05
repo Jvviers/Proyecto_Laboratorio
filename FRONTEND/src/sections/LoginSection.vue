@@ -70,7 +70,7 @@ const goToAdmin = () => {
                     <input class="text-input input" type="password" id="password" v-model="password" required />
                 </div>
             </div>
-            <button class="button" type="submit">INICIAR SESIÓN</button>
+            <button class="button-red" type="submit">INICIAR SESIÓN</button>
         </form>
     </section>
 </template>

@@ -231,7 +231,7 @@ onUnmounted(() => {
 		<h2 class="text-2xl text-center font-bold text-utal">BIENVENIDO</h2>
 		<h3 class="text-lg text-center">Inicia sesión para ver las solicitudes</h3>
 		<div class="flex justify-center items-center py-6">
-			<button class="button" @click="goToLogin">INICIAR SESIÓN</button>
+			<button class="button-red" @click="goToLogin">INICIAR SESIÓN</button>
 		</div>
 	</header>
 	<section v-if="validSession" class="flex flex-col justify-center items-center w-full px-8 md:px-32 gap-6 py-12">
