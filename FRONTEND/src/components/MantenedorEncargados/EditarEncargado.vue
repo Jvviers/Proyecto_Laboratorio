@@ -64,7 +64,7 @@ const getEncargados = async () => {
 const toggleEdicion = (id) => {
     const encargado = encargados.value.find(encargado => encargado.id === id);
     encargado.disabled = !encargado.disabled;
-    encargado.color = encargado.disabled ? '#e5e7eb' : '#00cdcd';
+    encargado.color = encargado.disabled ? '#e5e7eb' : '#286532';
 };
 
 onMounted(() => {

@@ -63,7 +63,7 @@ const getMaquinarias = async () => {
 const toggleEdicion = (id) => {
     const maquinaria = maquinarias.value.find(maquinaria => maquinaria.id === id);
     maquinaria.disabled = !maquinaria.disabled;
-    maquinaria.color = maquinaria.disabled ? '#e5e7eb' : '#00cdcd';
+    maquinaria.color = maquinaria.disabled ? '#e5e7eb' : '#286532';
 };
 
 onMounted(() => {
