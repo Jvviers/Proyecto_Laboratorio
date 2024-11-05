@@ -494,7 +494,6 @@ export default {
     getSolicitudesById,
     getEquipoById,
     downloadMaterial,
-    getMailEncargado,
     postAsesoria,
     postMateriales,
     postEquipos,
