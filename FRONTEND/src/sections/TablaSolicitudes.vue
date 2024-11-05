@@ -230,21 +230,18 @@ onUnmounted(() => {
 </script>
 
 <template>
-	<header class="flex justify-center py-6 px-8">
-		<div v-if="validSession" class="flex flex-col justify-center items-center gap-2">
-			<h1 v-if="userRole" class="text-2xl text-center font-bold">BIENVENIDO ADMINISTRADOR</h1>
-			<h1 v-if="!userRole" class="text-2xl text-center font-bold">BIENVENIDO ENCARGADO</h1>
-		</div>
-		<div v-if="!validSession" class="flex flex-col justify-center items-center gap-2">
-			<h2 class="text-2xl text-center font-bold">BIENVENIDO</h2>
-			<h3 class="text-lg text-center">Inicia sesión para ver las solicitudes</h3>
-			<div class="flex justify-center items-center py-6">
-				<button class="button" @click="goToLogin">INICIAR SESIÓN</button>
-			</div>
+	<header v-if="!validSession" class="flex flex-col justify-center items-center gap-2 py-12">
+		<h2 class="text-2xl text-center font-bold text-utal">BIENVENIDO</h2>
+		<h3 class="text-lg text-center">Inicia sesión para ver las solicitudes</h3>
+		<div class="flex justify-center items-center py-6">
+			<button class="button" @click="goToLogin">INICIAR SESIÓN</button>
 		</div>
 	</header>
-	<section v-if="validSession" class="flex flex-col justify-center items-center w-full px-8 md:px-32 gap-6 py-6">
-		<h2 class="text-2xl text-center font-bold">TABLA DE SOLICITUDES</h2>
+	<section v-if="validSession" class="flex flex-col justify-center items-center w-full px-8 md:px-32 gap-6 py-12">
+		<div class="flex flex-col justify-center items-center gap-2">
+			<h2 class="text-2xl text-center font-bold text-utal">TABLA DE SOLICITUDES</h2>
+			<h3 class="text-lg text-center">Aquí puedes ver las solicitudes que han sido enviadas</h3>
+		</div>
 		<!-- Contenedor de la tabla -->
 		<div class="w-full overflow-x-scroll border">
 			<table class="table-auto bg-white">
@@ -379,7 +376,7 @@ select {
 }
 
 select:focus {
-	border: #00cdcd 1px solid;
+	border: #ba0c2f 1px solid;
 }
 
 .pagination-controls {
@@ -401,7 +398,7 @@ select:focus {
 }
 
 .pagination-controls button:hover {
-	background-color: #00cdcd;
+	background-color: #ba0c2f;
 	/* Color al pasar el mouse */
 }
 
@@ -429,7 +426,7 @@ svg path {
 }
 
 .download:hover svg path {
-	fill: #00cdcd;
+	fill: #286532;
 	transition: all 0.3s ease;
 }
 </style>

@@ -46,22 +46,24 @@ const register = async () => {
 </script>
 <template>
     <form @submit.prevent="register" class="flex flex-col justify-center items-center gap-6 py-4 px-12 w-full">
-        <h1 class="text-2xl text-center font-bold">AGREGAR ENCARGADO</h1>
-        <div class="flex flex-col justify-center items-center gap-4">
-            <div class="flex justify-between items-center w-full gap-4">
+        <h2 class="text-2xl font-bold text-center text-utal">AGREGAR ENCARGADO</h2>
+        <div class="flex flex-col justify-center items-center w-full gap-4">
+            <div class="flex flex-col justify-start items-start w-full gap-1">
                 <label for="email">Email:</label>
-                <input class="input" type="email" id="email" v-model="email" required />
+                <input class="input w-full" type="email" id="email" v-model="email" 
+                placeholder="Correo del encargado" required />
             </div>
-            <div class="flex justify-between items-center w-full gap-4">
+            <div class="flex flex-col justify-start items-start w-full gap-1">
                 <label for="password">Contraseña:</label>
-                <input class="input" type="password" id="password" v-model="password" required />
+                <input class="input w-full" type="password" id="password" v-model="password" 
+                placeholder="Contraseña del encargado" required />
             </div>
-            <!-- <div class="flex justify-start items-center w-full gap-8">
+            <!-- <div class="flex flex-col justify-start items-center w-full gap-8">
                 <label for="is_admin">Es Admin:</label>
                 <input class="input" type="checkbox" id="is_admin" v-model="is_admin" />
             </div> -->
         </div>
-        <div class="flex w-full justify-center items-center gap-8">
+        <div class="flex w-full justify-center items-center gap-8 mt-4">
             <button class="button" type="submit">AGREGAR</button>
             <button class="button" type="button" @click="closeModal">CANCELAR</button>
         </div>

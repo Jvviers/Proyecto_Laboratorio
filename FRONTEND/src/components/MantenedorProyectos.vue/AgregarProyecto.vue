@@ -42,12 +42,13 @@ const agregarProyecto = async () => {
 </script>
 <template>
     <form @submit.prevent="agregarProyecto" class="flex flex-col justify-center items-center gap-6 py-4 px-12 w-full">	
-        <h1 class="text-2xl text-center font-bold">AGREGAR PROYECTO</h1>
-        <div class="flex justify-between items-center w-full gap-4">
+        <h2 class="text-2xl font-bold text-center text-utal">AGREGAR PROYECTO</h2>
+        <div class="flex flex-col justify-start items-start w-full gap-1">
             <label for="name">Nombre:</label>
-            <input class="text-input input" type="text" id="name" v-model="name" required />
+            <input class="input w-full" type="text" id="name" v-model="name" 
+            placeholder="Nombre del proyecto" required />
         </div>
-        <div class="flex w-full justify-center items-center gap-8">
+        <div class="flex w-full justify-center items-center gap-8 mt-4">
             <button class="button" type="submit">AGREGAR</button>
             <button class="button" type="button" @click="closeModal">CANCELAR</button>
         </div>

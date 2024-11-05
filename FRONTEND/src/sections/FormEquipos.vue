@@ -112,47 +112,50 @@ const postEquipos = async () => {
 	<div v-if="accessMessage" class="fixed top-32 right-5 bg-green-500 text-white py-2 px-4 rounded shadow-lg z-50">
 		{{ accessMessage }}
 	</div>
-	<form @submit.prevent="postEquipos" class="flex flex-col justify-center items-center gap-4 my-4 w-full">
-		<h1 class="text-2xl text-center font-bold">EQUIPOS</h1>
-		<div class="flex flex-col justify-center items-center gap-4 mx-auto px-10 py-6">
-			<div class="flex justify-between items-center w-full gap-4">
-				<label for="solicitante">Solicitante:</label>
-				<input required class="text-input input" type="text" id="solicitante" v-model="solicitante" />
+	<form @submit.prevent="postEquipos"
+		class="flex flex-col justify-center items-center gap-4 py-12 px-8 md:px-32 w-full">
+		<header class="flex flex-col justify-center gap-3 w-full">
+			<h2 class="text-2xl font-bold text-center text-utal">LABORATORIO</h2>
+			<h3 class="text-lg text-center">Aquí puedes solicitar la realización de tu laboratorio</h3>
+		</header>
+		<div class="flex flex-col lg:flex-row justify-center items-start gap-2 w-full border border-gray-300 rounded-lg shadow-md">
+			<div class="flex flex-col justify-start w-3/4 lg:w-1/2 items-center gap-4 mx-auto px-8 py-6">
+				<div class="flex flex-col justify-start items-start w-full gap-1">
+					<label for="solicitante">Solicitante:</label>
+					<input class="input w-full" type="text" id="solicitante" v-model="solicitante"
+						placeholder="Nombre del solicitante" required />
+				</div>
+				<div class="flex flex-col justify-start items-start w-full gap-1">
+					<label for="email">Email:</label>
+					<input class="input w-full" type="email" id="email" v-model="email"
+						placeholder="Correo del solicitante" required />
+				</div>
+				<div class="flex flex-col justify-start items-start w-full gap-1">
+					<label for="matricula">Matrícula:</label>
+					<input class="input w-full" type="text" id="matricula" v-model="matricula"
+						placeholder="Matrícula del solicitante" required />
+				</div>
+				<div class="flex flex-col justify-start items-start w-full gap-1">
+					<label for="actividad">Actividad:</label>
+					<input class="input w-full" type="text" id="actividad" v-model="actividad"
+						placeholder="Actividad a realizar" required />
+				</div>
 			</div>
-			<div class="flex justify-between items-center w-full gap-4">
-				<label for="email">Email:</label>
-				<input required class="text-input input" type="email" id="email" v-model="email" />
-			</div>
-			<div class="flex justify-between items-center w-full gap-4">
-				<label for="matricula">Matrícula:</label>
-				<input required class="text-input input" type="text" id="matricula" v-model="matricula" />
-			</div>
-			<div class="flex justify-between items-center w-full gap-4">
-				<label for="actividad">Actividad:</label>
-				<input required class="text-input input" type="text" id="actividad" v-model="actividad" />
-			</div>
-		</div>
-		<div class="flex flex-col justify-center gap-4 p-2">
-			<h2 class="font-bold text-center text-2xl">Equipos a utilizar</h2>
-			<div class="flex flex-col gap-2">
-				<li v-for="equipo in equiposTypes" :key="equipo.id" class="flex items-center">
-					<input type="checkbox" v-model="equipo.checked" :id="'equipo-' + equipo.id" class="mr-3 w-6 h-6" />
-					<label :for="'equipo-' + equipo.id" class="text-md">{{
-						equipo.nombre
-					}}</label>
-				</li>
+			<div class="flex flex-col justify-start w-3/4 lg:w-1/2 items-start gap-4 mx-auto px-8 py-6">
+				<header class="flex flex-col justify-center gap-3 w-full">
+					<h3 class="text-base text-center lg:text-start">Selecciona los equipos que vas a utilizar:</h3>
+				</header>
+				<div class="flex flex-col justify-center items-start gap-2">
+					<li v-for="equipo in equiposTypes" :key="equipo.id" class="flex items-center">
+						<input type="checkbox" v-model="equipo.checked" :id="'equipo-' + equipo.id"
+							class="mr-3 w-6 h-6 accent-utal" />
+						<label :for="'equipo-' + equipo.id" class="text-md">{{
+							equipo.nombre
+						}}</label>
+					</li>
+				</div>
 			</div>
 		</div>
 		<button class="button" type="submit">ENVIAR</button>
 	</form>
 </template>
-
-<style scoped>
-.text-input {
-	width: 200px;
-
-	@media (min-width: 768px) {
-		width: 300px;
-	}
-}
-</style>

@@ -23,7 +23,7 @@ const toggleModalEditar = () => {
 
 <template>
     <div class="flex flex-col justify-center items-center gap-2 px-8 py-4 w-[200px] border border-gray-300 shadow-md rounded">
-        <h2 class="text-lg font-bold">MAQUINARIAS</h2>
+        <h2 class="text-lg font-bold text-utal">MAQUINARIAS</h2>
         <div class="flex flex-col justify-center items-center gap-1 w-full">
             <button class="button w-full" @click="toggleModalAgregar">AGREGAR</button>
             <button class="button w-full" @click="toggleModalEliminar">ELIMINAR</button>

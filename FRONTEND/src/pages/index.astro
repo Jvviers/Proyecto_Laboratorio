@@ -3,10 +3,12 @@ import Layout from "../layouts/Layout.astro";
 import Servicios from "../sections/Servicios.astro";
 import Info from "../sections/Info.astro";
 import Carousel from "../sections/Carousel.vue";
+import Noticias from "../sections/SliderNoticias.vue";
 ---
 
 <Layout title="Inicio">
 	<Carousel client:load />
 	<Servicios />
+	<Noticias client:load />
 	<Info />
 </Layout>
