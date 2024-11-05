@@ -63,7 +63,7 @@ const getMateriales = async () => {
 const toggleEdicion = (id) => {
     const material = materiales.value.find(material => material.id === id);
     material.disabled = !material.disabled;
-    material.color = material.disabled ? '#e5e7eb' : '#00cdcd';
+    material.color = material.disabled ? '#e5e7eb' : '#286532';
 };
 
 onMounted(() => {

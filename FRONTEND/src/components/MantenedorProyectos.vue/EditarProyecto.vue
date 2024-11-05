@@ -63,7 +63,7 @@ const getProyectos = async () => {
 const toggleEdicion = (id) => {
     const proyecto = proyectos.value.find(proyecto => proyecto.id === id);
     proyecto.disabled = !proyecto.disabled;
-    proyecto.color = proyecto.disabled ? '#e5e7eb' : '#00cdcd';
+    proyecto.color = proyecto.disabled ? '#e5e7eb' : '#286532';
 };
 
 onMounted(() => {
