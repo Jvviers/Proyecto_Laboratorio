@@ -50,12 +50,12 @@ const goToAdmin = () => {
 </script>
 
 <template>
-    <section>
+    <section class="flex flex-col justify-start items-center w-full px-8 md:px-32 py-12">
         <span v-if="errorMessage"
             class="fixed top-4 left-1/2 transform -translate-x-1/2 bg-red-500 text-white py-2 px-4 rounded shadow-lg z-50">
             {{ errorMessage }}
         </span>
-        <form @submit.prevent="login" class="flex flex-col justify-center items-center gap-4 py-12 w-full">
+        <form @submit.prevent="login" class="flex flex-col justify-center items-center gap-4 w-full">
             <header class="flex flex-col justify-center gap-2">
                 <h2 class="text-2xl text-center font-bold text-utal">INICIAR SESIÓN</h2>
                 <h3 class="text-lg text-center">Aquí los administradores y encargados de laboratorio pueden iniciar sesión</h3>

@@ -81,14 +81,14 @@ onMounted(() => {
 
 <template>
     <nav class="flex flex-col w-full px-8 md:px-32 shadow-md ">
-        <div class="flex flex-col items-end w-full">
+        <!-- <div class="flex flex-col items-end w-full">
             <span class="h-6 w-full bg-utal"></span>
             <span class="h-6 w-2/3 border-b border-gray-300 hidden md:flex justify-end items-center gap-4 text-xs text-nowrap font-normal text-gray-500">
                 <h4>Visítanos en 19 norte #1665, Talca</h4>
                 <h4>Escríbenos a utal.adm@gmail.com</h4>
             </span>
-        </div>
-        <div class="flex w-full justify-between items-center">
+        </div> -->
+        <div class="flex w-full justify-between items-center py-2">
             <a href="/" aria-label="logo" class="geologica">
                 <div class="flex items-center gap-2 py-4">
                     <img src="/icons/logo.svg" alt="logo utal" class="w-20 h-20 pr-1 border-r border-[#9d9d9d]" />
@@ -112,10 +112,10 @@ onMounted(() => {
                 </button>
             </div>
             <div v-if="isDropdownVisible" id="dropdown"
-                class="absolute top-24 right-4 bg-white shadow-lg rounded w-48 p-2 z-20 md:hidden transitions">
+                class="absolute top-[130px] right-4 bg-white shadow-lg rounded w-48 p-2 z-20 md:hidden transitions">
                 <ul class="flex flex-col gap-2 w-full font-medium text-sm">
-                    <li class="w-full hover:bg-utal/10 py-2 px-4 rounded cursor-pointer transitions"><a href="/">INICIO</a></li>
-                    <li class="w-full hover:bg-utal/10 py-2 px-4 rounded cursor-pointer transitions"><a href="/admin">ACCESO ADMIN</a></li>
+                    <li class="w-full hover:bg-utal/30 py-2 px-4 rounded cursor-pointer transitions"><a href="/">INICIO</a></li>
+                    <li class="w-full hover:bg-utal/30 py-2 px-4 rounded cursor-pointer transitions"><a href="/admin">ACCESO ADMIN</a></li>
                     <li v-if="sessionActive" @click="logout()" class="w-full hover:bg-utal/10 py-2 px-4 rounded cursor-pointer transitions"><a href="/">CERRAR SESIÓN</a></li>
                 </ul>
             </div>

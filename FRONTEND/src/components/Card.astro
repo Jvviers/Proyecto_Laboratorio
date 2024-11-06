@@ -12,13 +12,16 @@ const { text, url } = Astro.props;
         <div class="bg-gradient-to-b from-neutral-200 to-neutral-400 rounded-full p-2 shadow-md">
             <div class="bg-white rounded-full p-2">
                 <div class="flex justify-center items-center p-3 border-2 border-utal border-dashed bg-neutral-100 rounded-full">
-                    <slot />
+                    <slot name="img" />
                 </div>
             </div>
         </div>
         <button class="w-full font-bold text-lg" type="button">
             {text}
         </button>
+        <div class="w-[200px] text-wrap text-center">
+            <slot name="text" />
+        </div>
     </div>
 </a>
 
