@@ -114,7 +114,7 @@ const postNoticia = async () => {
             </div>
         </div>
         <div class="flex w-full justify-center items-center gap-8">
-            <button v-if="!imageUrl" class="button" type="submit">AGREGAR</button>
+            <button v-if="!imageUrl" class="button-red" type="submit">AGREGAR</button>
             <button class="button" type="button" @click="closeModal">CERRAR</button>
         </div>
     </form>

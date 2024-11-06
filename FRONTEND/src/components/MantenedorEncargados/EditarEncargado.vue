@@ -55,7 +55,7 @@ const getEncargados = async () => {
         const data = await response.json();
         encargados.value = data;
         encargados.value.forEach(encargado => encargado.disabled = true);
-        encargados.value.forEach(encargado => encargado.color = '#e5e7eb');
+        encargados.value.forEach(encargado => encargado.color = '#9d9d9d');
     } catch (error) {
         console.error('Error al obtener encargados: ', error);
     }
@@ -64,7 +64,7 @@ const getEncargados = async () => {
 const toggleEdicion = (id) => {
     const encargado = encargados.value.find(encargado => encargado.id === id);
     encargado.disabled = !encargado.disabled;
-    encargado.color = encargado.disabled ? '#e5e7eb' : '#286532';
+    encargado.color = encargado.disabled ? '#9d9d9d' : '#286532';
 };
 
 onMounted(() => {

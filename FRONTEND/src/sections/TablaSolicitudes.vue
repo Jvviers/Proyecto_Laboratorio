@@ -418,7 +418,7 @@ svg path {
 }
 
 .delete:hover svg path {
-	fill: #ef4444;
+	fill: #dc2626;
 	transition: all 0.3s ease;
 }
 

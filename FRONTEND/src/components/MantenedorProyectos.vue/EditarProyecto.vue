@@ -54,7 +54,7 @@ const getProyectos = async () => {
         const data = await response.json();
         proyectos.value = data;
         proyectos.value.forEach(proyecto => proyecto.disabled = true);
-        proyectos.value.forEach(proyecto => proyecto.color = '#e5e7eb');
+        proyectos.value.forEach(proyecto => proyecto.color = '#9d9d9d');
     } catch (error) {
         console.error('Error al obtener proyectos: ', error);
     }
@@ -63,7 +63,7 @@ const getProyectos = async () => {
 const toggleEdicion = (id) => {
     const proyecto = proyectos.value.find(proyecto => proyecto.id === id);
     proyecto.disabled = !proyecto.disabled;
-    proyecto.color = proyecto.disabled ? '#e5e7eb' : '#286532';
+    proyecto.color = proyecto.disabled ? '#9d9d9d' : '#286532';
 };
 
 onMounted(() => {
