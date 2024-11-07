@@ -1,10 +1,11 @@
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, onBeforeUnmount } from 'vue';
 const BACKEND_URL = import.meta.env.PUBLIC_BACKEND_URL;
 
 const noticias = ref([]);
 const currentIndex = ref(0);
 const slideWidth = 224;
+const visibleSlides = ref(0);
 
 const getNoticias = async () => {
     try {
@@ -24,8 +25,13 @@ const getNoticias = async () => {
     }
 };
 
+const calculateVisibleSlides = () => {
+    const containerWidth = window.innerWidth;
+    visibleSlides.value = Math.floor(containerWidth / slideWidth);
+};
+
 const nextSlide = () => {
-    if (currentIndex.value < noticias.value.length - 4) {
+    if (currentIndex.value < noticias.value.length - visibleSlides.value) {
         currentIndex.value++;
     }
 };
@@ -38,6 +44,12 @@ const prevSlide = () => {
 
 onMounted(() => {
     getNoticias();
+    calculateVisibleSlides();
+    window.addEventListener('resize', calculateVisibleSlides);
+});
+
+onBeforeUnmount(() => {
+    window.removeEventListener('resize', calculateVisibleSlides);
 });
 </script>
 
@@ -49,7 +61,6 @@ onMounted(() => {
         </header>
         <div class="flex items-center w-full overflow-hidden">
             <button @click="prevSlide" class="bg-gray-400 hover:bg-utal focus:outline-none rounded-full p-3">
-                <!-- Icono Izquierda -->
                 <img src="/icons/arrow.svg" alt="Flecha Izquierda Tabla" class="w-4 h-4 rotate-180" />
             </button>
 
@@ -67,7 +78,6 @@ onMounted(() => {
             </div>
 
             <button @click="nextSlide" class="bg-gray-400 hover:bg-utal focus:outline-none rounded-full p-3">
-                <!-- Icono Derecha -->
                 <img src="/icons/arrow.svg" alt="Flecha Derecha Tabla" class="w-4 h-4" />
             </button>
         </div>
