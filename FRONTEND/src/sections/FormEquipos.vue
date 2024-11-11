@@ -66,6 +66,7 @@ const postEquipos = async () => {
 				email: email.value,
 				matricula: matricula.value,
 				actividad: actividad.value,
+				equipos: equiposTypes.value,
 			}),
 		});
 		if (!response.ok) {
