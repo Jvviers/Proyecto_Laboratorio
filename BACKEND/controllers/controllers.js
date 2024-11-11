@@ -67,7 +67,7 @@ const postAsesoria = async (req, res) => {
     }
 }
 const postMateriales = async (req, res) => {
-    try {
+    try { 
         const file = req.file;
         if (!file) return res.status(400).send('No se ha subido ningún archivo.');
         const [data] = await db.query(Queries.postMateriales, [req.body.solicitante, req.body.email, req.body.matricula, req.body.actividad, req.body.tipo_proyecto, req.body.tipo_material, file.originalname, file.buffer, "impresion"]);
@@ -99,19 +99,29 @@ const postEquipo = async (req, res) => {
 // Controladores para la gestión de solicitudes
 const postEncargadoSolicitud = async (req, res) => {
   try {
+    console.log("Contenido de req.body:", req.body);
     const [data] = await db.query(Queries.postEncargadoSolicitud, [
       req.body.ref_enc,
       req.body.id,
+      req.body.estado,
     ]);
     const [email] = await db.query(Queries.getMailEncargado, [
       req.body.ref_enc,
     ]);
 
-    console.log(req.body.ref_enc);
+
+
+    const emailContent = `
+    Se le ha asignado la solicitud de: ${req.body.solicitante} <br>
+    Correo del solicitante: ${req.body.email}
+    `;
+  
+
     await sendEmailNotification(
       email[0].email,
       "Asignación de solicitud",
-      `Se le ha asignado la solicitud de: ${req.body.solicitante}`
+      
+      emailContent
     );
     res.json(data);
   } catch (error) {
@@ -144,7 +154,7 @@ const sendEmailNotification = async (to, subject, text) => {
             <strong>Advertencia:</strong> Este correo es autogenerado, por favor no responda a este mensaje.
         </div>
     </div>
-`;
+  `;
 
 
   try {

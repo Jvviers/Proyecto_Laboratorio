@@ -114,7 +114,9 @@ const goToLogin = () => {
 	window.location.href = '/login';
 };
 
-const updateEncargado = async (sol_id, ref_enc, solicitante) => {
+console.log('Email:', email);
+
+const updateEncargado = async (sol_id, ref_enc, solicitante, email) => {
 	try {
 		const response = await fetch(BACKEND_URL + '/encargado-solicitud', {
 			method: 'POST',
@@ -125,7 +127,8 @@ const updateEncargado = async (sol_id, ref_enc, solicitante) => {
 			body: JSON.stringify({
 				ref_enc: ref_enc,
 				id: sol_id,
-				solicitante: solicitante
+				solicitante: solicitante,
+				email: email,
 			}),
 		});
 		if (!response.ok) {
