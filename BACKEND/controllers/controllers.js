@@ -120,7 +120,6 @@ const postEncargadoSolicitud = async (req, res) => {
     await sendEmailNotification(
       email[0].email,
       "Asignación de solicitud",
-      
       emailContent
     );
     res.json(data);
