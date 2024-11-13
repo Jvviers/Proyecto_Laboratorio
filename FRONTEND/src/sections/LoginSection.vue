@@ -58,7 +58,7 @@ const goToAdmin = () => {
         <form @submit.prevent="login" class="flex flex-col justify-center items-center gap-4 w-full">
             <header class="flex flex-col justify-center gap-2">
                 <h2 class="text-2xl text-center font-bold text-utal">INICIAR SESIÓN</h2>
-                <h3 class="text-lg text-center">Aquí los administradores y encargados de laboratorio pueden iniciar sesión</h3>
+                <h3 class="text-lg text-center">Aquí los administradores y encargados de laboratorio pueden iniciar sesión.</h3>
             </header>
             <div class="flex flex-col justify-center items-center gap-4 mx-auto px-10 py-6">
                 <div class="flex justify-between items-center w-full gap-4">

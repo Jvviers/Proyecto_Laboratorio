@@ -40,6 +40,11 @@ const putNombreEquipos = "UPDATE nombreequipos SET nombre = ? WHERE id = ?";
 const putTipoMaterial = "UPDATE tipomaterial SET nombre = ? WHERE id = ?";
 const putTipoProyecto = "UPDATE tipoproyecto SET nombre = ? WHERE id = ?";
 
+// Consultas para la gestión de logos de los laboratorios
+const getLogos = "SELECT * FROM logos";
+const postLogos = "INSERT INTO logos (id, url) VALUES (?, ?)";
+const deleteLogos = "DELETE FROM logos WHERE id = ?";
+
 // Consultas para la gestión de imagenes del carrusel
 const getCarrusel = "SELECT * FROM imagencarrusel";
 const postCarrusel = "INSERT INTO imagencarrusel (id, url) VALUES (?, ?)";
@@ -84,6 +89,9 @@ export default {
     putNombreEquipos,
     putTipoMaterial,
     putTipoProyecto,
+    getLogos,
+    postLogos,
+    deleteLogos,
     getCarrusel,
     postCarrusel,
     deleteCarrusel,

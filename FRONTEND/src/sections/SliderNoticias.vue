@@ -69,7 +69,7 @@ onBeforeUnmount(() => {
     <section class="flex flex-col justify-center items-center w-full py-6 px-8 md:px-32">
         <header class="flex flex-col justify-center py-6 border-t border-gray-300 gap-3 w-full">
             <h2 class="text-2xl font-bold text-center text-utal">NOTICIAS</h2>
-            <h3 class="text-lg text-center">Aquí puedes ver las noticias más recientes</h3>
+            <h3 class="text-lg text-center">Aquí puedes ver las noticias más recientes.</h3>
         </header>
         <div class="flex items-center w-full overflow-hidden">
             <button @click="prevSlide" class="bg-gray-400 hover:bg-utal focus:outline-none rounded-full p-3"
