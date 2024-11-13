@@ -114,9 +114,9 @@ onMounted(() => {
             <div v-if="isDropdownVisible" id="dropdown"
                 class="absolute top-[130px] right-4 bg-white shadow-lg rounded w-48 p-2 z-20 md:hidden transitions">
                 <ul class="flex flex-col gap-2 w-full font-medium text-sm">
-                    <li class="w-full hover:bg-utal/30 py-2 px-4 rounded cursor-pointer transitions"><a href="/">INICIO</a></li>
-                    <li class="w-full hover:bg-utal/30 py-2 px-4 rounded cursor-pointer transitions"><a href="/admin">ACCESO ADMIN</a></li>
-                    <li v-if="sessionActive" @click="logout()" class="w-full hover:bg-utal/10 py-2 px-4 rounded cursor-pointer transitions"><a href="/">CERRAR SESIÓN</a></li>
+                    <li class="w-full hover:bg-utal hover:text-white py-2 px-4 rounded cursor-pointer transitions"><a href="/">INICIO</a></li>
+                    <li class="w-full hover:bg-utal hover:text-white py-2 px-4 rounded cursor-pointer transitions"><a href="/admin">ACCESO ADMIN</a></li>
+                    <li v-if="sessionActive" @click="logout()" class="w-full hover:bg-utal hover:text-white py-2 px-4 rounded cursor-pointer transitions"><a href="/">CERRAR SESIÓN</a></li>
                 </ul>
             </div>
         </div>
