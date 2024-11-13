@@ -81,31 +81,31 @@ const postEquipos = async () => {
 	}
 
 	for (const equipo of equiposTypes.value) {
-		console.log("Equipo:", equipo);
-		console.log("idSolicitud:", idSolicitud.value);
-		try {
-			const response = await fetch(BACKEND_URL + "/equipo", {
-				method: "POST",
-				headers: {
-					"Content-Type": "application/json",
-				},
-				body: JSON.stringify({
-					ref_sol: idSolicitud.value,
-					nombre_equipo: equipo.nombre,
-				}),
-			});
-			if (!response.ok) {
-				throw new Error(`Error: ${response.statusText}`);
+		console.log("Equipo:", equipo.nombre, equipo.checked);
+		if (equipo.checked) {
+			try {
+				const response = await fetch(BACKEND_URL + "/equipo", {
+					method: "POST",
+					headers: {
+						"Content-Type": "application/json",
+					},
+					body: JSON.stringify({
+						ref_sol: idSolicitud.value,
+						nombre_equipo: equipo.nombre,
+					}),
+				});
+				if (!response.ok) {
+					throw new Error(`Error: ${response.statusText}`);
+				}
+				const data = await response.json();
+				console.log("Equipo agregado:", data);
+			} catch (error) {
+				console.error("Error al enviar la solicitud:", error);
 			}
-			const data = await response.json();
-			console.log("Equipo agregado:", data);
-
-			//aqui ira los reset inputs
-			resetInputs();
-		} catch (error) {
-			console.error("Error al enviar la solicitud:", error);
 		}
 	}
+	//aqui ira los reset inputs
+	resetInputs();
 };
 </script>
 
