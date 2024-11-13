@@ -114,7 +114,7 @@ onMounted(() => {
 		class="flex flex-col justify-center items-center gap-4 py-12 px-8 md:px-32 w-full">
 		<header class="flex flex-col justify-center gap-3 w-full">
 			<h2 class="text-2xl font-bold text-center text-utal">SOLICITUD DE IMPRESIÓN</h2>
-			<h3 class="text-lg text-center">Aquí puedes solicitar impresiones para tus laboratorios</h3>
+			<h3 class="text-lg text-center">Aquí puedes solicitar impresiones para tus laboratorios.</h3>
 		</header>
 		<div class="flex flex-col justify-start items-center w-full border border-gray-300 rounded-lg shadow-md">
 			<!-- Sección de formulario de solicitud de impresión -->
@@ -145,15 +145,18 @@ onMounted(() => {
 				<div class="flex flex-col justify-center w-3/4 lg:w-1/2 items-center gap-4 mx-auto px-8 py-6">
 					<!-- Subir archivo -->
 					<div class="flex flex-col gap-1 justify-center items-center">
-						<div class="flex flex-col justify-center items-center gap-3 md:gap-8 p-2">
+						<div class="flex flex-col justify-center items-center gap-2 p-2">
 							<button type="button" class="button relative overflow-hidden text-sm">SELECCIONAR ARCHIVO
 								<input type="file" name="file" @change="onFileChange($event)" required
 									class="absolute top-0 left-0 w-full h-[60px] text-transparent opacity-0" />
 							</button>
+							<span v-if="file != null" class="text-center text-sm">
+								Archivo cargado: {{ file.name }}
+							</span>
+							<span v-else class="text-center text-sm">
+								Se recomienda usar un archivo comprimido (.zip, .rar).
+							</span>
 						</div>
-						<span v-if="file != null" class="text-center text-sm">
-							Archivo cargado: {{ file.name }}
-						</span>
 					</div>
 				</div>
 			</div>
@@ -193,7 +196,7 @@ onMounted(() => {
 		</div>
 		<!-- Botón enviar -->
 		<div class="flex justify-center py-4">
-			<button class="button" type="submit">
+			<button class="button-red" type="submit">
 				ENVIAR
 			</button>
 		</div>

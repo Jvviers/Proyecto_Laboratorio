@@ -84,12 +84,12 @@ onMounted(() => {
 
 <style scoped>
 svg path {
-    fill: #e5e7eb;
+    fill: #9d9d9d;
     transition: all 0.3s ease;
 }
 
 button:hover svg path {
-    fill: #ef4444;
+    fill: #dc2626;
     transition: all 0.3s ease;
 }
 </style>

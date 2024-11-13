@@ -54,7 +54,7 @@ const getMateriales = async () => {
         const data = await response.json();
         materiales.value = data;
         materiales.value.forEach(material => material.disabled = true);
-        materiales.value.forEach(material => material.color = '#e5e7eb');
+        materiales.value.forEach(material => material.color = '#9d9d9d');
     } catch (error) {
         console.error('Error al obtener materiales: ', error);
     }
@@ -63,7 +63,7 @@ const getMateriales = async () => {
 const toggleEdicion = (id) => {
     const material = materiales.value.find(material => material.id === id);
     material.disabled = !material.disabled;
-    material.color = material.disabled ? '#e5e7eb' : '#286532';
+    material.color = material.disabled ? '#9d9d9d' : '#286532';
 };
 
 onMounted(() => {

@@ -54,7 +54,7 @@ const getMaquinarias = async () => {
         const data = await response.json();
         maquinarias.value = data;
         maquinarias.value.forEach(maquinaria => maquinaria.disabled = true);
-        maquinarias.value.forEach(maquinaria => maquinaria.color = '#e5e7eb');
+        maquinarias.value.forEach(maquinaria => maquinaria.color = '#9d9d9d');
     } catch (error) {
         console.error('Error al obtener maquinarias: ', error);
     }
@@ -63,7 +63,7 @@ const getMaquinarias = async () => {
 const toggleEdicion = (id) => {
     const maquinaria = maquinarias.value.find(maquinaria => maquinaria.id === id);
     maquinaria.disabled = !maquinaria.disabled;
-    maquinaria.color = maquinaria.disabled ? '#e5e7eb' : '#286532';
+    maquinaria.color = maquinaria.disabled ? '#9d9d9d' : '#286532';
 };
 
 onMounted(() => {

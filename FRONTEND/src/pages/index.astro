@@ -4,11 +4,13 @@ import Servicios from "../sections/Servicios.astro";
 import Info from "../sections/Info.astro";
 import Carousel from "../sections/Carousel.vue";
 import Noticias from "../sections/SliderNoticias.vue";
+import BannerLogos from "../sections/BannerLogos.vue";
 ---
 
 <Layout title="Inicio">
 	<Carousel client:load />
 	<Servicios />
+	<BannerLogos client:load />
 	<Noticias client:load />
 	<Info />
 </Layout>
