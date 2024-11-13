@@ -4,7 +4,7 @@ import { ref, onMounted, onBeforeUnmount, watch } from 'vue';
 const BACKEND_URL = import.meta.env.PUBLIC_BACKEND_URL;
 const noticias = ref([]);
 const currentIndex = ref(0);
-const slideWidth = 224;
+const slideWidth = 220;
 const visibleItems = ref(4);
 
 const getNoticias = async () => {
@@ -66,9 +66,9 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-    <section class="flex flex-col justify-center items-center w-full py-6 px-8 md:px-32">
-        <header class="flex flex-col justify-center py-6 border-t border-gray-300 gap-3 w-full">
-            <h2 class="text-2xl font-bold text-center text-utal">NOTICIAS</h2>
+    <section class="flex flex-col justify-center items-center w-full py-6 px-2 md:px-32">
+        <header class="flex flex-col justify-center pb-6 gap-3 w-full px-6 md:px-0">
+            <h2 class="text-2xl font-bold text-center text-utal border-t border-gray-300 pt-6">NOTICIAS</h2>
             <h3 class="text-lg text-center">Aquí puedes ver las noticias más recientes.</h3>
         </header>
         <div class="flex items-center w-full overflow-hidden">
@@ -81,7 +81,7 @@ onBeforeUnmount(() => {
                 <div class="flex transition-transform duration-300 ease-in-out"
                     :style="{ transform: `translateX(-${currentIndex * slideWidth}px)` }">
                     <div v-for="noticia in noticias" :key="noticia.id"
-                        class="bg-white w-56 m-2 flex-shrink-0 border border-gray-300 rounded-lg shadow-md hover:scale-105 duration-300 ease-in-out overflow-hidden">
+                        class="bg-white w-52 m-2 flex-shrink-0 border border-gray-300 rounded-lg shadow-md hover:scale-105 duration-300 ease-in-out overflow-hidden">
                         <img :src="noticia.url" :alt="'Imagen de noticia ' + noticia.id" loading="lazy"
                             class="w-full aspect-video object-cover" />
                         <h2 class="text-base font-bold leading-5 px-2 pt-2">{{ noticia.titulo }}</h2>
