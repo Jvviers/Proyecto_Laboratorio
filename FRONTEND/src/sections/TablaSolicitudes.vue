@@ -114,7 +114,7 @@ const goToLogin = () => {
 	window.location.href = '/login';
 };
 
-const updateEncargado = async (sol_id, ref_enc, solicitante, email) => {
+const updateEncargado = async (sol_id, ref_enc, solicitante, email, actividad) => {
 	try {
 		const response = await fetch(BACKEND_URL + '/encargado-solicitud', {
 			method: 'POST',
@@ -127,6 +127,7 @@ const updateEncargado = async (sol_id, ref_enc, solicitante, email) => {
 				id: sol_id,
 				solicitante: solicitante,
 				email: email,
+				actividad: actividad,
 			}),
 		});
 		if (!response.ok) {
@@ -270,7 +271,7 @@ onUnmounted(() => {
 						<td class="td">{{ request.id }}</td>
 						<td>
 							<select v-if="request.tipo_form != 'asesoria'" v-model="request.ref_enc"
-								@change="updateEncargado(request.id, request.ref_enc, request.solicitante, request.email)" class="border rounded px-2 py-1">
+								@change="updateEncargado(request.id, request.ref_enc, request.solicitante, request.email, request.actividad)" class="border rounded px-2 py-1">
 								<option v-for="encargado in encargados" :key="encargado.id" :value="encargado.id">{{
 									encargado.email }}
 								</option>

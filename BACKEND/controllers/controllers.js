@@ -109,11 +109,10 @@ const postEncargadoSolicitud = async (req, res) => {
       req.body.ref_enc,
     ]);
 
-
-
-    const emailContent = `
-    Se le ha asignado la solicitud de: ${req.body.solicitante} <br>
-    Correo del solicitante: ${req.body.email}
+    const emailContent = 
+    `Se le ha asignado la solicitud de: ${req.body.solicitante}. <br>
+    Para la actividad de: ${req.body.actividad}. <br>
+    Para mayor información el correo del solicitante es: ${req.body.email} <br>
     `;
   
 
@@ -168,6 +167,7 @@ const sendEmailNotification = async (to, subject, text) => {
     console.log("Error al enviar email", error);
   }
 };
+
 const postEstadoSolicitud = async (req, res) => {
   try {
     const [data] = await db.query(Queries.postEstadoSolicitud, [
