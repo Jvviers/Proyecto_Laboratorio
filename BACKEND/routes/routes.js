@@ -53,6 +53,11 @@ router.put('/nombre-equipos', Controller.putNombreEquipos);
 router.put('/tipo-material', Controller.putTipoMaterial);
 router.put('/tipo-proyecto', Controller.putTipoProyecto);
 
+// Rutas para la gestión de logos de los laboratorios
+router.get('/logos', Controller.getLogos);
+router.post('/logos', Controller.postLogos);
+router.delete('/logos', Controller.deleteLogos);
+
 // Rutas para la gestión de imagenes del carrusel
 router.get('/carrusel', Controller.getCarrusel);
 router.post('/carrusel', Controller.postCarrusel);

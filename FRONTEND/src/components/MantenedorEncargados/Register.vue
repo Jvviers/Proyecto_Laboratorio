@@ -64,7 +64,7 @@ const register = async () => {
             </div> -->
         </div>
         <div class="flex w-full justify-center items-center gap-8 mt-4">
-            <button class="button" type="submit">AGREGAR</button>
+            <button class="button-red" type="submit">AGREGAR</button>
             <button class="button" type="button" @click="closeModal">CANCELAR</button>
         </div>
     </form>
