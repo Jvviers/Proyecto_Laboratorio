@@ -6,6 +6,7 @@ import data from '../config.js';
 import jwt from 'jsonwebtoken'
 import sseController from './sseController.js';
 import nodemailer from "nodemailer";
+import e from 'express';
 
 // Controladores para obtener datos de solicitudes
 const getSolicitudes = async (req, res) => {
@@ -174,11 +175,52 @@ const postEstadoSolicitud = async (req, res) => {
       req.body.estado,
       req.body.id,
     ]);
+    let emailSubject;
+    let emailContent;
+
+    switch (req.body.estado) {
+      case 'en espera':
+        emailSubject = "Tu solicitud está en espera";
+        emailContent = `Tu solicitud ha sido recibida y está actualmente en espera. Te notificaremos cuando haya algún cambio.`;
+        break;
+      case 'Agendado':
+        emailSubject = "Solicitud agendada";
+        emailContent = `Tu solicitud ha sido agendada. Nos pondremos en contacto contigo en la fecha indicada para llevar a cabo la actividad.`;
+        break;
+      case 'Terminado':
+        emailSubject = "Solicitud finalizada";
+        emailContent = `La solicitud que realizaste ha sido completada. Te agradecemos por utilizar nuestros servicios.`;
+        break;
+      case 'En cola de Impresión':
+        emailSubject = "Solicitud en cola de impresión";
+        emailContent = `Tu solicitud ha sido puesta en cola de impresión. Te notificaremos cuando esté lista para retirar.`;
+        break;
+      case 'Listo para Retirar':
+        emailSubject = "Solicitud lista para retirar";
+        emailContent = `Tu solicitud está lista para retirar. Por favor, acércate a nuestras instalaciones para recogerla.`;
+        break;
+      case 'Rechazado':
+        emailSubject = "Solicitud rechazada";
+        emailContent = `Tu solicitud ha sido rechazada. Si tienes alguna duda, por favor, ponte en contacto con nosotros.`;
+        break;
+      case 'terminado': //este es el terminado de asesoria
+        emailSubject = "Solicitud finalizada";
+        emailContent = `La solicitud que realizaste ha sido completada. Te agradecemos por utilizar nuestros servicios.`;
+        break;
+      /* case 'agendado': //este es el agendado de asesoria
+        emailSubject = "Solicitud agendada";
+        emailContent = `Tu solicitud ha sido agendada. Nos pondremos en contacto contigo en la fecha indicada para llevar a cabo la actividad.`; */
+      
+      default:
+        emailSubject = "Actualización de estado de solicitud";
+        emailContent = `El estado de tu solicitud ha cambiado a: ${req.body.estado}`;
+        break;
+    }
 
     await sendEmailNotification(
       req.body.email,
-      "Actualización de estado de solicitud",
-      `El estado de tu solicitud cambió a ${req.body.estado}`
+      emailSubject,
+      emailContent
     );
     res.json(data);
   } catch (error) {
