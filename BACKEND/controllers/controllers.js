@@ -100,7 +100,6 @@ const postEquipo = async (req, res) => {
 // Controladores para la gestión de solicitudes
 const postEncargadoSolicitud = async (req, res) => {
   try {
-    console.log("Contenido de req.body:", req.body);
     const [data] = await db.query(Queries.postEncargadoSolicitud, [
       req.body.ref_enc,
       req.body.id,
