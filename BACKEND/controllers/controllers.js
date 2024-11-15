@@ -478,7 +478,7 @@ const deleteNoticia = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 }
-const putNoticia = async (req, res) => {
+/* const putNoticia = async (req, res) => {
   try {
     const file = req.file;
     if (!file) return res.status(400).send('No se ha subido ningún archivo.');
@@ -495,7 +495,7 @@ const putNoticiaWithoutFile = async (req, res) => {
   } catch (error) {
     res.status(500).json({ message: error });
   }
-}
+} */
 
 // Controladores para la gestión de sesiones de usuarios
 const login = async (req, res) => {
@@ -585,8 +585,8 @@ export default {
   getNoticias,
   postNoticia,
   deleteNoticia,
-  putNoticia,
-  putNoticiaWithoutFile,
+  /* putNoticia,
+  putNoticiaWithoutFile, */
   login,
   session,
   logout,

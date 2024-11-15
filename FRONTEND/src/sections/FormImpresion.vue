@@ -74,7 +74,7 @@ const postMateriales = async () => {
 			throw new Error(`Error: ${response.statusText}`);
 		}
 		const data = await response.json();
-		console.log("Solicitud enviada:", data);
+		/* console.log("Solicitud enviada:", data); */
 		accessMessage.value = "Solicitud enviada correctamente";
 		showAccessBanner();
 		//Aquí vaciamos los campos 

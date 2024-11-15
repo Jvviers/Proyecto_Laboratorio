@@ -34,7 +34,7 @@ const editarMaterial = async (id, name) => {
             throw new Error(`Error: ${response.statusText}`);
         }
         const data = await response.json();
-        console.log('Se ha editado: ', data);
+        /* console.log('Se ha editado: ', data); */
     } catch (error) {
         console.error('Error al editar material: ', error);
     }

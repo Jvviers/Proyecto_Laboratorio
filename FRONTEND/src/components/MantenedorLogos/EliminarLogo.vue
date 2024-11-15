@@ -32,7 +32,7 @@ const deleteLogo = async (id) => {
             throw new Error(`Error: ${response.statusText}`);
         }
         const data = await response.json();
-        console.log('Se ha eliminado: ', data);
+        /* console.log('Se ha eliminado: ', data); */
         getLogos();
     } catch (error) {
         console.error('Error al eliminar logo: ', error);
