@@ -25,6 +25,7 @@ const getImagenes = async () => {
 const activeIndex = ref(0);
 const isDragging = ref(false);
 const startX = ref(0);
+let autoSlideInterval = null;
 
 const nextSlide = () => {
 	activeIndex.value = (activeIndex.value + 1) % images.value.length;
