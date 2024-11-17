@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
 import { DatePicker } from 'v-calendar';
 import 'v-calendar/style.css';
 const BACKEND_URL = import.meta.env.PUBLIC_BACKEND_URL;
@@ -9,7 +9,7 @@ const solicitante = ref("");
 const email = ref("");
 const matricula = ref("");
 const actividad = ref("");
-const selectedDate = ref(new Date());
+const selectedDate = ref(null);
 const accessMessage = ref("");
 
 const disabledDates = ref([
@@ -75,6 +75,21 @@ const asesoria = async () => {
 
 const selectedColor = ref('red');
 const timeAccuracy = ref(2);
+
+const getNextWeekday = () => {
+    const date = new Date();
+    const day = date.getDay();
+    if (day === 0) {
+        date.setDate(date.getDate() + 1);
+    } else if (day === 6) {
+        date.setDate(date.getDate() + 2);
+    }
+    return date;
+}
+
+onMounted(() => {
+    selectedDate.value = getNextWeekday();
+});
 </script>
 
 <template>
