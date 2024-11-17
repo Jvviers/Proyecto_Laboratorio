@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, onBeforeUnmount } from 'vue';
 const BACKEND_URL = import.meta.env.PUBLIC_BACKEND_URL;
 
 const images = ref([]);
@@ -63,6 +63,18 @@ const endDrag = () => {
 
 onMounted(() => {
 	getImagenes();
+
+	autoSlideInterval = setInterval(() => {
+		if (images.value.length > 0) {
+			nextSlide();
+		}
+	}, 5000);
+});
+
+onBeforeUnmount(() => {
+	if (autoSlideInterval) {
+		clearInterval(autoSlideInterval);
+	}
 });
 </script>
 
