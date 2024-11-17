@@ -25,7 +25,7 @@ const validateSession = async () => {
 			const data = await response.json();
 			validSession.value = true;
 			userRole.value = data.is_admin;
-			console.log('userRole:', userRole.value);
+			/* console.log('userRole:', userRole.value); */
 		}
 	} catch (err) {
 		console.error('Error al validar sesión:', err);

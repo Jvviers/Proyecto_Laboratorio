@@ -41,7 +41,7 @@ const agregarMaquinaria = async () => {
             
         }
         const data = await response.json();
-        console.log('Se ha agregado: ', data);
+        /* console.log('Se ha agregado: ', data); */
         closeModal();
         showAccessBanner();
     } catch (error) {

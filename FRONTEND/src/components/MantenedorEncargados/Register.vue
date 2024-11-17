@@ -37,7 +37,7 @@ const register = async () => {
             throw new Error(`Error: ${response.statusText}`);
         }
         const data = await response.json();
-        console.log('Usuario registrado:', data);
+        /* console.log('Usuario registrado:', data); */
         closeModal();
     } catch (error) {
         console.error('Error al registrar:', error);

@@ -34,7 +34,7 @@ const deleteNoticia = async (id, public_id) => {
             throw new Error(`Error: ${response.statusText}`);
         }
         const data = await response.json();
-        console.log('Se ha eliminado: ', data);
+        /* console.log('Se ha eliminado: ', data); */
         getNoticias();
     } catch (error) {
         console.error('Error al eliminar noticia: ', error);

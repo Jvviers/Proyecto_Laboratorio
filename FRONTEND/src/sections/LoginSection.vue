@@ -29,7 +29,7 @@ const login = async () => {
         }
 
         const data = await response.json();
-        console.log('Usuario logeado:', data);
+        /* console.log('Usuario logeado:', data); */
         goToAdmin();
     } catch (error) {
         console.error('Error al iniciar sesión:', error);
@@ -60,14 +60,16 @@ const goToAdmin = () => {
                 <h2 class="text-2xl text-center font-bold text-utal">INICIAR SESIÓN</h2>
                 <h3 class="text-lg text-center">Aquí los administradores y encargados de laboratorio pueden iniciar sesión.</h3>
             </header>
-            <div class="flex flex-col justify-center items-center gap-4 mx-auto px-10 py-6">
-                <div class="flex justify-between items-center w-full gap-4">
+            <div class="flex flex-col justify-start w-3/4 lg:w-1/2 items-center gap-4 mx-auto px-8 py-6 border border-gray-300 rounded-lg shadow-md">
+                <div class="flex flex-col justify-start items-start w-full gap-1">
                     <label for="email">Email:</label>
-                    <input class="text-input input" type="email" id="email" v-model="email" required />
+                    <input class="input w-full" type="email" id="email" v-model="email"
+                        placeholder="Dirección de correo electrónico" required />
                 </div>
-                <div class="flex justify-between items-center w-full gap-4">
+                <div class="flex flex-col justify-start items-start w-full gap-1">
                     <label for="password">Contraseña:</label>
-                    <input class="text-input input" type="password" id="password" v-model="password" required />
+                    <input class="input w-full" type="password" id="password" v-model="password"
+                        placeholder="Contraseña" required />
                 </div>
             </div>
             <button class="button-red" type="submit">INICIAR SESIÓN</button>

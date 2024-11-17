@@ -79,7 +79,7 @@ onBeforeUnmount(() => {
         <div class="flex items-center w-full overflow-hidden">
             <button @click="prevSlide" class="bg-gray-400 hover:bg-utal focus:outline-none rounded-full p-3"
                 :disabled="currentIndex === 0">
-                <img src="/icons/arrow.svg" alt="Flecha Izquierda Tabla" class="w-4 h-4 rotate-180" />
+                <img src="/icons/arrow.svg" alt="Flecha Izquierda Tabla" class="w-4 h-4 rotate-180" loading="lazy" />
             </button>
 
             <div class="flex overflow-hidden w-full mx-2">
@@ -97,7 +97,7 @@ onBeforeUnmount(() => {
 
             <button @click="nextSlide" class="bg-gray-400 hover:bg-utal focus:outline-none rounded-full p-3"
                 :disabled="currentIndex >= noticias.length - visibleItems">
-                <img src="/icons/arrow.svg" alt="Flecha Derecha Tabla" class="w-4 h-4" />
+                <img src="/icons/arrow.svg" alt="Flecha Derecha Tabla" class="w-4 h-4" loading="lazy" />
             </button>
         </div>
     </section>
