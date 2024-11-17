@@ -41,7 +41,7 @@ const agregarProyecto = async () => {
             throw new Error(`Error: ${response.statusText}`);
         }
         const data = await response.json();
-        console.log('Se ha agregado: ', data);
+        /* console.log('Se ha agregado: ', data); */
         showAccessBanner();
         closeModal();
     } catch (error) {

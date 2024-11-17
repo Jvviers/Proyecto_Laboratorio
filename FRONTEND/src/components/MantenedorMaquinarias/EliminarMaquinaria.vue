@@ -33,7 +33,7 @@ const eliminarMaquinaria = async (id) => {
             throw new Error(`Error: ${response.statusText}`);
         }
         const data = await response.json();
-        console.log('Se ha eliminado: ', data);
+        /* console.log('Se ha eliminado: ', data); */
         getMaquinarias();
     } catch (error) {
         console.error('Error al eliminar maquinaria: ', error);

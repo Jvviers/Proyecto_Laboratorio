@@ -54,8 +54,8 @@ const deleteCarrusel = "DELETE FROM imagencarrusel WHERE id = ?";
 const getNoticias = "SELECT * FROM noticia";
 const postNoticia = "INSERT INTO noticia (titulo, descripcion, url, public_id) VALUES (?, ?, ?, ?)";
 const deleteNoticia = "DELETE FROM noticia WHERE id = ?";
-const putNoticia = "UPDATE noticia SET titulo = ?, descripcion = ?, nombre_archivo = ?, contenido_archivo = ? WHERE id = ?";
-const putNoticiaWithoutFile = "UPDATE noticia SET titulo = ?, descripcion = ? WHERE id = ?";
+/* const putNoticia = "UPDATE noticia SET titulo = ?, descripcion = ?, nombre_archivo = ?, contenido_archivo = ? WHERE id = ?";
+const putNoticiaWithoutFile = "UPDATE noticia SET titulo = ?, descripcion = ? WHERE id = ?"; */
 
 // Consultas para la gestión de sesiones de usuarios
 const getUserByEmail = "SELECT * FROM usuario WHERE email = ?";
@@ -98,7 +98,7 @@ export default {
     getNoticias,
     postNoticia,
     deleteNoticia,
-    putNoticia,
-    putNoticiaWithoutFile,
+    /* putNoticia,
+    putNoticiaWithoutFile, */
     getUserByEmail,
 }

@@ -11,7 +11,7 @@ function eventsHandler(req, res) {
 
     // Maneja la desconexión del cliente
     req.on('close', () => {
-        console.log('Cliente SSE desconectado');
+        /* console.log('Cliente SSE desconectado'); */
         clients.splice(clients.indexOf(res), 1);
     });
 }

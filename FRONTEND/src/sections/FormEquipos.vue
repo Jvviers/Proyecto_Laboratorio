@@ -73,7 +73,7 @@ const postEquipos = async () => {
 			throw new Error(`Error: ${response.statusText}`);
 		}
 		const data = await response.json();
-		console.log("Solicitud enviada:", data);
+		/* console.log("Solicitud enviada:", data); */
 		idSolicitud.value = data.insertId;
 		showAccessBanner();
 	} catch (error) {
@@ -81,7 +81,6 @@ const postEquipos = async () => {
 	}
 
 	for (const equipo of equiposTypes.value) {
-		console.log("Equipo:", equipo.nombre, equipo.checked);
 		if (equipo.checked) {
 			try {
 				const response = await fetch(BACKEND_URL + "/equipo", {
@@ -98,7 +97,7 @@ const postEquipos = async () => {
 					throw new Error(`Error: ${response.statusText}`);
 				}
 				const data = await response.json();
-				console.log("Equipo agregado:", data);
+				/* console.log("Equipo agregado:", data); */
 			} catch (error) {
 				console.error("Error al enviar la solicitud:", error);
 			}

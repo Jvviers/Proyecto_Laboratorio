@@ -44,7 +44,7 @@ const logout = async () => {
         }
 
         const data = await response.json();
-        console.log('Usuario deslogeado:', data);
+        /* console.log('Usuario deslogeado:', data); */
         sessionActive.value = false; // Oculta el botón tras cerrar sesión
 
     } catch (error) {

@@ -65,7 +65,7 @@ const asesoria = async () => {
             throw new Error(`Error: ${response.statusText}`);
         }
         const data = await response.json();
-        console.log('Solicitud enviada:', data);
+        /* console.log('Solicitud enviada:', data); */
         showAccessBanner();
         resetInputs();
     } catch (error) {

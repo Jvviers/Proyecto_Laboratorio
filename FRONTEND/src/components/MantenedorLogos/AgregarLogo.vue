@@ -65,7 +65,7 @@ const postLogo = async () => {
             throw new Error(`Error: ${response.statusText}`);
         }
         const data = await response.json();
-        console.log('Se ha agregado: ', data);
+        /* console.log('Se ha agregado: ', data); */
     } catch (error) {
         console.error('Error al agregar logo: ', error);
     }
