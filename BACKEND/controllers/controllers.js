@@ -110,11 +110,12 @@ const postEncargadoSolicitud = async (req, res) => {
     ]);
 
     const emailContent = 
-    `Se le ha asignado la solicitud de: ${req.body.solicitante}. <br>
-    Para la actividad de: ${req.body.actividad}. <br>
-    Para mayor información el correo del solicitante es: ${req.body.email} <br>
+    `Le informamos que se le ha asignado la solicitud de tipo "${req.body.tipo_form}" para la actividad "${req.body.actividad}". <br>
+    <br>
+    Informacion del solicitante: <br>
+    Nombre: ${req.body.solicitante} <br>
+    Email: ${req.body.email} <br>
     `;
-  
 
     await sendEmailNotification(
       email[0].email,
@@ -174,48 +175,56 @@ const postEstadoSolicitud = async (req, res) => {
       req.body.estado,
       req.body.id,
     ]);
+
+    const d = new Date(req.body.fecha);
+    const month = String(d.getMonth() + 1).padStart(2, "0");
+    const day = String(d.getDate()).padStart(2, "0");
+    const hours = String(d.getHours()).padStart(2, "0");
+    const minutes = String(d.getMinutes()).padStart(2, "0");
+    const fechaAgendada = `para el día ${day}/${month} a las [${hours}:${minutes}]`;
+
+
     let emailSubject;
     let emailContent;
 
     switch (req.body.estado) {
       case 'en espera':
         emailSubject = "Tu solicitud está en espera";
-        emailContent = `Tu solicitud ha sido recibida y está actualmente en espera. Te notificaremos cuando haya algún cambio.`;
+        emailContent = `Tu solicitud de tipo "${req.body.tipo_form}" para la actividad "${req.body.actividad}" se ha puesto en espera nuevamente, por favor espera a una nueva actualización del estado de tu solicitud.`;
         break;
       case 'Agendado':
         emailSubject = "Solicitud agendada";
-        emailContent = `Tu solicitud ha sido agendada. Nos pondremos en contacto contigo en la fecha indicada para llevar a cabo la actividad.`;
+        if (req.body.tipo_form ==='asesoria') {
+          emailContent = `Tu solicitud de tipo "${req.body.tipo_form}" para la actividad "${req.body.actividad}" ha sido agendada ${fechaAgendada}. Por favor, espera a que el encargado se contacte contigo via mail.`;
+        } else {
+        emailContent = `Tu solicitud de tipo "${req.body.tipo_form}" para la actividad "${req.body.actividad}" ha sido agendada. `;
+        }
         break;
       case 'Terminado':
         emailSubject = "Solicitud finalizada";
-        emailContent = `La solicitud que realizaste ha sido completada. Te agradecemos por utilizar nuestros servicios.`;
+        emailContent = `La solicitud de tipo "${req.body.tipo_form}" para la actividad "${req.body.actividad}" que realizaste ha sido completada.`;
         break;
       case 'En cola de Impresión':
         emailSubject = "Solicitud en cola de impresión";
-        emailContent = `Tu solicitud ha sido puesta en cola de impresión. Te notificaremos cuando esté lista para retirar.`;
+        emailContent = `Tu solicitud para la actividad "${req.body.actividad}" se ha agregado a la cola de impresión. Te notificaremos cuando esté lista para retirar.`;
         break;
       case 'Listo para Retirar':
         emailSubject = "Solicitud lista para retirar";
-        emailContent = `Tu solicitud está lista para retirar. Por favor, acércate a nuestras instalaciones para recogerla.`;
+        emailContent = `Tu solicitud para la actividad "${req.body.actividad}" está lista para retirar. Por favor, acérquese al laboratorio para retirarla.`;
         break;
       case 'Rechazado':
         emailSubject = "Solicitud rechazada";
-        emailContent = `Tu solicitud ha sido rechazada. Si tienes alguna duda, por favor, ponte en contacto con nosotros.`;
+        if (req.body.tipo_form ==='asesoria') {
+          emailContent = `Tu solicitud de tipo "${req.body.tipo_form}" para la actividad "${req.body.actividad}" ha sido rechazada. Por favor, selecciona otra fecha, el administrador se contactará con usted via mail. `;
+        } else {
+        emailContent = `Tu solicitud de tipo "${req.body.tipo_form}" para la actividad "${req.body.actividad}" ha sido rechazada.`;
+        }
         break;
-      case 'terminado': //este es el terminado de asesoria
-        emailSubject = "Solicitud finalizada";
-        emailContent = `La solicitud que realizaste ha sido completada. Te agradecemos por utilizar nuestros servicios.`;
-        break;
-      /* case 'agendado': //este es el agendado de asesoria
-        emailSubject = "Solicitud agendada";
-        emailContent = `Tu solicitud ha sido agendada. Nos pondremos en contacto contigo en la fecha indicada para llevar a cabo la actividad.`; */
-      
       default:
         emailSubject = "Actualización de estado de solicitud";
-        emailContent = `El estado de tu solicitud ha cambiado a: ${req.body.estado}`;
+        emailContent = `El estado de tu solicitud ha cambiado a: "${req.body.estado}"`;
         break;
     }
-
     await sendEmailNotification(
       req.body.email,
       emailSubject,
