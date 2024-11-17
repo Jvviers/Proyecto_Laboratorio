@@ -68,7 +68,7 @@ onMounted(() => {
 		if (images.value.length > 0) {
 			nextSlide();
 		}
-	}, 5000);
+	}, 3000);
 });
 
 onBeforeUnmount(() => {
