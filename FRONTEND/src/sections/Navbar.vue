@@ -81,13 +81,13 @@ onMounted(() => {
 
 <template>
     <nav class="flex flex-col w-full px-8 md:px-32 shadow-md ">
-        <!-- <div class="flex flex-col items-end w-full">
+        <div class="flex flex-col items-end w-full">
             <span class="h-6 w-full bg-utal"></span>
             <span class="h-6 w-2/3 border-b border-gray-300 hidden md:flex justify-end items-center gap-4 text-xs text-nowrap font-normal text-gray-500">
                 <h4>Visítanos en 19 norte #1665, Talca</h4>
                 <h4>Escríbenos a utal.adm@gmail.com</h4>
             </span>
-        </div> -->
+        </div>
         <div class="flex w-full justify-between items-center py-2">
             <a href="/" aria-label="logo" class="geologica">
                 <div class="flex items-center gap-2 py-4">
