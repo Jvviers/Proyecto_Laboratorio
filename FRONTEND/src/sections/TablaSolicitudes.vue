@@ -296,9 +296,9 @@ onUnmounted(() => {
       </h3>
     </div>
     <!-- Contenedor de la tabla -->
-    <div class="w-full overflow-x-scroll border">
+    <div class="w-full overflow-x-scroll border scroll">
       <table class="table-auto bg-white">
-        <thead class="bg-gray-100 sticky top-0">
+        <thead class="bg-gray-200 sticky top-0">
           <tr>
             <th>ID</th>
             <th>Encargado</th>
@@ -338,13 +338,13 @@ onUnmounted(() => {
             <td class="td">{{ request.solicitante }}</td>
             <td class="td">{{ request.email }}</td>
             <td class="td">{{ request.matricula }}</td>
-            <td class="td overflow-x-scroll max-w-[180px]">
+            <td class="td overflow-x-scroll max-w-[180px] scroll">
               {{ request.actividad }}
             </td>
             <td class="td">
               <p v-if="request.fecha">{{ formatDate(request.fecha) }}</p>
             </td>
-            <td class="td overflow-x-scroll max-w-[180px]">
+            <td class="td overflow-x-scroll max-w-[180px] scroll">
               {{ request.equipos }}
             </td>
             <td class="td">{{ request.tipo_proyecto }}</td>
@@ -450,7 +450,7 @@ th {
   font-size: 12px;
   line-height: 1rem;
   font-weight: 500;
-  color: #6b7280;
+  color: #242424;
   text-transform: uppercase;
   letter-spacing: 0.05em;
 }
@@ -527,5 +527,23 @@ svg path {
 .mail:hover svg path {
   fill: #286532;
   transition: all 0.3s ease;
+}
+
+.scroll {
+  scrollbar-color: #ba0c2f #e5e7eb;
+  scrollbar-width: thin;
+}
+
+.scroll::-webkit-scrollbar {
+   width: 8px;
+}
+
+.scroll::-webkit-scrollbar-thumb {
+   background: #ba0c2f;
+   border-radius: 10px;
+}
+
+.scroll::-webkit-scrollbar-track {
+   background: #e5e7eb;
 }
 </style>
