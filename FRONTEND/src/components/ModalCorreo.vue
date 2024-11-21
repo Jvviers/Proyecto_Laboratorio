@@ -6,7 +6,7 @@ const BACKEND_URL = import.meta.env.PUBLIC_BACKEND_URL;
 
 const props = defineProps({
     isModalOpen: Boolean,
-    email: String, // Correo del solicitante recibido del padre
+    email: String, 
 });
 
 const emit = defineEmits(['close-modal']);
@@ -43,7 +43,7 @@ const enviarCorreo = async () => {
 
 // Limpia el contenido cuando el modal se abre o cierra
 watch(() => props.isModalOpen, (isOpen) => {
-    if (!isOpen) contenido.value = ''; // Limpia contenido al cerrar
+    if (!isOpen) contenido.value = ''; 
 });
 </script>
 
