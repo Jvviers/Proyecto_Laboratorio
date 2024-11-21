@@ -236,6 +236,25 @@ const postEstadoSolicitud = async (req, res) => {
   }
 };
 
+const sendCorreo = async (req, res) => {
+  const { email, titulo, contenido } = req.body;
+  try {
+
+      if (!email || !titulo || !contenido) {
+        return res.status(400).json({ message: "Faltan datos obligatorios" });
+      } 
+    
+      await sendEmailNotification(
+          email,
+          titulo,
+          contenido
+      );
+      res.status(200).json({ message: 'Correo enviado correctamente' });
+  } catch (error) {
+      res.status(500).json({ message: 'Error al enviar correo', error: error.message });
+  }
+};
+
 const deleteSolicitud = async (req, res) => {
   try {
     const [data] = await db.query(Queries.deleteSolicitud, [req.body.id]);
@@ -618,6 +637,7 @@ export default {
   postEquipo,
   postEncargadoSolicitud,
   postEstadoSolicitud,
+  sendCorreo,
   deleteSolicitud,
   getEncargados,
   getNombreEquipos,
