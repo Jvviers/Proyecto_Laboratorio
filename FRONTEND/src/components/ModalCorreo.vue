@@ -1,7 +1,5 @@
 <script setup>
 import { ref, watch } from 'vue';
-import { defineProps, defineEmits } from 'vue';
-
 const BACKEND_URL = import.meta.env.PUBLIC_BACKEND_URL;
 
 const props = defineProps({
@@ -49,26 +47,29 @@ watch(() => props.isModalOpen, (isOpen) => {
 
 <template>
     <form @submit.prevent="enviarCorreo" class="flex flex-col justify-center items-center gap-6 py-4 px-12 w-full">
-        <h2 class="text-2xl font-bold text-center text-utal">Enviar Correo</h2>
-        <div class="flex flex-col justify-start items-start w-full gap-1">
-            <label for="titulo">Título del Correo</label>
-            <input
-                id="titulo"
-                type="text"
-                v-model="titulo"
-                class="input w-full"
-                placeholder="Escribe el título del correo aquí..."
-                required
-            />
+        <div class="flex justify-center items-center w-full">
+            <h2 class="text-2xl font-bold text-center text-utal">ENVIAR CORREO</h2>
         </div>
-        <div class="flex flex-col justify-start items-start w-full gap-1">
-            <label for="content">Enviar a: {{ email }}</label>
-            <textarea class="input w-full h-48 resize-none" id="content" v-model="contenido"
-                placeholder="Escribe el contenido del correo aquí..." required></textarea>
+        <div class="flex flex-col justify-center items-center w-full gap-4">
+            <div class="flex flex-col justify-start items-start w-full gap-1">
+                <span class="text-gray-600 px-2 border border-gray-300 rounded bg-gray-200">Para: {{ email }}</span>
+            </div>
+            <div class="flex flex-col justify-start items-start w-full gap-1">
+                <label for="title">Título del correo:</label>
+                <input placeholder="Escribe el título del correo aquí:" class="input w-full" type="text" id="title"
+                    v-model="titulo" required />
+            </div>
+            <div class="flex flex-col justify-start items-start w-full gap-1">
+                <label for="content">Contenido del correo:</label>
+                <span class="text-gray-600 px-2 border border-gray-300 rounded bg-gray-200">Estimado/a</span>
+                <textarea class="input w-full h-40 resize-none" id="content" v-model="contenido"
+                placeholder="Escribe el contenido del correo aquí:" required></textarea>
+                <span class="text-gray-600 px-2 border border-gray-300 rounded bg-gray-200">Atentamente, La Administración</span>
+            </div>
         </div>
         <div class="flex w-full justify-center items-center gap-8 mt-4">
-            <button class="button-red" type="submit">Enviar</button>
-            <button class="button" type="button" @click="closeModal">Cancelar</button>
+            <button class="button-red" type="submit">ENVIAR</button>
+            <button class="button" type="button" @click="closeModal">CANCELAR</button>
         </div>
     </form>
 </template>

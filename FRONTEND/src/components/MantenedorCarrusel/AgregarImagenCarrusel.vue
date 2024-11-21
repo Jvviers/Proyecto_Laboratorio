@@ -1,6 +1,5 @@
 <script setup>
 import { ref } from 'vue';
-import { defineProps, defineEmits } from 'vue';
 const BACKEND_URL = import.meta.env.PUBLIC_BACKEND_URL;
 
 // Recibe la propiedad isModalOpen
