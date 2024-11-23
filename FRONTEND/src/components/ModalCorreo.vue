@@ -19,6 +19,7 @@ const contenido = ref('');
 const enviarCorreo = async () => {
     closeModal();
     try {
+        const contenidoHtml = contenido.value.replace(/\n/g, '<br>');
         const response = await fetch(`${BACKEND_URL}/correo`, {
             method: 'POST',
             headers: {
@@ -27,7 +28,7 @@ const enviarCorreo = async () => {
             body: JSON.stringify({
                 email: props.email, 
                 titulo: titulo.value,
-                contenido: contenido.value, 
+                contenido: contenidoHtml, 
             }),
         });
         if (!response.ok) {
