@@ -22,7 +22,7 @@ const getNombreEquipo = async () => {
 			throw new Error(`Error: ${response.statusText}`);
 		}
 		const data = await response.json();
-		equiposTypes.value = data;
+		equiposTypes.value = data.sort((a, b) => a.id - b.id); // Reemplaza "id" con el campo que indique el orden
 		equiposTypes.value.forEach((equipo) => {
 			equipo.checked = false;
 		});
@@ -115,7 +115,7 @@ const postEquipos = async () => {
 	<form @submit.prevent="postEquipos"
 		class="flex flex-col justify-center items-center gap-4 py-12 px-8 md:px-32 w-full">
 		<header class="flex flex-col justify-center gap-3 w-full">
-			<h2 class="text-2xl font-bold text-center text-utal">LABORATORIO</h2>
+			<h2 class="text-2xl font-bold text-center text-utal">ASESORÍA EN LABORATORIO</h2>
 			<h3 class="text-lg text-center">Aquí puedes solicitar la realización de tu laboratorio.</h3>
 		</header>
 		<div class="flex flex-col lg:flex-row justify-center items-start gap-2 w-full border border-gray-300 rounded-lg shadow-md">
@@ -143,7 +143,7 @@ const postEquipos = async () => {
 			</div>
 			<div class="flex flex-col justify-start w-3/4 lg:w-1/2 items-start gap-4 mx-auto px-8 py-6">
 				<header class="flex flex-col justify-center gap-3 w-full">
-					<h3 class="text-base text-center lg:text-start">Selecciona los equipos que vas a utilizar:</h3>
+					<h3 class="text-base text-center lg:text-start">Tipo de asesoría requerida:</h3>
 				</header>
 				<div class="flex flex-col justify-center items-start gap-2">
 					<li v-for="equipo in equiposTypes" :key="equipo.id" class="flex items-center">

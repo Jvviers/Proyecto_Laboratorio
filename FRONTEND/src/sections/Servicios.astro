@@ -7,17 +7,17 @@ import Card from "../components/Card.astro";
         <h3 class="text-lg text-center">Aquí puedes realizar las solicitudes para tus laboratorios.</h3>
     </header>
     <div class="flex flex-wrap justify-evenly items-center gap-4 w-full py-6 px-4">
-        <Card text="LABORATORIO" url="/laboratorio">
-            <img slot="img" src="/icons/materiales.svg" alt="Materiales" loading="lazy" class="w-20 h-20" />
-            <h2 slot="text" class="">Aquí puedes solicitar la realización de tus laboratorios.</h2>
-        </Card>
-        <Card text="IMPRESIÓN" url="/impresion">
+        <Card text="IMPRESIÓN 3D" url="/impresion">
             <img slot="img" src="/icons/impresion.svg" alt="Impresión" loading="lazy" class="w-20 h-20" />
-            <h2 slot="text" class="">Aquí puedes solicitar impresiones para tus laboratorios.</h2>
+            <h2 slot="text" class="">Solicita la impresion de tus diseños 3D, con opciones de materiales y acabados personalizados para prototipos o proyectos finales.</h2>
         </Card>
-        <Card text="ASESORÍA" url="/asesoria">
+        <Card text="ASESORIA EN LABORATORIO" url="/laboratorio">
+            <img slot="img" src="/icons/materiales.svg" alt="Materiales" loading="lazy" class="w-20 h-20" />
+            <h2 slot="text" class="">Reserva una hora en nuestro laboratorio para analizar tus desafios y recibir asesoramiento profesional, definiendo si tu proyecto puede realizarse con impresion 3D o requiere otra técnica de manufactura.</h2>
+        </Card>
+        <Card text="ASESORÍA ONLINE" url="/asesoria">
             <img slot="img" src="/icons/asesoria.svg" alt="Agendar" loading="lazy" class="w-20 h-20" />
-            <h2 slot="text" class="">Aquí puedes solicitar asesorías para realizar tus laboratorios.</h2>
+            <h2 slot="text" class="">Agenda una hora de asesoría remota para resolver dudas sobre tus diseños, configuraciones o problemas antes y durante el proceso de impresión.</h2>
         </Card>
     </div>
 </section>
