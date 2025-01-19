@@ -32,7 +32,10 @@ const getTipoMaterial = async () => {
 			throw new Error(`Error: ${response.statusText}`);
 		}
 		const data = await response.json();
-		materialTypes.value = data;
+		materialTypes.value = data.sort((a,b) => a.id - b.id);
+		materialTypes.value.forEach((material) => {
+			material.checked = false;
+		});
 	} catch (error) {
 		console.error("Error al obtener el tipo de material: ", error);
 	}
@@ -154,7 +157,7 @@ onMounted(() => {
 								Archivo cargado: {{ file.name }}
 							</span>
 							<span v-else class="text-center text-sm">
-								Se recomienda usar un archivo comprimido (.zip, .rar).
+								Se recomienda usar archivos con el formato: (.stl o .obj) para modelos individuales o (.zip y .rar) si contiene mas de un diseño.
 							</span>
 						</div>
 					</div>
