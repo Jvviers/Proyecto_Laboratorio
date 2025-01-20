@@ -34,8 +34,10 @@ onMounted(() => {
             <h3 class="text-lg text-center">Estos son nuestros laboratorios asociados.</h3>
         </header>
         <div class="flex flex-wrap justify-center items-center gap-10 w-full py-6">
-            <li v-for="(logo, index) in logos" :key="index" class="w-20 h-20 aspect-square flex justify-center items-center">
-                <img :src="logo.url" :alt="'logo '+index">
+            <li v-for="(logo, index) in logos" :key="index" class="flex justify-center items-center">
+                <div class="w-48 flex justify-center border-2 border-utal border-dashed rounded-full p-2 overflow-hidden">
+                    <img :src="logo.url" :alt="'logo '+index" class="h-20" />
+                </div>
             </li>
         </div>
     </section>
