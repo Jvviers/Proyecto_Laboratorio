@@ -94,7 +94,7 @@ onMounted(() => {
                     <img src="/icons/logo.svg" alt="logo utal" class="w-20 h-20 pr-1 border-r border-[#9d9d9d]" />
                     <div class="flex flex-col justify-center items-start text-start pl-1 w-44 gap-[2px]">
                         <h3 class="text-lg font-semibold leading-none">Dirección de Innovación y Transferencia</h3>
-                        <h4 class="text-sm font-medium leading-none text-[#9d9d9d]">Vicerrectoría Académica</h4>
+                        <h4 class="text-sm font-medium leading-none text-[#9d9d9d]">Ingeniería 2030</h4>
                     </div>
                 </div>
             </a>
