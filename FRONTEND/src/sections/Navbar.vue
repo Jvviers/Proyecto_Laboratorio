@@ -84,7 +84,7 @@ onMounted(() => {
         <div class="flex flex-col items-end w-full">
             <span class="h-6 w-full bg-utal"></span>
             <span class="h-6 w-2/3 border-b border-gray-300 hidden md:flex justify-end items-center gap-4 text-xs text-nowrap font-normal text-gray-500">
-                <h4>Visítanos en 19 norte #1665, Talca</h4>
+                <h4>Visítanos en camino Los Niches km 1, Curicó</h4>
                 <h4>Escríbenos a utal.adm@gmail.com</h4>
             </span>
         </div>
@@ -93,8 +93,8 @@ onMounted(() => {
                 <div class="flex items-center gap-2 py-4">
                     <img src="/icons/logo.svg" alt="logo utal" class="w-20 h-20 pr-1 border-r border-[#9d9d9d]" />
                     <div class="flex flex-col justify-center items-start text-start pl-1 w-44 gap-[2px]">
-                        <h3 class="text-lg font-semibold leading-none">Dirección de Innovación y Transferencia</h3>
-                        <h4 class="text-sm font-medium leading-none text-[#9d9d9d]">Ingeniería 2030</h4>
+                        <h3 class="text-lg font-semibold leading-none">Plataforma Prototipaje</h3>
+                        <h4 class="text-sm font-medium leading-none text-[#9d9d9d]">Universidad de Talca</h4>
                     </div>
                 </div>
             </a>
